@@ -10,7 +10,7 @@ public:
 	~EntityManager();
 	
 	static EntityManager &Instance();
-	void Release();
+	static void Release();
 
 	void AddEntity(std::unique_ptr<Entity> entity);
 	Entity *GetEntity(UniqueID id);

@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Component\Component.h" />
+    <ClInclude Include="include\Component\GraphicsComponent.h" />
     <ClInclude Include="include\Component\LocationComponent.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\Entity\Entity.h" />
@@ -26,6 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Component\Component.cpp" />
+    <ClCompile Include="src\Component\GraphicsComponent.cpp" />
     <ClCompile Include="src\Component\LocationComponent.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />

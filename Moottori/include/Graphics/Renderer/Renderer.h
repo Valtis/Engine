@@ -6,6 +6,7 @@
 #include <string>
 
 #include "Utility/UniqueID.h"
+class Entity;
 class Renderer
 {
 public:
@@ -25,14 +26,23 @@ public:
 	static Renderer &Instance();
 	static void Release();
 
-	void CreateWindow(std::string title, int width, int height);
+	SDL_Renderer *GetRenderingContext() { return mRenderer; }
 
+	void CreateWindow(std::string title, int width, int height);
+	
+	void AddEntity(UniqueID id) { mDrawables.push_back(id); }
 	void Draw();
 
 protected:
 private:
 	static Renderer *mInstance;
 	Renderer();
+	void ClearScreen();
+	void DrawEntities();
+	std::vector<Entity *> GetEntitiesForDrawing();
+	bool CullEntity(Entity *e);
+	void SortByDrawPriority(std::vector<Entity *> &drawList);
+	void DrawEntity(Entity *e);
 
 	std::vector<UniqueID> mDrawables;
 
