@@ -1,0 +1,45 @@
+#include "Entity/EntityManager.h"
+#include "Entity/Entity.h"
+EntityManager *EntityManager::mInstance = nullptr;
+
+EntityManager::EntityManager()
+{
+
+}
+
+EntityManager::~EntityManager()
+{
+
+}
+
+EntityManager &EntityManager::Instance()
+{
+	if (mInstance == nullptr)
+	{
+		mInstance = new EntityManager();
+	}
+
+	return *mInstance;
+}
+
+void EntityManager::Release()
+{
+	delete mInstance;
+	mInstance = nullptr;
+}
+
+
+void EntityManager::AddEntity(std::unique_ptr<Entity> entity)
+{
+	mEntities[entity->GetID()] = std::move(entity);
+}
+
+Entity *EntityManager::GetEntity(UniqueID id)
+{
+	if (mEntities.count(id) == 0)
+	{
+		return nullptr;
+	}
+
+	return mEntities[id].get();
+}
