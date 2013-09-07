@@ -20,6 +20,8 @@
     <ClInclude Include="include\Event\Event.h" />
     <ClInclude Include="include\Event\IEventHandler.h" />
     <ClInclude Include="include\Graphics\Renderer\Renderer.h" />
+    <ClInclude Include="include\Graphics\Sprite.h" />
+    <ClInclude Include="include\Graphics\SpriteManager.h" />
     <ClInclude Include="include\Utility\UniqueID.h" />
   </ItemGroup>
   <ItemGroup>
@@ -30,6 +32,8 @@
     <ClCompile Include="src\Entity\EntityManager.cpp" />
     <ClCompile Include="src\Event\Event.cpp" />
     <ClCompile Include="src\Graphics\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Graphics\Sprite.cpp" />
+    <ClCompile Include="src\Graphics\SpriteManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Utility\UniqueID.cpp" />
   </ItemGroup>

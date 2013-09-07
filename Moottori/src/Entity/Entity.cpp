@@ -2,7 +2,7 @@
 #include "Component/Component.h"
 #include "Event/Event.h"
 
-#include <cassert>
+#include <SDL_assert.h>
 
 Entity::Entity() : mComponents(), mEventCallbacks(), mEvents()
 {
@@ -16,7 +16,7 @@ Entity::~Entity()
 
 void Entity::AddComponent(ComponentType type, std::unique_ptr<Component> c)
 {
-    assert(type != ComponentType::None);
+    SDL_assert(type != ComponentType::None);
     c->RegisterEventHandler(this);
     mComponents[type] = std::move(c);
 }
@@ -47,7 +47,7 @@ void Entity::ProcessEvent(std::unique_ptr<Event> event)
 
 void Entity::RegisterCallback(EventType type, std::function<void(Event *)> callback)
 {
-	assert (type != EventType::None);
+	SDL_assert(type != EventType::None);
 	mEventCallbacks[type].push_back(callback);
 }
 
