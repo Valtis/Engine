@@ -1,6 +1,6 @@
 #include "Graphics/Renderer/Renderer.h"
 #include "Entity/EntityManager.h"
-
+#include <stdexcept>
 Renderer *Renderer::mInstance = nullptr;
 
 
@@ -11,7 +11,8 @@ Renderer::Renderer()
 
 Renderer::~Renderer()
 {
-
+	SDL_DestroyRenderer(mRenderer);
+    SDL_DestroyWindow(mWindow);
 }
 
 
@@ -33,7 +34,17 @@ void Renderer::Release()
 
 void Renderer::CreateWindow(std::string title, int width, int height)
 {
-	
+	if (SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_RESIZABLE, &mWindow, &mRenderer) != 0)
+	{
+		throw std::runtime_error("SDL_CreateWindowAndRenderer failed");
+	}
+
+	if (mWindow == nullptr || mRenderer == nullptr)
+	{
+		throw std::runtime_error("Failed to create window and render context");
+	}
+
+
 }
 
 void Renderer::Draw()
