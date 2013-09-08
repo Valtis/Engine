@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Enumerations.h"
+#include "Utility/Enumerations.h"
 
 class Event
 {
@@ -8,7 +8,7 @@ class Event
         Event();
         virtual ~Event();
 
-        virtual EventType GetType() = 0;
+        virtual EventType GetType() const = 0;
 
     protected:
     private:

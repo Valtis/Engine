@@ -1,5 +1,11 @@
 #include "Component/GraphicsComponent.h"
 #include <SDL.h>
+
+GraphicsComponent::GraphicsComponent(std::vector<int> spriteIDs) : mSpriteIDs(spriteIDs), mCurrentSprite(0)
+{
+
+}
+
 GraphicsComponent::GraphicsComponent() : mSpriteIDs(), mCurrentSprite(0)
 {
 

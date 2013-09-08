@@ -3,6 +3,9 @@
 class LocationComponent : public Component 
 {
 public:
+	LocationComponent() {} 
+	LocationComponent(int x, int y) : mX(x), mY(y) {}
+	virtual ~LocationComponent() {}
 	int GetX() const { return mX; }
 	void SetX(int x) { mX = x; }
 	

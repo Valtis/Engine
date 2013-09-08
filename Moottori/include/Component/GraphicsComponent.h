@@ -6,6 +6,7 @@
 class GraphicsComponent : public Component
 {
 public:
+	GraphicsComponent(std::vector<int> spriteIDs);
 	GraphicsComponent();
 	~GraphicsComponent();
 

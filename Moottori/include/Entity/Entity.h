@@ -8,7 +8,7 @@
 
 #include "Event/IEventHandler.h"
 #include "Utility/UniqueID.h"
-#include "Enumerations.h"
+#include "Utility/Enumerations.h"
 
 class Component;
 class Event;

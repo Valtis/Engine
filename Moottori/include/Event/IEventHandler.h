@@ -3,7 +3,7 @@
 #include <memory>
 #include <functional>
 
-#include "Enumerations.h"
+#include "Utility/Enumerations.h"
 class Event;
 
 class IEventHandler

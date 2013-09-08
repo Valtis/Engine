@@ -16,13 +16,17 @@
     <ClInclude Include="include\Component\LocationComponent.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\Entity\Entity.h" />
+    <ClInclude Include="include\Entity\EntityFactory.h" />
     <ClInclude Include="include\Entity\EntityManager.h" />
-    <ClInclude Include="include\Enumerations.h" />
     <ClInclude Include="include\Event\Event.h" />
     <ClInclude Include="include\Event\IEventHandler.h" />
+    <ClInclude Include="include\Event\UIEvent.h" />
     <ClInclude Include="include\Graphics\Renderer\Renderer.h" />
     <ClInclude Include="include\Graphics\Sprite.h" />
     <ClInclude Include="include\Graphics\SpriteManager.h" />
+    <ClInclude Include="include\UI\UI.h" />
+    <ClInclude Include="include\Utility\Defines.h" />
+    <ClInclude Include="include\Utility\Enumerations.h" />
     <ClInclude Include="include\Utility\UniqueID.h" />
   </ItemGroup>
   <ItemGroup>
@@ -31,12 +35,14 @@
     <ClCompile Include="src\Component\LocationComponent.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
+    <ClCompile Include="src\Entity\EntityFactory.cpp" />
     <ClCompile Include="src\Entity\EntityManager.cpp" />
     <ClCompile Include="src\Event\Event.cpp" />
     <ClCompile Include="src\Graphics\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Graphics\Sprite.cpp" />
     <ClCompile Include="src\Graphics\SpriteManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\UI\UI.cpp" />
     <ClCompile Include="src\Utility\UniqueID.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
