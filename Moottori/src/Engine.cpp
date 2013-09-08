@@ -8,11 +8,12 @@
 
 // feel free to delete following headers, only for testing
 #include "Entity/Entity.h"
+#include "Entity/EntityFactory.h"
 #include "Component/LocationComponent.h"
 #include "Component/GraphicsComponent.h"
 #include "Graphics/Sprite.h"
 
-Engine::Engine() : mFrameTickLength(0), mLastTick(0), mIsRunning(true)
+Engine::Engine() : mDrawTickLength(0), mLastDrawTick(0), mGameLogicTickLength(0), mLastGameLogicTick(0), mIsRunning(true)
 {
 
 }
@@ -55,16 +56,23 @@ void Engine::HandleInput()
 
 void Engine::UpdateGameState()
 {
-	//EntityManager::Instance().Update(ticksPassed);
+	Uint32 currentTick = SDL_GetTicks();
+	if (currentTick > mGameLogicTickLength + mLastGameLogicTick)
+	{
+		double ticksPassed = (double)(mLastGameLogicTick - currentTick)/(double)mGameLogicTickLength;
+		EntityManager::Instance().Update(ticksPassed);
+		mGameLogicTickLength = SDL_GetTicks();
+	}
+	//
 }
 
 void Engine::Draw()
 {
 	Uint32 currentTick = SDL_GetTicks();
-	if (currentTick > mFrameTickLength + mLastTick)
+	if (currentTick > mDrawTickLength + mLastDrawTick)
 	{
 		mUI.Draw();
-		mLastTick = SDL_GetTicks();
+		mLastDrawTick = SDL_GetTicks();
 
 	}
 }
@@ -73,10 +81,11 @@ void Engine::Draw()
 void Engine::Initialize()
 {
 	SDL_Init(SDL_INIT_VIDEO);
-	mLastTick = SDL_GetTicks();
+	mLastDrawTick = SDL_GetTicks();
 
 	// todo: read from datafile or something
-	mFrameTickLength = 100;
+	mDrawTickLength = 30;
+	mGameLogicTickLength = 100;
 
 	mUI.Initialize("Generic title - move to settings file!", 640, 480);
 	mUI.RegisterInputHandler([&](Event *event) { return this->InputHandler(event); }, INPUT_PRIORITY_HIGH);
@@ -87,7 +96,7 @@ void Engine::Initialize()
 	// --------------- TEST CODE ----------------------
 	std::unique_ptr<Sprite> sprite(new Sprite);
 	sprite->SetSpriteSheetID(0);
-	sprite->SetLocation(0, 0, 100, 100);
+	sprite->SetLocation(0, 0, 50, 50);
 
 
 	std::unique_ptr<Entity> e(new Entity);
@@ -109,8 +118,10 @@ void Engine::Initialize()
 	sprite.reset(new Sprite);
 
 	sprite->SetSpriteSheetID(0);
-	sprite->SetLocation(100, 100, 50, 50);
+	sprite->SetLocation(51, 0, 50, 50);
 
+
+	
 
 
 	e.reset(new Entity);
@@ -127,6 +138,21 @@ void Engine::Initialize()
 	Renderer::Instance().AddEntity(e->GetID());
 	EntityManager::Instance().AddEntity(std::move(e));
 	SpriteManager::Instance().AddSprite(std::move(sprite));
+
+	
+	sprite.reset(new Sprite);
+
+	sprite->SetSpriteSheetID(0);
+	sprite->SetLocation(102, 102, 50, 50);
+	std::vector<UniqueID> ids;
+	ids.push_back(sprite->GetID());
+
+	e = EntityFactory::CreatePlayer(250, 250, 10, ids, mUI);
+	Renderer::Instance().AddEntity(e->GetID());
+	EntityManager::Instance().AddEntity(std::move(e));
+	SpriteManager::Instance().AddSprite(std::move(sprite));
+
+
 
 }
 

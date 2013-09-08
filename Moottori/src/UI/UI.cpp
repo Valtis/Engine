@@ -46,14 +46,44 @@ void UI::Update()
 void UI::HandleEvent(const SDL_Event &event)
 {
 	// I wonded if std::(unordered_)map would be better than switch/case
-	
+
 	switch (event.type)
 	{
-		case SDL_QUIT:
-			NotifyInputHandlers(UIEventType::Quit);
+	case SDL_QUIT:
+		NotifyInputHandlers(UIEventType::Quit);
+	case SDL_KEYDOWN:
+		HandleKeys(event.key.keysym.scancode);
+		break;
+	default:
+		break;
+	}
+}
 
-		default:
-			break;
+void UI::HandleKeys(SDL_Scancode code)
+{
+	switch (code)
+	{
+
+	case SDL_SCANCODE_W:
+	case SDL_SCANCODE_KP_8:
+		NotifyInputHandlers(UIEventType::MoveUp);
+		break;
+	case SDL_SCANCODE_A:
+	case SDL_SCANCODE_KP_4:
+		NotifyInputHandlers(UIEventType::MoveLeft);
+		break;
+	case SDL_SCANCODE_D:
+	case SDL_SCANCODE_KP_6:
+		NotifyInputHandlers(UIEventType::MoveRight);
+		break;
+	case SDL_SCANCODE_S:
+	case SDL_SCANCODE_KP_2:
+		NotifyInputHandlers(UIEventType::MoveDown);
+		break;
+
+
+	default:
+		break;
 	}
 }
 

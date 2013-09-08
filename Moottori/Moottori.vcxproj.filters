@@ -102,6 +102,18 @@
     <ClInclude Include="include\Event\UIEvent.h">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
+    <ClInclude Include="include\Component\InputComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Component\VelocityComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Event\ChangeVelocityEvent.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Event\ChangeLocationEvent.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -145,6 +157,12 @@
     </ClCompile>
     <ClCompile Include="src\Entity\EntityFactory.cpp">
       <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Component\InputComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Component\VelocityComponent.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

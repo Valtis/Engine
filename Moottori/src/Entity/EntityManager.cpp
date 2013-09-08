@@ -43,3 +43,12 @@ Entity *EntityManager::GetEntity(UniqueID id)
 
 	return mEntities[id].get();
 }
+
+
+void EntityManager::Update(double doubleTicks)
+{
+	for (const auto &entityNode : mEntities)
+	{
+		entityNode.second->Update(doubleTicks);
+	}
+}

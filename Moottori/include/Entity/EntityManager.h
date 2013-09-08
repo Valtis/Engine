@@ -15,6 +15,8 @@ public:
 	void AddEntity(std::unique_ptr<Entity> entity);
 	Entity *GetEntity(UniqueID id);
 
+	void Update(double ticksPassed);
+
 
 
 private:

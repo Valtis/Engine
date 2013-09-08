@@ -33,8 +33,13 @@ private:
 
 
 
-	Uint32 mFrameTickLength;
-	Uint32 mLastTick;
+	Uint32 mDrawTickLength;
+	Uint32 mLastDrawTick;
+
+	Uint32 mGameLogicTickLength;
+	Uint32 mLastGameLogicTick;
+
+
 	bool mIsRunning;
 
 	std::queue<UIEventType> mEvents;

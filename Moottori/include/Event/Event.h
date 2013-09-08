@@ -7,7 +7,6 @@ class Event
     public:
         Event();
         virtual ~Event();
-
         virtual EventType GetType() const = 0;
 
     protected:

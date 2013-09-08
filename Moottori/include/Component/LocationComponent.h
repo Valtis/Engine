@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+
 class LocationComponent : public Component 
 {
 public:
@@ -13,7 +14,10 @@ public:
 	void SetY(int y) { mY = y; }
 
 
+protected:
+	void OnEventHandlerRegistration() override;
 private:
+	void HandleLocationChangeEvents(Event *event);
 	int mX;
 	int mY;
 };

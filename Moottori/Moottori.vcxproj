@@ -13,11 +13,15 @@
   <ItemGroup>
     <ClInclude Include="include\Component\Component.h" />
     <ClInclude Include="include\Component\GraphicsComponent.h" />
+    <ClInclude Include="include\Component\InputComponent.h" />
     <ClInclude Include="include\Component\LocationComponent.h" />
+    <ClInclude Include="include\Component\VelocityComponent.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\Entity\Entity.h" />
     <ClInclude Include="include\Entity\EntityFactory.h" />
     <ClInclude Include="include\Entity\EntityManager.h" />
+    <ClInclude Include="include\Event\ChangeLocationEvent.h" />
+    <ClInclude Include="include\Event\ChangeVelocityEvent.h" />
     <ClInclude Include="include\Event\Event.h" />
     <ClInclude Include="include\Event\IEventHandler.h" />
     <ClInclude Include="include\Event\UIEvent.h" />
@@ -32,7 +36,9 @@
   <ItemGroup>
     <ClCompile Include="src\Component\Component.cpp" />
     <ClCompile Include="src\Component\GraphicsComponent.cpp" />
+    <ClCompile Include="src\Component\InputComponent.cpp" />
     <ClCompile Include="src\Component\LocationComponent.cpp" />
+    <ClCompile Include="src\Component\VelocityComponent.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
     <ClCompile Include="src\Entity\EntityFactory.cpp" />
