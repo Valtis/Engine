@@ -1,20 +1,19 @@
 #pragma once
 #include <vector>
 #include "Component.h"
-#include "Utility/UniqueID.h"
 
 class GraphicsComponent : public Component
 {
 public:
-	GraphicsComponent(std::vector<UniqueID> spriteIDs);
+	GraphicsComponent(std::vector<int> spriteIDs);
 	GraphicsComponent();
 	~GraphicsComponent();
 
 
-	void AddSpriteID(UniqueID id);
+	void AddSpriteID(int id);
 	void ClearSpriteIDs();
 
-	UniqueID GetCurrentSpriteID();
+	int GetCurrentSpriteID();
 	
 
 	void NextSprite();
@@ -22,6 +21,6 @@ public:
 	void ResetSprite();
 
 private:
-	std::vector<UniqueID> mSpriteIDs;
+	std::vector<int> mSpriteIDs;
 	int mCurrentSprite;
 };

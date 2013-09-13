@@ -1,7 +1,7 @@
 #include "Component/GraphicsComponent.h"
 #include <SDL.h>
 
-GraphicsComponent::GraphicsComponent(std::vector<UniqueID> spriteIDs) : mSpriteIDs(spriteIDs), mCurrentSprite(0)
+GraphicsComponent::GraphicsComponent(std::vector<int> spriteIDs) : mSpriteIDs(spriteIDs), mCurrentSprite(0)
 {
 }
 
@@ -15,7 +15,7 @@ GraphicsComponent::~GraphicsComponent()
 
 }
 
-void GraphicsComponent::AddSpriteID(UniqueID id)
+void GraphicsComponent::AddSpriteID(int id)
 {
 	mSpriteIDs.push_back(id);
 }
@@ -25,10 +25,10 @@ void GraphicsComponent::ClearSpriteIDs()
 	mSpriteIDs.clear();
 }
 
-UniqueID GraphicsComponent::GetCurrentSpriteID()
+int GraphicsComponent::GetCurrentSpriteID()
 {
 	SDL_assert(mSpriteIDs.size() > 0);
-	SDL_assert(mSpriteIDs.size() >= mCurrentSprite);
+	SDL_assert((int)mSpriteIDs.size() >= mCurrentSprite);
 	return mSpriteIDs[mCurrentSprite];
 }
 	

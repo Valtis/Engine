@@ -5,6 +5,11 @@ Sprite::Sprite()
 
 }
 
+Sprite::Sprite(int id) : mID(id)
+{
+
+}
+
 Sprite::~Sprite()
 {
 

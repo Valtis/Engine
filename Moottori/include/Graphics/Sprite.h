@@ -5,6 +5,7 @@ class Sprite
 {
 public:
 	Sprite();
+	Sprite(int id);
 	~Sprite();
 	
 	SDL_Rect GetLocation() { return mLocation; }

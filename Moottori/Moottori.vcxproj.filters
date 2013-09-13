@@ -114,6 +114,9 @@
     <ClInclude Include="include\Event\ChangeLocationEvent.h">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
+    <ClInclude Include="include\Utility\StringUtility.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -163,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="src\Component\VelocityComponent.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utility\StringUtility.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

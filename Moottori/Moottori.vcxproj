@@ -31,6 +31,7 @@
     <ClInclude Include="include\UI\UI.h" />
     <ClInclude Include="include\Utility\Defines.h" />
     <ClInclude Include="include\Utility\Enumerations.h" />
+    <ClInclude Include="include\Utility\StringUtility.h" />
     <ClInclude Include="include\Utility\UniqueID.h" />
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +50,7 @@
     <ClCompile Include="src\Graphics\SpriteManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\UI\UI.cpp" />
+    <ClCompile Include="src\Utility\StringUtility.cpp" />
     <ClCompile Include="src\Utility\UniqueID.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

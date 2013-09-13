@@ -3,8 +3,10 @@
 #include <unordered_map>
 #include <memory>
 #include <SDL.h>
+#include <vector>
 #include "Graphics/Sprite.h"
 #include "Utility/UniqueID.h"
+
 class SpriteManager
 {
 public:
@@ -15,13 +17,18 @@ public:
 	void Initialize(std::string datafilePath);
 
 	void AddSprite(std::unique_ptr<Sprite> sprite);
-	Sprite *GetSprite(UniqueID id);
+	Sprite *GetSprite(int id);
 
 	SDL_Texture *GetTextureForDrawing(int spriteSheetID);
 
 private:
 	SpriteManager();
 	static SpriteManager *mInstance;
+	void LoadSpriteSheets(std::string datafilePath);
+	
+	std::vector<std::pair<int, std::string>> LoadSpriteSheetDetails(std::string path);
+	std::pair<int, std::string> ParseLine(std::string line, std::string path);
+	void LoadSpriteSheet(std::pair<int, std::string> sheet);
 
 	std::unordered_map<UniqueID, std::unique_ptr<Sprite>, UniqueIDHashFunction> mSprites;
 	std::unordered_map<int, SDL_Texture *> mSpriteSheets;

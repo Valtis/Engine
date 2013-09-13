@@ -87,7 +87,7 @@ void Engine::Initialize()
 	mDrawTickLength = 30;
 	mGameLogicTickLength = 100;
 
-	mUI.Initialize("Generic title - move to settings file!", 640, 480);
+	mUI.Initialize("Generic title - move to settings file!", "data/spritesheets/", 640, 480);
 	mUI.RegisterInputHandler([&](Event *event) { return this->InputHandler(event); }, INPUT_PRIORITY_HIGH);
 
 	InitializeInputTypes();
@@ -105,12 +105,12 @@ void Engine::Initialize()
 	l->SetY(0);
 
 	std::unique_ptr<GraphicsComponent> g(new GraphicsComponent);
-	g->AddSpriteID(sprite->GetID());
+	g->AddSpriteID(sprite->GetID().AsInt());
 
 	e->AddComponent(ComponentType::Location, std::move(l));
 	e->AddComponent(ComponentType::Graphics, std::move(g));
 
-	Renderer::Instance().AddEntity(e->GetID());
+	Renderer::Instance().AddEntity(e->GetID().AsInt());
 	EntityManager::Instance().AddEntity(std::move(e));
 	SpriteManager::Instance().AddSprite(std::move(sprite));
 
@@ -130,7 +130,7 @@ void Engine::Initialize()
 	l->SetY(200);
 
 	g.reset(new GraphicsComponent);
-	g->AddSpriteID(sprite->GetID());
+	g->AddSpriteID(sprite->GetID().AsInt());
 
 	e->AddComponent(ComponentType::Location, std::move(l));
 	e->AddComponent(ComponentType::Graphics, std::move(g));
@@ -144,8 +144,8 @@ void Engine::Initialize()
 
 	sprite->SetSpriteSheetID(0);
 	sprite->SetLocation(102, 102, 50, 50);
-	std::vector<UniqueID> ids;
-	ids.push_back(sprite->GetID());
+	std::vector<int> ids;
+	ids.push_back(sprite->GetID().AsInt());
 
 	e = EntityFactory::CreatePlayer(250, 250, 10, ids, mUI);
 	Renderer::Instance().AddEntity(e->GetID());

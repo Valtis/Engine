@@ -9,7 +9,7 @@
 
 namespace EntityFactory
 {
-	std::unique_ptr<Entity> CreatePlayer(int x, int y, int velocity,  std::vector<UniqueID> spriteIDs, UI &ui)
+	std::unique_ptr<Entity> CreatePlayer(int x, int y, int velocity,  std::vector<int> spriteIDs, UI &ui)
 	{
 		std::unique_ptr<Entity> entity(new Entity());
 		entity->AddComponent(ComponentType::Location, std::unique_ptr<Component>(new LocationComponent(x, y)));

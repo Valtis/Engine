@@ -127,12 +127,12 @@ void Renderer::SortByDrawPriority(std::vector<Entity *> &drawList) // bool cmp(c
 
 		if (firstSprite == nullptr)
 		{
-			throw std::runtime_error("Couldn't find sprite with id " + firstGraphics->GetCurrentSpriteID().GetID());
+			throw std::runtime_error("Couldn't find sprite with id " + firstGraphics->GetCurrentSpriteID());
 		}
 
 		if (secondGraphics == nullptr)
 		{
-			throw std::runtime_error("Couldn't find sprite with id " + secondGraphics->GetCurrentSpriteID().GetID());
+			throw std::runtime_error("Couldn't find sprite with id " + secondGraphics->GetCurrentSpriteID());
 		}
 
 		return firstSprite->GetDrawPriority() < secondSprite->GetDrawPriority();
@@ -152,7 +152,7 @@ void Renderer::DrawEntity(Entity *e)
 	
 	if (s == nullptr)
 	{
-		throw std::runtime_error("Couldn't find sprite with id " + g->GetCurrentSpriteID().GetID());
+		throw std::runtime_error("Couldn't find sprite with id " + g->GetCurrentSpriteID());
 	}
 
 	// TODO: Take account the camera position!

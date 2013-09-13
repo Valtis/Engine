@@ -16,10 +16,10 @@ UI::~UI()
 
 }
 
-void UI::Initialize(std::string title, int windowWidth, int windowHeight)
+void UI::Initialize(std::string title, std::string spritesheetpath,  int windowWidth, int windowHeight)
 {
 	Renderer::Instance().CreateWindow(title, windowWidth, windowHeight); 
-	SpriteManager::Instance().Initialize("DATA_FILE_PATH/DATA_FILE_NAME.dat");
+	SpriteManager::Instance().Initialize(spritesheetpath);
 
 	RegisterInputHandler([&](Event *event) { return this->EventHandler(event); }, INPUT_PRIORITY_MAX);
 }
@@ -58,7 +58,7 @@ void UI::HandleEvent(const SDL_Event &event)
 		break;
 	}
 }
-
+// todo: move to controller-class instead of hardcoding here
 void UI::HandleKeys(SDL_Scancode code)
 {
 	switch (code)

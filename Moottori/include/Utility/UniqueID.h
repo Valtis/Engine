@@ -1,14 +1,14 @@
 #pragma once
 #include <cstddef>
 
- 
+#include <set>
 
 class UniqueID
 {
 public:
 	UniqueID();
 
-	UniqueID(unsigned int id);
+	UniqueID(int id);
 	~UniqueID();
 
 	bool operator==(const UniqueID &other) const
@@ -16,11 +16,17 @@ public:
 		return mID == other.mID;
 	}
 
-	unsigned int GetID() const { return mID; }
+	bool operator==(const int &val) const
+	{
+		return mID == val;
+	}
+	
+	unsigned int AsInt() const { return mID; }
 
 private:
-	static unsigned int mLastID;
-	unsigned int mID;
+	std::set<int> mUsedIDs;
+	static int mLastID;
+	int mID;
 };
 
 
@@ -29,6 +35,6 @@ class UniqueIDHashFunction
 public:
     std::size_t operator()(UniqueID const& id) const 
     {
-		return id.GetID();
+		return id.AsInt();
     }
 };

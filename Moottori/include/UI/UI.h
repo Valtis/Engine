@@ -23,7 +23,7 @@ public:
 #endif
 	typedef std::function<bool(Event *event)> InputHandler;
 	typedef std::pair<int, InputHandler> InputHandlerNode;
-	void Initialize(std::string title, int windowWidth, int windowHeight);
+	void Initialize(std::string title, std::string spritesheetpath, int windowWidth, int windowHeight);
 	void Draw();
 
 	void Update();
