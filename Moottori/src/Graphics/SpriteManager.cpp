@@ -39,6 +39,7 @@ void SpriteManager::Release()
 void SpriteManager::Initialize(std::string datafilePath)
 {
 	LoadSpriteSheets(datafilePath);
+	LoadSprites(datafilePath);
 }
 
 void SpriteManager::LoadSpriteSheets(std::string datafilePath)
@@ -58,12 +59,12 @@ std::vector<std::pair<int, std::string>> SpriteManager::LoadSpriteSheetDetails(s
 	std::string line;
 	while (std::getline(inFile, line))
 	{
-		spriteSheets.push_back(ParseLine(line, datafilePath));
+		spriteSheets.push_back(ParseSpriteSheetLine(line, datafilePath));
 	}
 	return spriteSheets;
 }
 
-std::pair<int, std::string> SpriteManager::ParseLine(std::string line, std::string datafilePath)
+std::pair<int, std::string> SpriteManager::ParseSpriteSheetLine(std::string line, std::string datafilePath)
 {
 	std::vector<std::string> tokens = Utility::Tokenize(line, " ");
 	if (tokens.size() < 2)
@@ -99,11 +100,60 @@ void SpriteManager::LoadSpriteSheet(std::pair<int, std::string> sheet)
 	mSpriteSheets[sheet.first] = texture;	
 }
 
-void SpriteManager::AddSprite(std::unique_ptr<Sprite> sprite)
+
+
+void SpriteManager::LoadSprites(std::string datafilePath)
 {
-	SDL_assert(sprite != nullptr);
+	std::vector<SpriteHelper> spriteData = LoadSpriteDetails(datafilePath);
+	for (auto &helper : spriteData)
+	{
+		CreateSprite(helper);
+	}
+}
+
+
+
+// x - y - width - height - sprite sheet id - sprite id
+std::vector<SpriteManager::SpriteHelper> SpriteManager::LoadSpriteDetails(std::string datafilePath)
+{
+	std::vector<SpriteHelper> spriteData;
+
+	std::ifstream inFile(datafilePath + "sprites.dat");
+	std::string line;
+	while (std::getline(inFile, line))
+	{
+		spriteData.push_back(ParseSpriteLine(line, datafilePath));
+	}
+	return spriteData;
+}
+
+SpriteManager::SpriteHelper SpriteManager::ParseSpriteLine(std::string line, std::string datafilePath) 
+{
+	std::vector<std::string> tokens = Utility::Tokenize(line, " ");
+	if (tokens.size() < 6)
+	{
+		throw std::runtime_error("Malformed sprite data file: Line " + line + " encourtered");
+	}
+	
+	SpriteManager::SpriteHelper helper;
+	helper.x = std::stoi(tokens[0]);
+	helper.y = std::stoi(tokens[1]);
+	helper.width = std::stoi(tokens[2]);
+	helper.height = std::stoi(tokens[3]);
+	helper.spriteSheetID = std::stoi(tokens[4]);
+	helper.spriteID = std::stoi(tokens[5]);
+
+	return helper;
+}
+
+void SpriteManager::CreateSprite(SpriteManager::SpriteHelper helper)
+{
+	std::unique_ptr<Sprite> sprite(new Sprite(helper.spriteID));
+	sprite->SetSpriteSheetID(helper.spriteSheetID);
+	sprite->SetLocation(helper.x, helper.y, helper.width, helper.height);
 	mSprites[sprite->GetID()] = std::move(sprite);
 }
+
 
 Sprite *SpriteManager::GetSprite(int id)
 {

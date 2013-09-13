@@ -94,35 +94,20 @@ void Engine::Initialize()
 
 
 	// --------------- TEST CODE ----------------------
-	std::unique_ptr<Sprite> sprite(new Sprite);
-	sprite->SetSpriteSheetID(0);
-	sprite->SetLocation(0, 0, 50, 50);
-
-
+	
 	std::unique_ptr<Entity> e(new Entity);
 	std::unique_ptr<LocationComponent> l(new LocationComponent);
 	l->SetX(0);
 	l->SetY(0);
 
 	std::unique_ptr<GraphicsComponent> g(new GraphicsComponent);
-	g->AddSpriteID(sprite->GetID().AsInt());
+	g->AddSpriteID(200000);
 
 	e->AddComponent(ComponentType::Location, std::move(l));
 	e->AddComponent(ComponentType::Graphics, std::move(g));
 
 	Renderer::Instance().AddEntity(e->GetID().AsInt());
 	EntityManager::Instance().AddEntity(std::move(e));
-	SpriteManager::Instance().AddSprite(std::move(sprite));
-
-
-	sprite.reset(new Sprite);
-
-	sprite->SetSpriteSheetID(0);
-	sprite->SetLocation(51, 0, 50, 50);
-
-
-	
-
 
 	e.reset(new Entity);
 	l.reset(new LocationComponent);
@@ -130,27 +115,22 @@ void Engine::Initialize()
 	l->SetY(200);
 
 	g.reset(new GraphicsComponent);
-	g->AddSpriteID(sprite->GetID().AsInt());
+	g->AddSpriteID(200001);
 
 	e->AddComponent(ComponentType::Location, std::move(l));
 	e->AddComponent(ComponentType::Graphics, std::move(g));
 
 	Renderer::Instance().AddEntity(e->GetID());
 	EntityManager::Instance().AddEntity(std::move(e));
-	SpriteManager::Instance().AddSprite(std::move(sprite));
 
 	
-	sprite.reset(new Sprite);
 
-	sprite->SetSpriteSheetID(0);
-	sprite->SetLocation(102, 102, 50, 50);
 	std::vector<int> ids;
-	ids.push_back(sprite->GetID().AsInt());
+	ids.push_back(200002);
 
 	e = EntityFactory::CreatePlayer(250, 250, 10, ids, mUI);
 	Renderer::Instance().AddEntity(e->GetID());
 	EntityManager::Instance().AddEntity(std::move(e));
-	SpriteManager::Instance().AddSprite(std::move(sprite));
 
 
 

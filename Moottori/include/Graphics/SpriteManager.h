@@ -1,9 +1,10 @@
 #pragma once
 #include <string>
 #include <unordered_map>
+#include <vector>
 #include <memory>
 #include <SDL.h>
-#include <vector>
+
 #include "Graphics/Sprite.h"
 #include "Utility/UniqueID.h"
 
@@ -16,19 +17,33 @@ public:
 
 	void Initialize(std::string datafilePath);
 
-	void AddSprite(std::unique_ptr<Sprite> sprite);
 	Sprite *GetSprite(int id);
 
 	SDL_Texture *GetTextureForDrawing(int spriteSheetID);
 
 private:
+	struct SpriteHelper
+	{
+		int x;
+		int y;
+		int width;
+		int height;
+		int spriteSheetID;
+		int spriteID;
+	};
+
 	SpriteManager();
 	static SpriteManager *mInstance;
 	void LoadSpriteSheets(std::string datafilePath);
+	void LoadSprites(std::string datafilePath);
 	
 	std::vector<std::pair<int, std::string>> LoadSpriteSheetDetails(std::string path);
-	std::pair<int, std::string> ParseLine(std::string line, std::string path);
+	std::pair<int, std::string> ParseSpriteSheetLine(std::string line, std::string path);
 	void LoadSpriteSheet(std::pair<int, std::string> sheet);
+
+	std::vector<SpriteHelper> LoadSpriteDetails(std::string datafilePath);
+	SpriteHelper ParseSpriteLine(std::string line, std::string path);
+	void CreateSprite(SpriteHelper helper);
 
 	std::unordered_map<UniqueID, std::unique_ptr<Sprite>, UniqueIDHashFunction> mSprites;
 	std::unordered_map<int, SDL_Texture *> mSpriteSheets;
