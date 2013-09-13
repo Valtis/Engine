@@ -44,7 +44,8 @@ void SpriteManager::Initialize(std::string datafilePath)
 	}
 
 	SDL_Texture *texture = SDL_CreateTextureFromSurface(Renderer::Instance().GetRenderingContext(), spriteSheetSurface);
-	
+	SDL_FreeSurface(spriteSheetSurface);
+
 	if (texture == nullptr)
 	{
 		throw std::runtime_error("Failed to create texture");
@@ -52,7 +53,7 @@ void SpriteManager::Initialize(std::string datafilePath)
 
 	mSpriteSheets[0] = texture;
 
-	SDL_FreeSurface(spriteSheetSurface);
+	
 	
 }
 

@@ -81,7 +81,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <IncludePath>include\;C:\Users\Omistaja\Desktop\Satunnaisia_tavaroita\Ohjelmointi\SDL\SDL2-2.0.0-vc\include;$(IncludePath)</IncludePath>
+    <IncludePath>include\;SDL2-2.0.0\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>include\;C:\Users\Omistaja\Desktop\Satunnaisia_tavaroita\Ohjelmointi\SDL\SDL2-2.0.0-vc\include;$(IncludePath)</IncludePath>
