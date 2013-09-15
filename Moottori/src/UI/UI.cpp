@@ -50,49 +50,65 @@ void UI::HandleEvent(const SDL_Event &event)
 	switch (event.type)
 	{
 	case SDL_QUIT:
-		NotifyInputHandlers(UIEventType::Quit);
+		NotifyInputHandlers(UIEventType::Quit, UIEventState::None);
 	case SDL_KEYDOWN:
-		HandleKeys(event.key.keysym.scancode);
+	case SDL_KEYUP:
+		HandleKeys(event.key.keysym.scancode, event.type);
 		break;
 	default:
 		break;
-	}
+	} 
 }
 // todo: move to controller-class instead of hardcoding here 
 // todo: load keys from file instead of hardcoding
-void UI::HandleKeys(SDL_Scancode code)
+void UI::HandleKeys(SDL_Scancode code, Uint32 type)
 {
+	UIEventState state = UIEventState::None;
+	UIEventType uiEvent = UIEventType::None;
+	if (type == SDL_KEYDOWN)
+	{
+		state = UIEventState::Start;
+	}
+	else if (type == SDL_KEYUP)
+	{
+		state = UIEventState::Stop;
+	}
+
 	switch (code)
 	{
 
 	case SDL_SCANCODE_Q:
-		NotifyInputHandlers(UIEventType::RotateLeft);
+		uiEvent = UIEventType::RotateLeft;
 		break;
 
 	case SDL_SCANCODE_E:
-		NotifyInputHandlers(UIEventType::RotateRight);
+		uiEvent = UIEventType::RotateRight;
 		break;
 
 	case SDL_SCANCODE_W:
 	case SDL_SCANCODE_KP_8:
-		NotifyInputHandlers(UIEventType::MoveUp);
+		uiEvent = UIEventType::MoveUp;
 		break;
 	case SDL_SCANCODE_A:
 	case SDL_SCANCODE_KP_4:
-		NotifyInputHandlers(UIEventType::MoveLeft);
+		uiEvent = UIEventType::MoveLeft;
 		break;
 	case SDL_SCANCODE_D:
 	case SDL_SCANCODE_KP_6:
-		NotifyInputHandlers(UIEventType::MoveRight);
+		uiEvent = UIEventType::MoveRight;
 		break;
 	case SDL_SCANCODE_S:
 	case SDL_SCANCODE_KP_2:
-		NotifyInputHandlers(UIEventType::MoveDown);
+		uiEvent = UIEventType::MoveDown;
 		break;
-
 
 	default:
 		break;
+	}
+
+	if (uiEvent != UIEventType::None)
+	{
+		NotifyInputHandlers(uiEvent, state);
 	}
 }
 
@@ -117,9 +133,9 @@ void UI::SortHandlers()
 }
 
 
-void UI::NotifyInputHandlers(UIEventType event)
+void UI::NotifyInputHandlers(UIEventType event, UIEventState state)
 {
-	std::unique_ptr<UIEvent> uiEvent(new UIEvent(event));
+	std::unique_ptr<UIEvent> uiEvent(new UIEvent(event, state));
 	for (auto &handler : mInputHandlers)
 	{
 		if (handler.second(uiEvent.get())) // returns true if event was handled

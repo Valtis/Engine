@@ -10,81 +10,93 @@ void AccelerationComponent::OnEventHandlerRegistration()
 }
 
 
+void AccelerationComponent::Update(double ticksPassed) 
+{
+	if (mCurrentXAcceleration != 0 || mCurrentYAcceleration !=0 || mCurrentRotationAcceleration != 0)
+	{
+		GetEventHandler().ProcessEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(mCurrentXAcceleration*ticksPassed, 
+			mCurrentYAcceleration*ticksPassed, mCurrentRotationAcceleration*ticksPassed)));
+	}
+
+}
 
 void AccelerationComponent::HandleAccelerationChangeEvents(Event *event)
 {
 	ChangeAccelerationEvent *changeEvent = dynamic_cast<ChangeAccelerationEvent *>(event);
 	SDL_assert(changeEvent != nullptr);
 
-	double xVelocity = 0;
-	double yVelocity = 0;
-	double turnSpeed = 0;
+	GetXYVelocity(changeEvent);
+	GetTurnSpeed(changeEvent);
 
-	GetXYVelocity(changeEvent, xVelocity, yVelocity);
-	GetTurnSpeed(changeEvent, turnSpeed);
-
-	if (turnSpeed != 0 || xVelocity !=0 || yVelocity != 0)
-	{
-		GetEventHandler().AddEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(xVelocity, yVelocity, turnSpeed)));
-	}
 }
 
-void AccelerationComponent::GetXYVelocity(ChangeAccelerationEvent *changeEvent, double &xVelocity, double &yVelocity)
+void AccelerationComponent::GetXYVelocity(ChangeAccelerationEvent *changeEvent)
 {
+	int velocityChange = mMaxAcceleration;
+	if (changeEvent->GetState() == UIEventState::Stop)
+	{
+		velocityChange = 0;
+	}
 	switch (changeEvent->GetDirection())
 	{
 	case Direction::Up:
-		yVelocity = -mMaxAcceleration;
+		mCurrentYAcceleration = -velocityChange;
 		break;
 
 	case Direction::TopRight:
-		xVelocity = sqrt(mMaxAcceleration);
-		yVelocity = -sqrt(mMaxAcceleration);
+		mCurrentXAcceleration = sqrt(velocityChange);
+		mCurrentYAcceleration = -sqrt(velocityChange);
 		break;
 	case Direction::Right:
-		xVelocity = mMaxAcceleration;
+		mCurrentXAcceleration = velocityChange;
 		break;
 
 	case Direction::BottomRight:
-		xVelocity = sqrt(mMaxAcceleration);
-		yVelocity = sqrt(mMaxAcceleration);
+		mCurrentXAcceleration = sqrt(velocityChange);
+		mCurrentYAcceleration = sqrt(velocityChange);
 		break;
 
 	case Direction::Bottom:
-		yVelocity = mMaxAcceleration;
+		mCurrentYAcceleration = velocityChange;
 		break;
 
 	case Direction::BottomLeft:
-		xVelocity = -sqrt(mMaxAcceleration);
-		yVelocity = sqrt(mMaxAcceleration);
+		mCurrentXAcceleration = -sqrt(velocityChange);
+		mCurrentYAcceleration = sqrt(velocityChange);
 		break;
 
 	case Direction::Left:
-		xVelocity  =-mMaxAcceleration;
-		yVelocity = 0;
+		mCurrentXAcceleration  =-velocityChange;
+		mCurrentYAcceleration = 0;
 		break;
 	case Direction::TopLeft:
-		xVelocity = -sqrt(mMaxAcceleration);
-		yVelocity = -sqrt(mMaxAcceleration);
+		mCurrentXAcceleration = -sqrt(velocityChange);
+		mCurrentYAcceleration = -sqrt(velocityChange);
 		break;
-    default:
+	default:
 		break;
 	}
 }
 
 
-void AccelerationComponent::GetTurnSpeed(ChangeAccelerationEvent *changeEvent, double &turnSpeed)
+void AccelerationComponent::GetTurnSpeed(ChangeAccelerationEvent *changeEvent)
 {
+
+	int velocityChange = mMaxRotationAcceleration;
+	if (changeEvent->GetState() == UIEventState::Stop)
+	{
+		velocityChange = 0;
+	}
 
 	switch (changeEvent->GetTurnDirection())
 	{
 
 	case Direction::Right:
-		turnSpeed = mMaxRotationAcceleration;
+		mCurrentRotationAcceleration = velocityChange;
 		break;
 
 	case Direction::Left:
-		turnSpeed = -mMaxRotationAcceleration;
+		mCurrentRotationAcceleration = -velocityChange;
 		break;
 	default:
 		break;

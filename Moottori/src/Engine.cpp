@@ -59,9 +59,9 @@ void Engine::UpdateGameState()
 	Uint32 currentTick = SDL_GetTicks();
 	if (currentTick > mGameLogicTickLength + mLastGameLogicTick)
 	{
-		double ticksPassed = (double)(mLastGameLogicTick - currentTick)/(double)mGameLogicTickLength;
-		EntityManager::Instance().Update(ticksPassed);
-		mGameLogicTickLength = SDL_GetTicks();
+		double ticksPassed = (double)(currentTick - mLastGameLogicTick)/(double)mGameLogicTickLength;
+		EntityManager::Instance().Update(ticksPassed); // todo: replace with code that only updates entities that are currently active instead of *all* entities
+		mLastGameLogicTick = SDL_GetTicks();
 	}
 	//
 }
@@ -81,11 +81,12 @@ void Engine::Draw()
 void Engine::Initialize()
 {
 	SDL_Init(SDL_INIT_VIDEO);
-	mLastDrawTick = SDL_GetTicks();
+
 
 	// todo: read from datafile or something
 	mDrawTickLength = 30;
 	mGameLogicTickLength = 30;
+
 
 	mUI.Initialize("Generic title - move to settings file!", "data/spritesheets/", 640, 480);
 	mUI.RegisterInputHandler([&](Event *event) { return this->InputHandler(event); }, INPUT_PRIORITY_HIGH);
@@ -127,12 +128,13 @@ void Engine::Initialize()
 
 	std::vector<int> ids;
 	ids.push_back(200002);
-	e = EntityFactory::CreatePlayer(250, 250, 10, 10, 1, 1, 3, 3, ids, mUI);
+	e = EntityFactory::CreatePlayer(250, 250, 8, 8, 0.3, 0.3, 3, 5, ids, mUI);
 	Renderer::Instance().AddEntity(e->GetID());
 	EntityManager::Instance().AddEntity(std::move(e));
 
 
-
+	mLastDrawTick = SDL_GetTicks();
+	mLastGameLogicTick = SDL_GetTicks();
 }
 
 void Engine::InitializeInputTypes()

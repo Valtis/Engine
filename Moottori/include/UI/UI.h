@@ -32,8 +32,8 @@ public:
 	void RegisterInputHandler(InputHandler, int priority);
 private:
 	void HandleEvent(const SDL_Event &event);
-	void HandleKeys(SDL_Scancode code);
-	void NotifyInputHandlers(UIEventType type);
+	void HandleKeys(SDL_Scancode code, Uint32 type);
+	void NotifyInputHandlers(UIEventType type, UIEventState state);
 	void SortHandlers();
 	bool EventHandler(Event *);
 

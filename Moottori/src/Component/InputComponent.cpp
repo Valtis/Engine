@@ -24,32 +24,36 @@ bool InputComponent::InputHandler(Event *event)
 	{
 		return false;
 	}
-
+	Direction accelerationDirection = Direction::None;
+	Direction rotationDirection = Direction::None;
 	switch (uiEvent->GetUIEventType())
 	{
 		case UIEventType::MoveUp:
-			GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(Direction::Up)));
+			accelerationDirection = Direction::Up;
+
 			break;
 		case UIEventType::MoveDown:
-			GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(Direction::Bottom)));
+			accelerationDirection = Direction::Bottom;
 			break;
 		case UIEventType::MoveLeft:
-			GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(Direction::Left)));
+			accelerationDirection = Direction::Left;
 			break;
 		case UIEventType::MoveRight:
-			GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(Direction::Right)));
+			accelerationDirection = Direction::Right;
 			break;
 
 		case UIEventType::RotateLeft:
-			GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(Direction::None, Direction::Left)));
+			rotationDirection = Direction::Left;
 			break;
 		case UIEventType::RotateRight:
-			GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(Direction::None, Direction::Right)));
+			rotationDirection = Direction::Right;
 			break;
 
 		default:
 			return false;
 	}
+
+	GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(accelerationDirection, rotationDirection, uiEvent->GetUIEventState())));
 
 	return true;
 }

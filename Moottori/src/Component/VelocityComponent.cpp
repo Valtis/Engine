@@ -9,7 +9,7 @@
 
 VelocityComponent::VelocityComponent(double maxVelocity, double maxRotationSpeed, double velocityLossPerTick, double rotationVelocityLossPerTick) 
 	: mCurrentXVelocity(0), mCurrentYVelocity(0), mCurrentRotationSpeed(0), mMaxVelocity(maxVelocity), mMaxRotationSpeed(maxRotationSpeed), 
-	mVelocityLossPerTick(velocityLossPerTick), mRotationVelocityLossPerTick(mRotationVelocityLossPerTick)
+	mVelocityLossPerTick(velocityLossPerTick), mRotationVelocityLossPerTick(rotationVelocityLossPerTick)
 {
 
 }
@@ -21,9 +21,9 @@ VelocityComponent::~VelocityComponent()
 
 void VelocityComponent::Update(double ticksPassed)
 {
-	if (mCurrentRotationSpeed > 0 || mCurrentXVelocity > 0 || mCurrentYVelocity > 0)
+	if (mCurrentRotationSpeed != 0 || mCurrentXVelocity != 0 || mCurrentYVelocity != 0)
 	{
-		GetEventHandler().AddEvent(std::unique_ptr<ChangeLocationEvent>(new ChangeLocationEvent(mCurrentXVelocity, mCurrentYVelocity, mCurrentRotationSpeed)));
+		GetEventHandler().ProcessEvent(std::unique_ptr<ChangeLocationEvent>(new ChangeLocationEvent(mCurrentXVelocity*ticksPassed, mCurrentYVelocity*ticksPassed, mCurrentRotationSpeed*ticksPassed)));
 		DecaySpeed();
 	}
 }
@@ -35,39 +35,33 @@ void VelocityComponent::OnEventHandlerRegistration()
 
 void VelocityComponent::DecaySpeed() 
 {
-	double angle = 0;
-	if (fabsf(mCurrentXVelocity) < 0.01)	
-	{
-		angle = 0;
-
-	}
-	else 
-	{
-		angle = atan(fabsf(mCurrentYVelocity)/fabsf(mCurrentXVelocity));
-
-	}
+	
 	int xSign = SIGNUM(mCurrentXVelocity);
 	int ySign = SIGNUM(mCurrentYVelocity);
-	mCurrentXVelocity -= xSign*mVelocityLossPerTick*cos(angle);
-	mCurrentYVelocity -= ySign*mVelocityLossPerTick*sin(angle);
-
-	if (SIGNUM(mCurrentXVelocity) != xSign)
+	mCurrentXVelocity = fabsf(mCurrentXVelocity) - mVelocityLossPerTick;
+	mCurrentYVelocity = fabsf(mCurrentYVelocity) - mVelocityLossPerTick;
+	
+	if (mCurrentXVelocity < 0)
 	{
 		mCurrentXVelocity = 0;
 	}
-
-	if (SIGNUM(mCurrentYVelocity) != ySign)
+	if (mCurrentYVelocity < 0)
 	{
 		mCurrentYVelocity = 0;
 	}
 
+	mCurrentXVelocity *= xSign;
+	mCurrentYVelocity *= ySign;
+
+
 	int rotateSign = SIGNUM(mCurrentRotationSpeed);
-	mCurrentRotationSpeed -= rotateSign*mRotationVelocityLossPerTick;
-	if (SIGNUM(mCurrentRotationSpeed) != rotateSign)
+	mCurrentRotationSpeed = fabsf(mCurrentRotationSpeed) - mRotationVelocityLossPerTick;
+	if (mCurrentRotationSpeed < 0)
 	{
 		mCurrentRotationSpeed = 0;
 	}
 
+	mCurrentRotationSpeed *= rotateSign;
 }
 
 
@@ -91,12 +85,12 @@ void VelocityComponent::HandleVelocityChangeEvents(Event *event)
 
 	if (fabsf(mCurrentYVelocity) > mMaxVelocity)
 	{
-		mCurrentXVelocity = mMaxVelocity*ySign;
+		mCurrentYVelocity = mMaxVelocity*ySign;
 	}
 
 	if (fabsf(mCurrentRotationSpeed) > mMaxRotationSpeed)
 	{
-		mCurrentRotationSpeed = mMaxRotationSpeed*ySign;
+		mCurrentRotationSpeed = mMaxRotationSpeed*rotateSign;
 	}
 
 }
