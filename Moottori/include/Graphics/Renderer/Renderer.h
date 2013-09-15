@@ -11,7 +11,7 @@ class Renderer
 {
 public:
 
-#if (_MSC_VER >= 1800)
+#if !defined _MSC_VER || _MSC_VER >= 1800 
 	Renderer(const Renderer &) = delete;
 	Renderer &operator=(const Renderer &) = delete;
 #else

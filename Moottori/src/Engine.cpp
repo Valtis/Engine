@@ -84,7 +84,7 @@ void Engine::Initialize()
 	mLastDrawTick = SDL_GetTicks();
 
 	// todo: read from datafile or something
-	mDrawTickLength = 30;
+	mDrawTickLength = 100;
 	mGameLogicTickLength = 100;
 
 	mUI.Initialize("Generic title - move to settings file!", "data/spritesheets/", 640, 480);

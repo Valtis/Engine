@@ -20,6 +20,16 @@ public:
 
 	UniqueID GetID() { return mID; }
 
+#if !defined _MSC_VER || _MSC_VER >= 1800 
+	Sprite(const Sprite &) = delete;
+	Sprite &operator=(const Sprite &) = delete;
+#else
+private:
+	Sprite(const Sprite &);
+	Sprite &operator=(const Sprite &);
+public:
+#endif
+
 private:
 	UniqueID mID;
 	SDL_Rect mLocation; // location in sprite sheet

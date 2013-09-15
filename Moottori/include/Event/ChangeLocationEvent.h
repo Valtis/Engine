@@ -7,7 +7,7 @@ public:
 	ChangeLocationEvent(int xChange, int yChange, double rotationChange) : mXChange(xChange), mYChange(yChange), mRotationChange(rotationChange) { }
 
 	virtual ~ChangeLocationEvent() { }
-#if (_MSC_VER >= 1800)
+#if !defined _MSC_VER || _MSC_VER >= 1800 
 	ChangeLocationEvent(const ChangeLocationEvent &) = delete;
 	ChangeLocationEvent &operator=(const ChangeLocationEvent &) = delete;
 #else

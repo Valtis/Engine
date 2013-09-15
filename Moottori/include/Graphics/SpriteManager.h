@@ -21,6 +21,17 @@ public:
 
 	SDL_Texture *GetTextureForDrawing(int spriteSheetID);
 
+#if !defined _MSC_VER || _MSC_VER >= 1800 
+	SpriteManager(const SpriteManager &) = delete;
+	SpriteManager &operator=(const SpriteManager &) = delete;
+#else
+private:
+	SpriteManager(const SpriteManager &);
+	SpriteManager &operator=(const SpriteManager &);
+public:
+#endif
+
+
 private:
 	struct SpriteHelper
 	{
@@ -36,7 +47,7 @@ private:
 	static SpriteManager *mInstance;
 	void LoadSpriteSheets(std::string datafilePath);
 	void LoadSprites(std::string datafilePath);
-	
+
 	std::vector<std::pair<int, std::string>> LoadSpriteSheetDetails(std::string path);
 	std::pair<int, std::string> ParseSpriteSheetLine(std::string line, std::string path);
 	void LoadSpriteSheet(std::pair<int, std::string> sheet);

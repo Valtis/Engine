@@ -6,6 +6,15 @@ class InputComponent : public Component
 		InputComponent(UI &ui);
 		~InputComponent();
 
+#if !defined _MSC_VER || _MSC_VER >= 1800 
+	InputComponent(const InputComponent &) = delete;
+	InputComponent &operator=(const InputComponent &) = delete;
+#else
+private:
+	InputComponent(const InputComponent &);
+	InputComponent &operator=(const InputComponent &);
+public:
+#endif
 		
 		
 

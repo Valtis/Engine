@@ -9,7 +9,7 @@ public:
 
 	virtual ~ChangeVelocityEvent() { }
 
-#if (_MSC_VER >= 1800)
+#if !defined _MSC_VER || _MSC_VER >= 1800 
 	ChangeVelocityEvent(const ChangeVelocityEvent &) = delete;
 	ChangeVelocityEvent &operator=(const ChangeVelocityEvent &) = delete;
 #else

@@ -12,7 +12,7 @@ class UI
 public:
 	UI();
 	~UI();
-#if (_MSC_VER >= 1800)
+#if !defined _MSC_VER || _MSC_VER >= 1800 
 	UI(const UI &) = delete;
 	UI &operator=(const UI &) = delete;
 #else
