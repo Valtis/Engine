@@ -49,6 +49,12 @@
     <Filter Include="Source Files\UI">
       <UniqueIdentifier>{af3a8a9a-4f1e-4f9b-90ab-e7501cce7482}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics\Camera">
+      <UniqueIdentifier>{ae975e45-546a-4662-b75d-7ecad0237804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Camera">
+      <UniqueIdentifier>{8cb8fc6d-20bf-4465-a788-158511b4fd05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Component\Component.h">
@@ -123,6 +129,12 @@
     <ClInclude Include="include\Component\AccelerationComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="include\Graphics\Camera\EntityTrackingCamera.h">
+      <Filter>Header Files\Graphics\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Graphics\Camera\Camera.h">
+      <Filter>Header Files\Graphics\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -178,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="src\Component\AccelerationComponent.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Camera\EntityTrackingCamera.cpp">
+      <Filter>Source Files\Graphics\Camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -16,6 +16,7 @@ void LocationComponent::HandleLocationChangeEvents(Event *event)
 	mY += locationEvent->GetYChange();
 	mRotation += locationEvent->GetRotationChange();
 
+
 	// experimenting here
 	/*int velocity = locationEvent->GetYChange();
 	double angle = mRotation*3.1415926535/180.0;

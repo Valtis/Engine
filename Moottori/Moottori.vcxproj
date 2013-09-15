@@ -27,6 +27,8 @@
     <ClInclude Include="include\Event\Event.h" />
     <ClInclude Include="include\Event\IEventHandler.h" />
     <ClInclude Include="include\Event\UIEvent.h" />
+    <ClInclude Include="include\Graphics\Camera\EntityTrackingCamera.h" />
+    <ClInclude Include="include\Graphics\Camera\Camera.h" />
     <ClInclude Include="include\Graphics\Renderer\Renderer.h" />
     <ClInclude Include="include\Graphics\Sprite.h" />
     <ClInclude Include="include\Graphics\SpriteManager.h" />
@@ -48,6 +50,7 @@
     <ClCompile Include="src\Entity\EntityFactory.cpp" />
     <ClCompile Include="src\Entity\EntityManager.cpp" />
     <ClCompile Include="src\Event\Event.cpp" />
+    <ClCompile Include="src\Graphics\Camera\EntityTrackingCamera.cpp" />
     <ClCompile Include="src\Graphics\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Graphics\Sprite.cpp" />
     <ClCompile Include="src\Graphics\SpriteManager.cpp" />

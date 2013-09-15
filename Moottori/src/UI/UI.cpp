@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-UI::UI() : MAX_NUMBER_OF_EVENTS_TO_PROCESS_PER_TICK(10)
+UI::UI() : mInputHandlers(), MAX_NUMBER_OF_EVENTS_TO_PROCESS_PER_TICK(10), mCamera()
 {
 
 }
@@ -45,8 +45,6 @@ void UI::Update()
 
 void UI::HandleEvent(const SDL_Event &event)
 {
-	// I wonded if std::(unordered_)map would be better than switch/case
-
 	switch (event.type)
 	{
 	case SDL_QUIT:
@@ -145,9 +143,8 @@ void UI::NotifyInputHandlers(UIEventType event, UIEventState state)
 	}
 }
 
-
-// in the future will pass events to windows etc if necessary. Otherwise just 
+// todo: clean up
 bool UI::EventHandler(Event *event) 
 {
-	return false;
+	return false; // pass event forward
 }
