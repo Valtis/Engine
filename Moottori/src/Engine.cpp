@@ -6,12 +6,13 @@
 #include "Event/UIEvent.h"
 #include "Utility/Defines.h"
 
-// feel free to delete following headers, only for testing
+// feel free to delete following headers once refactored, only for testing
 #include "Entity/Entity.h"
 #include "Entity/EntityFactory.h"
 #include "Component/LocationComponent.h"
 #include "Component/GraphicsComponent.h"
 #include "Graphics/Sprite.h"
+#include "Graphics/Camera/EntityTrackingCamera.h"
 
 Engine::Engine() : mDrawTickLength(0), mLastDrawTick(0), mGameLogicTickLength(0), mLastGameLogicTick(0), mIsRunning(true)
 {
@@ -95,6 +96,7 @@ void Engine::Initialize()
 
 
 	// --------------- TEST CODE ----------------------
+	// --------------- UGLY UGLY UGLY -----------------
 	
 	std::unique_ptr<Entity> e(new Entity);
 	std::unique_ptr<LocationComponent> l(new LocationComponent);
@@ -130,6 +132,11 @@ void Engine::Initialize()
 	ids.push_back(200002);
 	e = EntityFactory::CreatePlayer(250, 250, 8, 8, 0.3, 1, 3, 5, ids, mUI);
 	Renderer::Instance().AddEntity(e->GetID());
+
+	// create camera for ui
+	std::unique_ptr<Camera> c(new EntityTrackingCamera(e->GetID()));
+	mUI.AttachCamera(std::move(c));
+
 	EntityManager::Instance().AddEntity(std::move(e));
 
 

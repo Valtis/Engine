@@ -59,8 +59,9 @@ void Renderer::CreateWindow(std::string title, int width, int height)
 
 }
 
-void Renderer::Draw()
+void Renderer::Draw(Camera *camera)
 {
+	SDL_assert(camera != nullptr);
 	ClearScreen();
 	DrawEntities();
 

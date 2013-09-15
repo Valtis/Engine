@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <string>
 
+#include "Graphics/Camera/Camera.h"
 #include "Utility/UniqueID.h"
 class Entity;
 class Renderer
@@ -31,7 +32,7 @@ public:
 	void CreateWindow(std::string title, int width, int height);
 	
 	void AddEntity(UniqueID id) { mDrawables.push_back(id); }
-	void Draw();
+	void Draw(Camera *camera);
 
 protected:
 private:

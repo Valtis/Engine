@@ -26,7 +26,7 @@ void UI::Initialize(std::string title, std::string spritesheetpath,  int windowW
 
 void UI::Draw()
 {
-	Renderer::Instance().Draw();
+	Renderer::Instance().Draw(mCamera.get());
 }
 
 void UI::Update()
