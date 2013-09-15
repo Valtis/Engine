@@ -8,5 +8,6 @@ class Entity;
 class UI;
 namespace EntityFactory
 {
-	std::unique_ptr<Entity> CreatePlayer(int x, int y, int velocity, double turnVelocity, std::vector<int> spriteIDs, UI &ui);
+	std::unique_ptr<Entity> CreatePlayer(int x, int y, double maxVelocity, double maxRotationSpeed, double speedLossPerTick, 
+		double rotationSpeedLossPerTick, double maxAcceleration, double maxRotation, std::vector<int> spriteIDs, UI &ui);
 }

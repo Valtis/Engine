@@ -3,8 +3,8 @@
 class ChangeLocationEvent : public Event
 {
 public:
-	ChangeLocationEvent(int xChange, int yChange) : mXChange(xChange), mYChange(yChange), mRotationChange(0) { }
-	ChangeLocationEvent(int xChange, int yChange, double rotationChange) : mXChange(xChange), mYChange(yChange), mRotationChange(rotationChange) { }
+	ChangeLocationEvent(double xChange, double yChange) : mXChange(xChange), mYChange(yChange), mRotationChange(0) { }
+	ChangeLocationEvent(double xChange, double yChange, double rotationChange) : mXChange(xChange), mYChange(yChange), mRotationChange(rotationChange) { }
 
 	virtual ~ChangeLocationEvent() { }
 #if !defined _MSC_VER || _MSC_VER >= 1800 
@@ -18,12 +18,12 @@ public:
 #endif
 
 	EventType GetType() const override { return EventType::ChangeLocation; }
-	int GetXChange() const { return mXChange; }
-	int GetYChange() const { return mYChange; }
+	double GetXChange() const { return mXChange; }
+	double GetYChange() const { return mYChange; }
 	double GetRotationChange() const { return mRotationChange; }
 
 private:
-	const int mXChange;
-	const int mYChange;
+	const double mXChange;
+	const double mYChange;
 	const double mRotationChange;
 };

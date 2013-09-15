@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Component\AccelerationComponent.h" />
     <ClInclude Include="include\Component\Component.h" />
     <ClInclude Include="include\Component\GraphicsComponent.h" />
     <ClInclude Include="include\Component\InputComponent.h" />
@@ -20,6 +21,7 @@
     <ClInclude Include="include\Entity\Entity.h" />
     <ClInclude Include="include\Entity\EntityFactory.h" />
     <ClInclude Include="include\Entity\EntityManager.h" />
+    <ClInclude Include="include\Event\ChangeAccelerationEvent.h" />
     <ClInclude Include="include\Event\ChangeLocationEvent.h" />
     <ClInclude Include="include\Event\ChangeVelocityEvent.h" />
     <ClInclude Include="include\Event\Event.h" />
@@ -35,6 +37,7 @@
     <ClInclude Include="include\Utility\UniqueID.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Component\AccelerationComponent.cpp" />
     <ClCompile Include="src\Component\Component.cpp" />
     <ClCompile Include="src\Component\GraphicsComponent.cpp" />
     <ClCompile Include="src\Component\InputComponent.cpp" />

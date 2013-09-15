@@ -4,8 +4,8 @@
 class ChangeVelocityEvent : public Event
 {
 public:
-	ChangeVelocityEvent(Direction direction) : mDirection(direction), mTurnDirection(Direction::None) { }
-	ChangeVelocityEvent(Direction direction, Direction turnDirection) : mDirection(direction), mTurnDirection(turnDirection) { }
+	ChangeVelocityEvent(double xVelocityChange, double yVelocityChange, double rotationVelocityChange) : mXVelocityChange(xVelocityChange), 
+		mYVelocityChange(yVelocityChange), mRotationVelocityChange(rotationVelocityChange)	{ }
 
 	virtual ~ChangeVelocityEvent() { }
 
@@ -20,10 +20,12 @@ public:
 #endif
 
 	EventType GetType() const override { return EventType::ChangeVelocity; }
-	Direction GetDirection() const { return mDirection; }
-	Direction GetTurnDirection() const { return mTurnDirection; } 
+	double GetXVelocityChange() const { return mXVelocityChange; }
+	double GetYVelocityChange() const { return mYVelocityChange; }
+	double GetRotationChange() const { return mRotationVelocityChange; }
 
 private:
-	const Direction mDirection;
-	const Direction mTurnDirection;
+	const double mXVelocityChange;
+	const double mYVelocityChange;
+	const double mRotationVelocityChange;
 };

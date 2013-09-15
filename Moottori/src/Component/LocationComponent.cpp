@@ -15,5 +15,4 @@ void LocationComponent::HandleLocationChangeEvents(Event *event)
 	mX += locationEvent->GetXChange();
 	mY += locationEvent->GetYChange();
 	mRotation += locationEvent->GetRotationChange();
-
 }

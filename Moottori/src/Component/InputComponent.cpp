@@ -2,7 +2,7 @@
 #include "UI/UI.h"
 #include "Utility/Defines.h"
 #include "Event/UIEvent.h"
-#include "Event/ChangeVelocityEvent.h"
+#include "Event/ChangeAccelerationEvent.h"
 #include <memory>
 
 InputComponent::InputComponent(UI &ui)
@@ -28,23 +28,23 @@ bool InputComponent::InputHandler(Event *event)
 	switch (uiEvent->GetUIEventType())
 	{
 		case UIEventType::MoveUp:
-			GetEventHandler().AddEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(Direction::Up)));
+			GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(Direction::Up)));
 			break;
 		case UIEventType::MoveDown:
-			GetEventHandler().AddEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(Direction::Bottom)));
+			GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(Direction::Bottom)));
 			break;
 		case UIEventType::MoveLeft:
-			GetEventHandler().AddEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(Direction::Left)));
+			GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(Direction::Left)));
 			break;
 		case UIEventType::MoveRight:
-			GetEventHandler().AddEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(Direction::Right)));
+			GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(Direction::Right)));
 			break;
 
 		case UIEventType::RotateLeft:
-			GetEventHandler().AddEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(Direction::None, Direction::Left)));
+			GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(Direction::None, Direction::Left)));
 			break;
 		case UIEventType::RotateRight:
-			GetEventHandler().AddEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(Direction::None, Direction::Right)));
+			GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(Direction::None, Direction::Right)));
 			break;
 
 		default:

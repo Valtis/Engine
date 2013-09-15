@@ -84,8 +84,8 @@ void Engine::Initialize()
 	mLastDrawTick = SDL_GetTicks();
 
 	// todo: read from datafile or something
-	mDrawTickLength = 100;
-	mGameLogicTickLength = 100;
+	mDrawTickLength = 30;
+	mGameLogicTickLength = 30;
 
 	mUI.Initialize("Generic title - move to settings file!", "data/spritesheets/", 640, 480);
 	mUI.RegisterInputHandler([&](Event *event) { return this->InputHandler(event); }, INPUT_PRIORITY_HIGH);
@@ -127,8 +127,7 @@ void Engine::Initialize()
 
 	std::vector<int> ids;
 	ids.push_back(200002);
-
-	e = EntityFactory::CreatePlayer(250, 250, 10, 5, ids, mUI);
+	e = EntityFactory::CreatePlayer(250, 250, 10, 10, 1, 1, 3, 3, ids, mUI);
 	Renderer::Instance().AddEntity(e->GetID());
 	EntityManager::Instance().AddEntity(std::move(e));
 
