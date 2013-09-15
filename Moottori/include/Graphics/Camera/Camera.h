@@ -3,9 +3,9 @@
 class Camera
 {
 public:
-	Camera() : mAreaWidth(0), mAreaHeight(0) { }
-	Camera(int width, int height) : mAreaWidth(width), mAreaHeight(height) { }
-	virtual ~Camera();
+	Camera() : mScreenWidth(0), mScreenHeight(0) { }
+	Camera(int width, int height) : mScreenWidth(width), mScreenHeight(height) { }
+	virtual ~Camera() { }
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
 	Camera(const Camera &) = delete;
@@ -20,15 +20,16 @@ public:
 	virtual int GetX() const = 0; 
 	virtual int GetY() const = 0;
 
-	void SetAreaWidth(int w) { mAreaWidth = w; }
-	void SetAreaHeight(int h)  { mAreaHeight = h; }
+	void SetAreaWidth(int w) { mScreenWidth = w; }
+	void SetAreaHeight(int h)  { mScreenHeight = h; }
 
+	int GetScreenWidth() { return mScreenWidth; }
+	int GetScreenHeight() { return mScreenHeight; }
 protected:
-	int GetAreaWidth() { return mAreaWidth; }
-	int GetAreaHeight() { return mAreaHeight; }
+
 
 private:
 	
-	int mAreaWidth;
-	int mAreaHeight;
+	int mScreenWidth;
+	int mScreenHeight;
 };

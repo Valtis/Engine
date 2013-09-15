@@ -35,8 +35,8 @@ void UI::Draw()
 void UI::AttachCamera(std::unique_ptr<Camera> camera)
 {
 	mCamera = std::move(camera); 
-	mCamera->SetAreaWidth(width);
-	mCamera->SetAreaHeight(height);
+	mCamera->SetAreaWidth(mScreenWidth);
+	mCamera->SetAreaHeight(mScreenHeight);
 }
 
 void UI::Update()

@@ -39,11 +39,11 @@ private:
 	static Renderer *mInstance;
 	Renderer();
 	void ClearScreen();
-	void DrawEntities(camera);
+	void DrawEntities(Camera *camera);
 	std::vector<Entity *> GetEntitiesForDrawing();
 	bool CullEntity(Entity *e);
 	void SortByDrawPriority(std::vector<Entity *> &drawList);
-	void DrawEntity(Entity *e);
+	void DrawEntity(Entity *e, Camera *c);
 
 	std::vector<UniqueID> mDrawables;
 

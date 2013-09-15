@@ -76,13 +76,13 @@ void Renderer::ClearScreen()
 	SDL_RenderClear(mRenderer);
 }
 
-void Renderer::DrawEntities()
+void Renderer::DrawEntities(Camera *camera)
 {
 	std::vector<Entity *> drawList = GetEntitiesForDrawing();
 	SortByDrawPriority(drawList);
 	for (auto it = std::begin(drawList); it != std::end(drawList); ++it)
 	{
-		DrawEntity(*it);
+		DrawEntity(*it, camera);
 	}
 }
 
@@ -141,7 +141,7 @@ void Renderer::SortByDrawPriority(std::vector<Entity *> &drawList) // bool cmp(c
 	);
 }
 
-void Renderer::DrawEntity(Entity *e)
+void Renderer::DrawEntity(Entity *e, Camera *camera)
 {
 	auto g = dynamic_cast<GraphicsComponent *>(e->GetComponent(ComponentType::Graphics));
 	auto l = dynamic_cast<LocationComponent *>(e->GetComponent(ComponentType::Location));
@@ -157,9 +157,10 @@ void Renderer::DrawEntity(Entity *e)
 	}
 
 	// TODO: Take account the camera position!
-	SDL_Rect TEST_DEBUG = s->GetLocation();
-	TEST_DEBUG.x = l->GetX();
-	TEST_DEBUG.y = l->GetY();
+	SDL_Rect drawDst = s->GetLocation();
+	drawDst.x = l->GetX() - camera->GetX() + camera->GetScreenWidth()/2;
+	drawDst.y = l->GetY() - camera->GetY() + camera->GetScreenHeight()/2;
+
 
 	SDL_Texture *texture = SpriteManager::Instance().GetTextureForDrawing(s->GetSpriteSheetID());
 
@@ -168,8 +169,8 @@ void Renderer::DrawEntity(Entity *e)
 		throw std::runtime_error("Couldn't find sprite sheet with id" + s->GetSpriteSheetID());
 	}
 	SDL_Rect spriteLocation = s->GetLocation();
-	//SDL_RenderCopy(mRenderer, texture, &spriteLocation, &TEST_DEBUG);
-	SDL_RenderCopyEx(mRenderer, texture, &spriteLocation, &TEST_DEBUG, l->GetRotation(), NULL, SDL_FLIP_NONE);
+
+	SDL_RenderCopyEx(mRenderer, texture, &spriteLocation, &drawDst, l->GetRotation(), NULL, SDL_FLIP_NONE);
 
 
 }
