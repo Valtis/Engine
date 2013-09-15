@@ -18,8 +18,10 @@ public:
 	EventType GetType() const override { return EventType::ChangeLocation; }
 	int GetXChange() const { return mXChange; }
 	int GetYChange() const { return mYChange; }
+	double GetRotationChange() const { return mRotationChange; }
 
 private:
 	const int mXChange;
 	const int mYChange;
+	const double mRotationChange;
 };

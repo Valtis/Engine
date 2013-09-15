@@ -13,6 +13,8 @@ public:
 	int GetY() const { return mY; }
 	void SetY(int y) { mY = y; }
 
+	double GetRotation() { return mRotation; }
+	void SetRotation(double r) { mRotation = r; }
 
 protected:
 	void OnEventHandlerRegistration() override;
@@ -20,4 +22,5 @@ private:
 	void HandleLocationChangeEvents(Event *event);
 	int mX;
 	int mY;
+	double mRotation;
 };

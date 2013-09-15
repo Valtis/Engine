@@ -111,9 +111,6 @@ void SpriteManager::LoadSprites(std::string datafilePath)
 	}
 }
 
-
-
-// x - y - width - height - sprite sheet id - sprite id
 std::vector<SpriteManager::SpriteHelper> SpriteManager::LoadSpriteDetails(std::string datafilePath)
 {
 	std::vector<SpriteHelper> spriteData;
