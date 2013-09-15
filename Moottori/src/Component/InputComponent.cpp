@@ -3,7 +3,6 @@
 #include "Utility/Defines.h"
 #include "Event/UIEvent.h"
 #include "Event/ChangeVelocityEvent.h"
-
 #include <memory>
 
 InputComponent::InputComponent(UI &ui)
@@ -39,6 +38,13 @@ bool InputComponent::InputHandler(Event *event)
 			break;
 		case UIEventType::MoveRight:
 			GetEventHandler().AddEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(Direction::Right)));
+			break;
+
+		case UIEventType::RotateLeft:
+			GetEventHandler().AddEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(Direction::None, Direction::Left)));
+			break;
+		case UIEventType::RotateRight:
+			GetEventHandler().AddEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(Direction::None, Direction::Right)));
 			break;
 
 		default:

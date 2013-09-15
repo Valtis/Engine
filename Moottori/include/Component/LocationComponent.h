@@ -4,8 +4,8 @@
 class LocationComponent : public Component 
 {
 public:
-	LocationComponent() {} 
-	LocationComponent(int x, int y) : mX(x), mY(y) {}
+	LocationComponent() : mX(0), mY(0), mRotation(0) {} 
+	LocationComponent(int x, int y) : mX(x), mY(y), mRotation(0) {}
 	virtual ~LocationComponent() {}
 	int GetX() const { return mX; }
 	void SetX(int x) { mX = x; }

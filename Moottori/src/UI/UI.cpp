@@ -58,11 +58,20 @@ void UI::HandleEvent(const SDL_Event &event)
 		break;
 	}
 }
-// todo: move to controller-class instead of hardcoding here
+// todo: move to controller-class instead of hardcoding here 
+// todo: load keys from file instead of hardcoding
 void UI::HandleKeys(SDL_Scancode code)
 {
 	switch (code)
 	{
+
+	case SDL_SCANCODE_Q:
+		NotifyInputHandlers(UIEventType::RotateLeft);
+		break;
+
+	case SDL_SCANCODE_E:
+		NotifyInputHandlers(UIEventType::RotateRight);
+		break;
 
 	case SDL_SCANCODE_W:
 	case SDL_SCANCODE_KP_8:

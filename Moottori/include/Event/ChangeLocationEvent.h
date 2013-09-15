@@ -3,7 +3,9 @@
 class ChangeLocationEvent : public Event
 {
 public:
-	ChangeLocationEvent(int xChange, int yChange) : mXChange(xChange), mYChange(yChange) { }
+	ChangeLocationEvent(int xChange, int yChange) : mXChange(xChange), mYChange(yChange), mRotationChange(0) { }
+	ChangeLocationEvent(int xChange, int yChange, double rotationChange) : mXChange(xChange), mYChange(yChange), mRotationChange(rotationChange) { }
+
 	virtual ~ChangeLocationEvent() { }
 #if (_MSC_VER >= 1800)
 	ChangeLocationEvent(const ChangeLocationEvent &) = delete;

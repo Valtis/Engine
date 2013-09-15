@@ -4,7 +4,9 @@
 class ChangeVelocityEvent : public Event
 {
 public:
-	ChangeVelocityEvent(Direction direction) : mDirection(direction) { }
+	ChangeVelocityEvent(Direction direction) : mDirection(direction), mTurnDirection(Direction::None) { }
+	ChangeVelocityEvent(Direction direction, Direction turnDirection) : mDirection(direction), mTurnDirection(turnDirection) { }
+
 	virtual ~ChangeVelocityEvent() { }
 
 #if (_MSC_VER >= 1800)
@@ -19,7 +21,9 @@ public:
 
 	EventType GetType() const override { return EventType::ChangeVelocity; }
 	Direction GetDirection() const { return mDirection; }
+	Direction GetTurnDirection() const { return mTurnDirection; } 
 
 private:
 	const Direction mDirection;
+	const Direction mTurnDirection;
 };

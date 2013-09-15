@@ -167,7 +167,8 @@ void Renderer::DrawEntity(Entity *e)
 		throw std::runtime_error("Couldn't find sprite sheet with id" + s->GetSpriteSheetID());
 	}
 	SDL_Rect spriteLocation = s->GetLocation();
-	SDL_RenderCopy(mRenderer, texture, &spriteLocation, &TEST_DEBUG);
+	//SDL_RenderCopy(mRenderer, texture, &spriteLocation, &TEST_DEBUG);
+	SDL_RenderCopyEx(mRenderer, texture, &spriteLocation, &TEST_DEBUG, l->GetRotation(), NULL, SDL_FLIP_NONE);
 
 
 }
