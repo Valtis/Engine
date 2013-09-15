@@ -22,7 +22,8 @@ int EntityTrackingCamera::GetX() const
 	{
 		return 0;
 	}
-
+	
+	// some code here that handles the case when we are close to area edges
 	return l->GetX();
 }
 
@@ -36,6 +37,7 @@ int EntityTrackingCamera::GetY() const
 		return 0;
 	}
 
+	// some code here that handles the case when we are close to area edges
 	return l->GetY();
 }
 

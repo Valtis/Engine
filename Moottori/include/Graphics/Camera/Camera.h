@@ -19,6 +19,10 @@ public:
 
 	virtual int GetX() const = 0; 
 	virtual int GetY() const = 0;
+
+	void SetAreaWidth(int w) { mAreaWidth = w; }
+	void SetAreaHeight(int h)  { mAreaHeight = h; }
+
 protected:
 	int GetAreaWidth() { return mAreaWidth; }
 	int GetAreaHeight() { return mAreaHeight; }

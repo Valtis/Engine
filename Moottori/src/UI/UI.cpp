@@ -18,6 +18,8 @@ UI::~UI()
 
 void UI::Initialize(std::string title, std::string spritesheetpath,  int windowWidth, int windowHeight)
 {
+	mScreenWidth = windowWidth;
+	mScreenHeight = windowHeight;
 	Renderer::Instance().CreateWindow(title, windowWidth, windowHeight); 
 	SpriteManager::Instance().Initialize(spritesheetpath);
 
@@ -27,6 +29,14 @@ void UI::Initialize(std::string title, std::string spritesheetpath,  int windowW
 void UI::Draw()
 {
 	Renderer::Instance().Draw(mCamera.get());
+}
+
+
+void UI::AttachCamera(std::unique_ptr<Camera> camera)
+{
+	mCamera = std::move(camera); 
+	mCamera->SetAreaWidth(width);
+	mCamera->SetAreaHeight(height);
 }
 
 void UI::Update()

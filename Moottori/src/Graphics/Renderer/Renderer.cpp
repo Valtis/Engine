@@ -63,7 +63,7 @@ void Renderer::Draw(Camera *camera)
 {
 	SDL_assert(camera != nullptr);
 	ClearScreen();
-	DrawEntities();
+	DrawEntities(camera);
 
 	
 	SDL_RenderPresent(mRenderer);
