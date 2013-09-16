@@ -40,8 +40,8 @@ private:
 	Renderer();
 	void ClearScreen();
 	void DrawEntities(Camera *camera);
-	std::vector<Entity *> GetEntitiesForDrawing();
-	bool CullEntity(Entity *e);
+	std::vector<Entity *> GetEntitiesForDrawing(Camera *camera);
+	bool CullEntity(Entity *e, Camera *camera);
 	void SortByDrawPriority(std::vector<Entity *> &drawList);
 	void DrawEntity(Entity *e, Camera *c);
 

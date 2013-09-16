@@ -20,11 +20,11 @@ public:
 	virtual int GetX() const = 0; 
 	virtual int GetY() const = 0;
 
-	void SetAreaWidth(int w) { mScreenWidth = w; }
-	void SetAreaHeight(int h)  { mScreenHeight = h; }
+	void SetScreenWidth(int w) { mScreenWidth = w; }
+	void SetScreenHeight(int h)  { mScreenHeight = h; }
 
-	int GetScreenWidth() { return mScreenWidth; }
-	int GetScreenHeight() { return mScreenHeight; }
+	int GetScreenWidth() const { return mScreenWidth; }
+	int GetScreenHeight() const { return mScreenHeight; }
 protected:
 
 
