@@ -51,6 +51,7 @@ void UI::Update()
 
 		HandleEvent(event);
 	}
+
 }
 
 void UI::HandleEvent(const SDL_Event &event)
@@ -67,7 +68,7 @@ void UI::HandleEvent(const SDL_Event &event)
 		break;
 	} 
 }
-// todo: move to controller-class instead of hardcoding here 
+// todo: move to controller-class instead of hardcoding here (easier to support multiple input devices!)
 // todo: load keys from file instead of hardcoding
 void UI::HandleKeys(SDL_Scancode code, Uint32 type)
 {
@@ -84,7 +85,6 @@ void UI::HandleKeys(SDL_Scancode code, Uint32 type)
 
 	switch (code)
 	{
-		/*
 	case SDL_SCANCODE_Q:
 		uiEvent = UIEventType::RotateLeft;
 		break;
@@ -118,8 +118,8 @@ void UI::HandleKeys(SDL_Scancode code, Uint32 type)
 		uiEvent = UIEventType::MoveForward;
 		break;
 	default:
-		break;*/
-	case SDL_SCANCODE_W:
+		break;
+	/*case SDL_SCANCODE_W:
 		uiEvent = UIEventType::MoveForward;
 		break;
 	case SDL_SCANCODE_A:
@@ -127,7 +127,7 @@ void UI::HandleKeys(SDL_Scancode code, Uint32 type)
 		break;
 	case SDL_SCANCODE_D:
 		uiEvent = UIEventType::RotateRight;
-		break;
+		break;*/
 
 	}
 

@@ -5,7 +5,7 @@
 #include <SDL_assert.h>
 #include <cmath>
 
-#define SIGNUM(x) ((x) < 0) ? -1 : ((x) > 0)
+#define SIGNUM(x) (((x) < 0) ? -1 : ((x) > 0))
 
 VelocityComponent::VelocityComponent(double maxVelocity, double maxRotationSpeed, double velocityLossPerTick, double rotationVelocityLossPerTick) 
 	: mCurrentXVelocity(0), mCurrentYVelocity(0), mCurrentRotationSpeed(0), mMaxVelocity(maxVelocity), mMaxRotationSpeed(maxRotationSpeed), 
@@ -35,33 +35,28 @@ void VelocityComponent::OnEventHandlerRegistration()
 
 void VelocityComponent::DecaySpeed() 
 {
+
+		
+	double angle = atan2(mCurrentYVelocity, mCurrentXVelocity);
 	
-	int xSign = SIGNUM(mCurrentXVelocity);
-	int ySign = SIGNUM(mCurrentYVelocity);
-	mCurrentXVelocity = fabsf(mCurrentXVelocity) - mVelocityLossPerTick;
-	mCurrentYVelocity = fabsf(mCurrentYVelocity) - mVelocityLossPerTick;
+
+	double mTotalVelocity = sqrt(mCurrentXVelocity*mCurrentXVelocity + mCurrentYVelocity*mCurrentYVelocity) - mVelocityLossPerTick;
+	if (mTotalVelocity < 0)
+	{
+		mTotalVelocity = 0;
+	}
 	
-	if (mCurrentXVelocity < 0)
-	{
-		mCurrentXVelocity = 0;
-	}
-	if (mCurrentYVelocity < 0)
-	{
-		mCurrentYVelocity = 0;
-	}
+	mCurrentXVelocity = fabs(mTotalVelocity)*cos(angle);
+	mCurrentYVelocity = fabs(mTotalVelocity)*sin(angle);
 
-	mCurrentXVelocity *= xSign;
-	mCurrentYVelocity *= ySign;
-
-
-	int rotateSign = SIGNUM(mCurrentRotationSpeed);
-	mCurrentRotationSpeed = fabsf(mCurrentRotationSpeed) - mRotationVelocityLossPerTick;
+	int rotSign = SIGNUM(mCurrentRotationSpeed);
+	mCurrentRotationSpeed = fabs(mCurrentRotationSpeed) - mRotationVelocityLossPerTick;
 	if (mCurrentRotationSpeed < 0)
 	{
 		mCurrentRotationSpeed = 0;
 	}
 
-	mCurrentRotationSpeed *= rotateSign;
+	mCurrentRotationSpeed *= rotSign;
 }
 
 

@@ -108,7 +108,7 @@ void AccelerationComponent::GetTurnSpeed(ChangeAccelerationEvent *changeEvent)
 	}
 }
 
-#include <fstream>
+
 
 void AccelerationComponent::HandleForwardBackwardMovement(Direction direction, double velocityChange)
 {
@@ -131,9 +131,7 @@ void AccelerationComponent::HandleForwardBackwardMovement(Direction direction, d
 	{
 		multiplier = -1;
 	}
-	std::ofstream file("debug.txt", std::ios::app);
-
-	mCurrentXAcceleration = -1*multiplier*velocityChange*sin(rotation*3.1415926535/180.0);
+	
+	mCurrentXAcceleration = -1.0*multiplier*velocityChange*sin(rotation*3.1415926535/180.0);
 	mCurrentYAcceleration = multiplier*velocityChange*cos(rotation*3.1415926535/180.0);
-	file << "angle: " << rotation << "\tx-accel: " <<  mCurrentXAcceleration << "\ty-accel: " << mCurrentYAcceleration << "\n";
 }
