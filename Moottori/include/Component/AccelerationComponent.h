@@ -22,6 +22,7 @@ protected:
 
 private:
 	void HandleAccelerationChangeEvents(Event *event);
+	void HandleForwardBackwardMovement(Direction direction, double velocityChange);
 	void GetXYVelocity(ChangeAccelerationEvent *changeEvent);
 	void GetTurnSpeed(ChangeAccelerationEvent *changeEvent);
 

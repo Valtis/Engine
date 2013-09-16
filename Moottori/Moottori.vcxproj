@@ -26,6 +26,7 @@
     <ClInclude Include="include\Event\ChangeVelocityEvent.h" />
     <ClInclude Include="include\Event\Event.h" />
     <ClInclude Include="include\Event\IEventHandler.h" />
+    <ClInclude Include="include\Event\QueryDirectionEvent.h" />
     <ClInclude Include="include\Event\UIEvent.h" />
     <ClInclude Include="include\Graphics\Camera\EntityTrackingCamera.h" />
     <ClInclude Include="include\Graphics\Camera\Camera.h" />

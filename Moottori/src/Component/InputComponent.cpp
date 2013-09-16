@@ -48,12 +48,17 @@ bool InputComponent::InputHandler(Event *event)
 		case UIEventType::RotateRight:
 			rotationDirection = Direction::Right;
 			break;
-
+		case UIEventType::MoveForward:
+			accelerationDirection = Direction::Forward;
+			break;
+		case UIEventType::MoveBackwards:
+			accelerationDirection = Direction::Backward;
+			break;
 		default:
 			return false;
 	}
 
-	GetEventHandler().AddEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(accelerationDirection, rotationDirection, uiEvent->GetUIEventState())));
+	GetEventHandler().ProcessEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(accelerationDirection, rotationDirection, uiEvent->GetUIEventState())));
 
 	return true;
 }

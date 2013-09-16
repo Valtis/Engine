@@ -31,6 +31,7 @@ protected:
 	void OnEventHandlerRegistration() override;
 private:
 	void HandleLocationChangeEvents(Event *event);
+	void HandleDirectionQueryEvent(Event *event);
 	double mX;
 	double mY;
 	double mRotation;

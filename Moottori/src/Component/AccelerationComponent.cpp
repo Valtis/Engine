@@ -1,6 +1,7 @@
 #include "Component/AccelerationComponent.h"
 #include "Event/ChangeAccelerationEvent.h"
 #include "Event/ChangeVelocityEvent.h"
+#include "Event/QueryDirectionEvent.h"
 #include <cmath>
 #include "SDL_assert.h"
 
@@ -32,13 +33,17 @@ void AccelerationComponent::HandleAccelerationChangeEvents(Event *event)
 
 void AccelerationComponent::GetXYVelocity(ChangeAccelerationEvent *changeEvent)
 {
-	int velocityChange = mMaxAcceleration;
+	double velocityChange = mMaxAcceleration;
 	if (changeEvent->GetState() == UIEventState::Stop)
 	{
 		velocityChange = 0;
 	}
 	switch (changeEvent->GetDirection())
 	{
+		case Direction::Forward:
+		case Direction::Backward:
+			HandleForwardBackwardMovement(changeEvent->GetDirection(), velocityChange);
+			break;
 	case Direction::Up:
 		mCurrentYAcceleration = -velocityChange;
 		break;
@@ -82,7 +87,7 @@ void AccelerationComponent::GetXYVelocity(ChangeAccelerationEvent *changeEvent)
 void AccelerationComponent::GetTurnSpeed(ChangeAccelerationEvent *changeEvent)
 {
 
-	int velocityChange = mMaxRotationAcceleration;
+	double velocityChange = mMaxRotationAcceleration;
 	if (changeEvent->GetState() == UIEventState::Stop)
 	{
 		velocityChange = 0;
@@ -101,4 +106,34 @@ void AccelerationComponent::GetTurnSpeed(ChangeAccelerationEvent *changeEvent)
 	default:
 		break;
 	}
+}
+
+#include <fstream>
+
+void AccelerationComponent::HandleForwardBackwardMovement(Direction direction, double velocityChange)
+{
+	// need direction to calculate proper xy-vectors
+	// query it
+	double rotation = 0;
+	bool wasHandled = false;
+	GetEventHandler().ProcessEvent(std::unique_ptr<QueryDirectionEvent>(new QueryDirectionEvent(rotation, wasHandled)));
+
+	if (!wasHandled)
+	{
+		return;
+	}
+	// shift rotation: currently 0 degrees is upwards, we want it to be on x axis
+	rotation -= 180;
+	// after this x-axis is mirrored; we need to multiply the acceleration with -1 to rectify this
+	
+	double multiplier = 1;
+	if (direction == Direction::Backward)
+	{
+		multiplier = -1;
+	}
+	std::ofstream file("debug.txt", std::ios::app);
+
+	mCurrentXAcceleration = -1*multiplier*velocityChange*sin(rotation*3.1415926535/180.0);
+	mCurrentYAcceleration = multiplier*velocityChange*cos(rotation*3.1415926535/180.0);
+	file << "angle: " << rotation << "\tx-accel: " <<  mCurrentXAcceleration << "\ty-accel: " << mCurrentYAcceleration << "\n";
 }

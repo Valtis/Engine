@@ -84,7 +84,7 @@ void UI::HandleKeys(SDL_Scancode code, Uint32 type)
 
 	switch (code)
 	{
-
+		/*
 	case SDL_SCANCODE_Q:
 		uiEvent = UIEventType::RotateLeft;
 		break;
@@ -110,12 +110,30 @@ void UI::HandleKeys(SDL_Scancode code, Uint32 type)
 		uiEvent = UIEventType::MoveDown;
 		break;
 
-	default:
+	case SDL_SCANCODE_KP_MINUS:
+		uiEvent = UIEventType::MoveBackwards;
 		break;
+	
+	case SDL_SCANCODE_KP_PLUS:
+		uiEvent = UIEventType::MoveForward;
+		break;
+	default:
+		break;*/
+	case SDL_SCANCODE_W:
+		uiEvent = UIEventType::MoveForward;
+		break;
+	case SDL_SCANCODE_A:
+		uiEvent = UIEventType::RotateLeft;
+		break;
+	case SDL_SCANCODE_D:
+		uiEvent = UIEventType::RotateRight;
+		break;
+
 	}
 
 	if (uiEvent != UIEventType::None)
 	{
+
 		NotifyInputHandlers(uiEvent, state);
 	}
 }
