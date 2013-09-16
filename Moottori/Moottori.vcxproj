@@ -33,6 +33,9 @@
     <ClInclude Include="include\Graphics\Renderer\Renderer.h" />
     <ClInclude Include="include\Graphics\Sprite.h" />
     <ClInclude Include="include\Graphics\SpriteManager.h" />
+    <ClInclude Include="include\UI\Controller\Controller.h" />
+    <ClInclude Include="include\UI\Controller\ControllerFactory.h" />
+    <ClInclude Include="include\UI\Controller\KeyboardController.h" />
     <ClInclude Include="include\UI\UI.h" />
     <ClInclude Include="include\Utility\Defines.h" />
     <ClInclude Include="include\Utility\Enumerations.h" />
@@ -56,6 +59,8 @@
     <ClCompile Include="src\Graphics\Sprite.cpp" />
     <ClCompile Include="src\Graphics\SpriteManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\UI\Controller\ControllerFactory.cpp" />
+    <ClCompile Include="src\UI\Controller\KeyboardController.cpp" />
     <ClCompile Include="src\UI\UI.cpp" />
     <ClCompile Include="src\Utility\StringUtility.cpp" />
     <ClCompile Include="src\Utility\UniqueID.cpp" />

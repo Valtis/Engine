@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "Utility/Enumerations.h"
+#include "UI/Controller/Controller.h"
 #include "Graphics/Camera/Camera.h"
 class Event;
 
@@ -34,7 +35,7 @@ public:
 	void RegisterInputHandler(InputHandler, int priority);
 private:
 	void HandleEvent(const SDL_Event &event);
-	void HandleKeys(SDL_Scancode code, Uint32 type);
+
 	void NotifyInputHandlers(UIEventType type, UIEventState state);
 	void SortHandlers();
 	bool EventHandler(Event *);
@@ -46,5 +47,6 @@ private:
 	int mScreenWidth;
 	int mScreenHeight;
 	std::unique_ptr<Camera> mCamera;
+	std::unique_ptr<Controller> mController;
 
 };

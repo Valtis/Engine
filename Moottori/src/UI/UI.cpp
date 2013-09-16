@@ -4,9 +4,11 @@
 #include "Utility/Defines.h"
 #include "Event/UIEvent.h"
 
+#include "UI/Controller/ControllerFactory.h"
+
 #include <algorithm>
 
-UI::UI() : mInputHandlers(), MAX_NUMBER_OF_EVENTS_TO_PROCESS_PER_TICK(10), mCamera()
+UI::UI() : mInputHandlers(), MAX_NUMBER_OF_EVENTS_TO_PROCESS_PER_TICK(10), mCamera(), mController(ControllerFactory::NewObject(ControllerType::Keyboard))
 {
 
 }
@@ -46,12 +48,18 @@ void UI::Update()
 	{
 		if (SDL_PollEvent(&event) == 0)
 		{
-			return; // no events to handle
+			break; // no events to handle
 		}
 
 		HandleEvent(event);
 	}
 
+	std::vector<std::pair<UIEventType, UIEventState>> inputEvents = mController->HandleInput();
+
+	for (auto &inputEvent : inputEvents)
+	{
+		NotifyInputHandlers(inputEvent.first, inputEvent.second);
+	}
 }
 
 void UI::HandleEvent(const SDL_Event &event)
@@ -60,82 +68,10 @@ void UI::HandleEvent(const SDL_Event &event)
 	{
 	case SDL_QUIT:
 		NotifyInputHandlers(UIEventType::Quit, UIEventState::None);
-	case SDL_KEYDOWN:
-	case SDL_KEYUP:
-		HandleKeys(event.key.keysym.scancode, event.type);
 		break;
 	default:
 		break;
 	} 
-}
-// todo: move to controller-class instead of hardcoding here (easier to support multiple input devices!)
-// todo: load keys from file instead of hardcoding
-void UI::HandleKeys(SDL_Scancode code, Uint32 type)
-{
-	UIEventState state = UIEventState::None;
-	UIEventType uiEvent = UIEventType::None;
-	if (type == SDL_KEYDOWN)
-	{
-		state = UIEventState::Start;
-	}
-	else if (type == SDL_KEYUP)
-	{
-		state = UIEventState::Stop;
-	}
-
-	switch (code)
-	{
-	case SDL_SCANCODE_Q:
-		uiEvent = UIEventType::RotateLeft;
-		break;
-
-	case SDL_SCANCODE_E:
-		uiEvent = UIEventType::RotateRight;
-		break;
-
-	case SDL_SCANCODE_W:
-	case SDL_SCANCODE_KP_8:
-		uiEvent = UIEventType::MoveUp;
-		break;
-	case SDL_SCANCODE_A:
-	case SDL_SCANCODE_KP_4:
-		uiEvent = UIEventType::MoveLeft;
-		break;
-	case SDL_SCANCODE_D:
-	case SDL_SCANCODE_KP_6:
-		uiEvent = UIEventType::MoveRight;
-		break;
-	case SDL_SCANCODE_S:
-	case SDL_SCANCODE_KP_2:
-		uiEvent = UIEventType::MoveDown;
-		break;
-
-	case SDL_SCANCODE_KP_MINUS:
-		uiEvent = UIEventType::MoveBackwards;
-		break;
-	
-	case SDL_SCANCODE_KP_PLUS:
-		uiEvent = UIEventType::MoveForward;
-		break;
-	default:
-		break;
-	/*case SDL_SCANCODE_W:
-		uiEvent = UIEventType::MoveForward;
-		break;
-	case SDL_SCANCODE_A:
-		uiEvent = UIEventType::RotateLeft;
-		break;
-	case SDL_SCANCODE_D:
-		uiEvent = UIEventType::RotateRight;
-		break;*/
-
-	}
-
-	if (uiEvent != UIEventType::None)
-	{
-
-		NotifyInputHandlers(uiEvent, state);
-	}
 }
 
 void UI::RegisterInputHandler(InputHandler handler, int priority)
@@ -171,8 +107,8 @@ void UI::NotifyInputHandlers(UIEventType event, UIEventState state)
 	}
 }
 
-// todo: clean up
 bool UI::EventHandler(Event *event) 
 {
+	// windows handling code would come here - catch mouse events and handle them
 	return false; // pass event forward
 }

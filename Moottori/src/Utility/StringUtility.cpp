@@ -12,9 +12,10 @@ namespace Utility
 		char *retVal;
 		const int textbufferSize = text.length() + 1;
 		char *textBuffer = new char[textbufferSize];
-		for (unsigned int i = 0; i < text.length() + 1; ++i)
+		for (unsigned int i = 0; i < textbufferSize; ++i)
+		{
 			textBuffer[i] = '\0';
-
+		}
 #ifdef _MSC_VER
 		strncpy_s(textBuffer, textbufferSize, text.c_str(), text.length());
 		char *nextToken = nullptr;

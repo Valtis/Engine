@@ -55,6 +55,12 @@
     <Filter Include="Source Files\Graphics\Camera">
       <UniqueIdentifier>{8cb8fc6d-20bf-4465-a788-158511b4fd05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\UI\Controller">
+      <UniqueIdentifier>{1fa98f90-780f-4f65-af18-fe2f30f31e04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI\Controller">
+      <UniqueIdentifier>{4f032beb-2b4f-426a-ac6e-d5c8c1542f0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Component\Component.h">
@@ -138,6 +144,15 @@
     <ClInclude Include="include\Event\QueryDirectionEvent.h">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
+    <ClInclude Include="include\UI\Controller\Controller.h">
+      <Filter>Header Files\UI\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UI\Controller\KeyboardController.h">
+      <Filter>Header Files\UI\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UI\Controller\ControllerFactory.h">
+      <Filter>Header Files\UI\Controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -196,6 +211,12 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\Camera\EntityTrackingCamera.cpp">
       <Filter>Source Files\Graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Controller\ControllerFactory.cpp">
+      <Filter>Source Files\UI\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\Controller\KeyboardController.cpp">
+      <Filter>Source Files\UI\Controller</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
