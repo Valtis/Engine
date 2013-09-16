@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Utility/UniqueID.h"
 class LocationComponent;
+class GraphicsComponent;
 class EntityTrackingCamera : public Camera
 {
 public:
@@ -25,5 +26,9 @@ public:
 
 private:
 	LocationComponent *GetLocationComponent() const;
+	GraphicsComponent *GetGraphicsComponent() const;
+	int GetXOffset() const;
+	int GetYOffset() const;
+
 	UniqueID mEntityID; // entity that will be tracked by the camera
 };
