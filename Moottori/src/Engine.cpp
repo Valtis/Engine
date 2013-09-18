@@ -109,7 +109,7 @@ void Engine::Initialize()
 	e->AddComponent(ComponentType::Location, std::move(l));
 	e->AddComponent(ComponentType::Graphics, std::move(g));
 
-	Renderer::Instance().AddEntity(e->GetID().AsInt());
+	Renderer::Instance().AddEntity(e->GetID());
 	EntityManager::Instance().AddEntity(std::move(e));
 
 	e.reset(new Entity);

@@ -8,7 +8,7 @@ class UniqueID
 public:
 	UniqueID();
 
-	UniqueID(int id);
+	explicit UniqueID(int id);
 	~UniqueID();
 
 	bool operator==(const UniqueID &other) const
@@ -24,7 +24,7 @@ public:
 	unsigned int AsInt() const { return mID; }
 
 private:
-	std::set<int> mUsedIDs;
+	static std::set<int> mUsedIDs;
 	static int mLastID;
 	int mID;
 };

@@ -18,7 +18,7 @@ public:
 	int GetSpriteSheetID() { return mSpriteSheetID; }
 	void SetSpriteSheetID(int id) { mSpriteSheetID = id; }
 
-	UniqueID GetID() { return mID; }
+	int GetID() { return mID.AsInt(); }
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
 	Sprite(const Sprite &) = delete;

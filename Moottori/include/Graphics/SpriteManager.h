@@ -56,6 +56,6 @@ private:
 	SpriteHelper ParseSpriteLine(std::string line, std::string path);
 	void CreateSprite(SpriteHelper helper);
 
-	std::unordered_map<UniqueID, std::unique_ptr<Sprite>, UniqueIDHashFunction> mSprites;
+	std::unordered_map<int, std::unique_ptr<Sprite>> mSprites;
 	std::unordered_map<int, SDL_Texture *> mSpriteSheets;
 };

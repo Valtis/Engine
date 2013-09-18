@@ -45,7 +45,6 @@ void SpriteManager::Initialize(std::string datafilePath)
 void SpriteManager::LoadSpriteSheets(std::string datafilePath)
 {
 	std::vector<std::pair<int, std::string>> spriteSheets = LoadSpriteSheetDetails(datafilePath);
-	// TODO: Add proper load code here. Hard coded for testing for now
 	for (const auto &sheet : spriteSheets)
 	{
 		LoadSpriteSheet(sheet);

@@ -5,7 +5,7 @@
 #include "Component/LocationComponent.h"
 #include "Component/GraphicsComponent.h"
 
-EntityTrackingCamera::EntityTrackingCamera(UniqueID entityID) : mEntityID(entityID)
+EntityTrackingCamera::EntityTrackingCamera(int entityID) : mEntityID(entityID)
 {
 
 }

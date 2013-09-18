@@ -40,8 +40,8 @@ public:
 
 	void Update(double ticksPassed);
 
-	UniqueID GetID() { return mID; }
-	void SetID(UniqueID id) { mID = id; }
+	int GetID() { return mID.AsInt(); }
+	void SetID(int id) { mID = UniqueID(id); }
 
 protected:
 private:

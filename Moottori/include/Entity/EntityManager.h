@@ -13,7 +13,7 @@ public:
 	static void Release();
 
 	void AddEntity(std::unique_ptr<Entity> entity);
-	Entity *GetEntity(UniqueID id);
+	Entity *GetEntity(int id);
 
 	void Update(double ticksPassed);
 
@@ -31,5 +31,5 @@ private:
 	EntityManager();
 	static EntityManager *mInstance;
 	
-	std::unordered_map<UniqueID, std::unique_ptr<Entity>, UniqueIDHashFunction> mEntities;
+	std::unordered_map<int, std::unique_ptr<Entity>> mEntities;
 };

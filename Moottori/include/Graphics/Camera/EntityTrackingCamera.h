@@ -7,7 +7,7 @@ class GraphicsComponent;
 class EntityTrackingCamera : public Camera
 {
 public:
-	EntityTrackingCamera(UniqueID entityID);
+	EntityTrackingCamera(int entityID);
 	~EntityTrackingCamera();
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
@@ -30,5 +30,5 @@ private:
 	int GetXOffset() const;
 	int GetYOffset() const;
 
-	UniqueID mEntityID; // entity that will be tracked by the camera
+	int mEntityID; // entity that will be tracked by the camera
 };

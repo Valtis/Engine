@@ -2,6 +2,7 @@
 #include <utility>
 #include <stdexcept>
 int UniqueID::mLastID = 0;
+std::set<int> UniqueID::mUsedIDs;
 
 
 UniqueID::UniqueID()

@@ -31,7 +31,7 @@ public:
 
 	void CreateWindow(std::string title, int width, int height);
 	
-	void AddEntity(UniqueID id) { mDrawables.push_back(id); }
+	void AddEntity(int id) { mDrawables.push_back(id); }
 	void Draw(Camera *camera);
 
 protected:
@@ -45,7 +45,7 @@ private:
 	void SortByDrawPriority(std::vector<Entity *> &drawList);
 	void DrawEntity(Entity *e, Camera *c);
 
-	std::vector<UniqueID> mDrawables;
+	std::vector<int> mDrawables;
 
 	SDL_Window *mWindow;
 	SDL_Renderer *mRenderer;

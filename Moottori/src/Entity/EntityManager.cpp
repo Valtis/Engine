@@ -34,7 +34,7 @@ void EntityManager::AddEntity(std::unique_ptr<Entity> entity)
 	mEntities[entity->GetID()] = std::move(entity);
 }
 
-Entity *EntityManager::GetEntity(UniqueID id)
+Entity *EntityManager::GetEntity(int id)
 {
 	if (mEntities.count(id) == 0)
 	{
