@@ -153,6 +153,9 @@
     <ClInclude Include="include\UI\Controller\ControllerFactory.h">
       <Filter>Header Files\UI\Controller</Filter>
     </ClInclude>
+    <ClInclude Include="include\Event\ChangeAnimationStateEvent.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">

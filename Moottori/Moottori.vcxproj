@@ -22,6 +22,7 @@
     <ClInclude Include="include\Entity\EntityFactory.h" />
     <ClInclude Include="include\Entity\EntityManager.h" />
     <ClInclude Include="include\Event\ChangeAccelerationEvent.h" />
+    <ClInclude Include="include\Event\ChangeAnimationStateEvent.h" />
     <ClInclude Include="include\Event\ChangeLocationEvent.h" />
     <ClInclude Include="include\Event\ChangeVelocityEvent.h" />
     <ClInclude Include="include\Event\Event.h" />

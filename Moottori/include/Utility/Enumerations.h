@@ -4,7 +4,7 @@ enum class ComponentType : int { None, Input, Acceleration, Velocity, Location, 
 
 enum class ControllerType : int {None, Keyboard };
 
-enum class EventType : int { None, UIEvent, QueryDirection, ChangeAcceleration, ChangeVelocity, ChangeLocation };
+enum class EventType : int { None, UIEvent, QueryDirection, ChangeAcceleration, ChangeVelocity, ChangeLocation, ChangeAnimationState };
 enum class UIEventType: int { None, Quit, MoveForward, MoveBackwards, MoveUp, MoveDown, MoveLeft, MoveRight, RotateLeft, RotateRight };
 enum class UIEventState : int {None, Start, Stop };
 

@@ -1,6 +1,16 @@
 #pragma once
 #include <vector>
+#include <unordered_map>
 #include "Component.h"
+// animation is place holder code, needs to be refactored to something more general\sane
+// also solve how\which subsystem drives the animations? (AI, movement, something else?)
+struct FrameData
+{
+	FrameData() : mTicksToNextFrame(0), mCurrentTickCount(0), spriteID(0) {}
+	double mTicksToNextFrame;
+	double mCurrentTickCount;
+	int spriteID;
+};
 
 class GraphicsComponent : public Component
 {
@@ -19,7 +29,11 @@ private:
 public:
 #endif
 
+	void HandleAnimationStateChangeEvent(Event *event);
+	void Update(double ticksPassed) override;
 
+	void SetAnimationState(bool state) {  mIsAnimating = state; }
+			
 	void AddSpriteID(int id);
 	void ClearSpriteIDs();
 
@@ -29,8 +43,11 @@ public:
 	void NextSprite();
 	void PreviousSprite();
 	void ResetSprite();
-
+protected:
+	void OnEventHandlerRegistration() override;
 private:
-	std::vector<int> mSpriteIDs;
+	bool mIsAnimating;
+	std::unordered_map<int, std::vector<FrameData>> mGraphicsData;
 	int mCurrentSprite;
+	int mCurrentAnimationID;
 };

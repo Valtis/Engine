@@ -1,6 +1,7 @@
 #include "Component/VelocityComponent.h"
 #include "Event/ChangeVelocityEvent.h"
 #include "Event/ChangeLocationEvent.h"
+#include "Event/ChangeAnimationStateEvent.h"
 
 #include <SDL_assert.h>
 #include <cmath>
@@ -21,11 +22,17 @@ VelocityComponent::~VelocityComponent()
 
 void VelocityComponent::Update(double ticksPassed)
 {
+	bool animationState = false;
 	if (mCurrentRotationSpeed != 0 || mCurrentXVelocity != 0 || mCurrentYVelocity != 0)
 	{
 		GetEventHandler().ProcessEvent(std::unique_ptr<ChangeLocationEvent>(new ChangeLocationEvent(mCurrentXVelocity*ticksPassed, mCurrentYVelocity*ticksPassed, mCurrentRotationSpeed*ticksPassed)));
+		animationState = true;
 		DecaySpeed();
 	}
+
+	GetEventHandler().AddEvent(
+		std::unique_ptr<ChangeAnimationStateEvent>(
+		new ChangeAnimationStateEvent(animationState)));
 }
 
 void VelocityComponent::OnEventHandlerRegistration()

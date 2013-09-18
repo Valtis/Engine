@@ -130,6 +130,11 @@ void Engine::Initialize()
 
 	std::vector<int> ids;
 	ids.push_back(200002);
+	ids.push_back(200003);
+	ids.push_back(200004);
+	ids.push_back(200005);
+
+
 	e = EntityFactory::CreatePlayer(250, 250, 8, 8, 0.3, 1, 3, 5, ids, mUI);
 	Renderer::Instance().AddEntity(e->GetID());
 
