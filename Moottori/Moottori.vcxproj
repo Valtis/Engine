@@ -40,6 +40,7 @@
     <ClInclude Include="include\UI\UI.h" />
     <ClInclude Include="include\Utility\Defines.h" />
     <ClInclude Include="include\Utility\Enumerations.h" />
+    <ClInclude Include="include\Utility\LuaState.h" />
     <ClInclude Include="include\Utility\StringUtility.h" />
     <ClInclude Include="include\Utility\UniqueID.h" />
   </ItemGroup>
@@ -96,10 +97,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <IncludePath>include\;SDL2-2.0.0\include;$(IncludePath)</IncludePath>
+    <IncludePath>include\;SDL2-2.0.0\include;C:\Program Files %28x86%29\Lua\5.1\include;C:\Libs\Boost\boost_1_54_0;C:\Libs\LuaBind\luabind-0.9.1;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>include\;C:\Users\Omistaja\Desktop\Satunnaisia_tavaroita\Ohjelmointi\SDL\SDL2-2.0.0-vc\include;$(IncludePath)</IncludePath>
+    <IncludePath>include\;SDL2-2.0.0\include;C:\Program Files %28x86%29\Lua\5.1\include;C:\Libs\Boost\boost_1_54_0;C:\Libs\LuaBind\luabind-0.9.1;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

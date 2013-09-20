@@ -156,6 +156,9 @@
     <ClInclude Include="include\Event\ChangeAnimationStateEvent.h">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
+    <ClInclude Include="include\Utility\LuaState.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
