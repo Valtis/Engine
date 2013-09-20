@@ -11,7 +11,7 @@ GraphicsComponent::GraphicsComponent(std::vector<int> spriteIDs) :
 	{
 		FrameData frameData;
 		frameData.spriteID = id;
-		frameData.mTicksToNextFrame = 10; // test value
+		frameData.mTicksToNextFrame = 5; // test value
 		frameData.mCurrentTickCount = 0;
 		mGraphicsData[0].push_back(frameData);
 	}
@@ -98,5 +98,9 @@ void GraphicsComponent::HandleAnimationStateChangeEvent(Event *event)
 	SDL_assert(animationEvent != nullptr);
 
 	mIsAnimating = animationEvent->GetNewAnimationState();
+	if (!mIsAnimating)
+	{
+		ResetSprite();
+	}
 
 }

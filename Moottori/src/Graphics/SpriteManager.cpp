@@ -82,6 +82,7 @@ void SpriteManager::LoadSpriteSheet(std::pair<int, std::string> sheet)
 		throw std::runtime_error("Failed to create surface - does the file " + sheet.second + " exist?");
 	}
 
+	SDL_SetColorKey(spriteSheetSurface, true, SDL_MapRGB(spriteSheetSurface->format, 255, 255, 255));
 	SDL_Texture *texture = SDL_CreateTextureFromSurface(Renderer::Instance().GetRenderingContext(), spriteSheetSurface);
 	SDL_FreeSurface(spriteSheetSurface);
 

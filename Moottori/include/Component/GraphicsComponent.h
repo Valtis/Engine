@@ -46,6 +46,8 @@ public:
 protected:
 	void OnEventHandlerRegistration() override;
 private:
+	// todo: split to another class? should this component really hold this much responsibility?
+
 	bool mIsAnimating;
 	std::unordered_map<int, std::vector<FrameData>> mGraphicsData;
 	int mCurrentSprite;
