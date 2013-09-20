@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Event/IEventHandler.h"
+#include "Utility/LuaState.h"
 
 class Component
 {
@@ -19,6 +20,7 @@ public:
 
 	virtual ~Component();
 
+	void AttachScript(std::string scriptFile);
 
 	void RegisterEventHandler(IEventHandler *handler)
 	{
@@ -26,10 +28,7 @@ public:
 		OnEventHandlerRegistration();
 	}
 
-	virtual void Update(double ticksPassed)
-	{
-
-	}
+	virtual void Update(double ticksPassed);
 
 protected:
 	IEventHandler &GetEventHandler() { return *mEventHandler; }
@@ -37,8 +36,16 @@ protected:
 	{
 
 	}
+
+	virtual void OnAttachingScript()
+	{
+	
+	}
+
+	LuaState mLuaState;
 private:
 	IEventHandler *mEventHandler;
+
 
 
 };

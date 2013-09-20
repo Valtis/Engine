@@ -8,9 +8,8 @@
 
 #define SIGNUM(x) (((x) < 0) ? -1 : ((x) > 0))
 
-VelocityComponent::VelocityComponent(double maxVelocity, double maxRotationSpeed, double velocityLossPerTick, double rotationVelocityLossPerTick) 
-	: mCurrentXVelocity(0), mCurrentYVelocity(0), mCurrentRotationSpeed(0), mMaxVelocity(maxVelocity), mMaxRotationSpeed(maxRotationSpeed), 
-	mVelocityLossPerTick(velocityLossPerTick), mRotationVelocityLossPerTick(rotationVelocityLossPerTick)
+VelocityComponent::VelocityComponent(double maxVelocity, double maxRotationSpeed) 
+	: mCurrentXVelocity(0), mCurrentYVelocity(0), mCurrentRotationSpeed(0), mMaxVelocity(maxVelocity), mMaxRotationSpeed(maxRotationSpeed)
 {
 
 }
@@ -22,49 +21,51 @@ VelocityComponent::~VelocityComponent()
 
 void VelocityComponent::Update(double ticksPassed)
 {
+
 	bool animationState = false;
 	if (mCurrentRotationSpeed != 0 || mCurrentXVelocity != 0 || mCurrentYVelocity != 0)
 	{
-		GetEventHandler().ProcessEvent(std::unique_ptr<ChangeLocationEvent>(new ChangeLocationEvent(mCurrentXVelocity*ticksPassed, mCurrentYVelocity*ticksPassed, mCurrentRotationSpeed*ticksPassed)));
+		SendVelocityChangeMessage(ticksPassed);
 		animationState = true;
-		DecaySpeed();
+
 	}
 
 	GetEventHandler().AddEvent(
 		std::unique_ptr<ChangeAnimationStateEvent>(
 		new ChangeAnimationStateEvent(animationState)));
+
+	Component::Update(ticksPassed);
 }
+
+void VelocityComponent::SendVelocityChangeMessage(double ticksPassed)
+{
+	GetEventHandler().ProcessEvent(std::unique_ptr<ChangeLocationEvent>(new ChangeLocationEvent(mCurrentXVelocity*ticksPassed, mCurrentYVelocity*ticksPassed, mCurrentRotationSpeed*ticksPassed)));
+}
+
+void VelocityComponent::OnAttachingScript()
+{
+	
+	luabind::module(mLuaState.State()) [
+		luabind::class_<VelocityComponent>("VelocityComponent")
+			.def("SendVelocityChangeMessage", &VelocityComponent::SendVelocityChangeMessage)
+			.def_readwrite("x_velocity", &VelocityComponent::mCurrentXVelocity)
+			.def_readwrite("y_velocity", &VelocityComponent::mCurrentYVelocity)
+			.def_readwrite("rotation_velocity", &VelocityComponent::mCurrentRotationSpeed)
+	];
+
+	luabind::globals(mLuaState.State())["velocity_component"] = this;
+
+	mLuaState.OpenLuaLibrary(luaopen_math, LUA_MATHLIBNAME);  
+}
+
+
 
 void VelocityComponent::OnEventHandlerRegistration()
 {
 	GetEventHandler().RegisterCallback(EventType::ChangeVelocity, [&](Event *event) { this->HandleVelocityChangeEvents(event); });
 }
 
-void VelocityComponent::DecaySpeed() 
-{
 
-		
-	double angle = atan2(mCurrentYVelocity, mCurrentXVelocity);
-	
-
-	double mTotalVelocity = sqrt(mCurrentXVelocity*mCurrentXVelocity + mCurrentYVelocity*mCurrentYVelocity) - mVelocityLossPerTick;
-	if (mTotalVelocity < 0)
-	{
-		mTotalVelocity = 0;
-	}
-	
-	mCurrentXVelocity = fabs(mTotalVelocity)*cos(angle);
-	mCurrentYVelocity = fabs(mTotalVelocity)*sin(angle);
-
-	int rotSign = SIGNUM(mCurrentRotationSpeed);
-	mCurrentRotationSpeed = fabs(mCurrentRotationSpeed) - mRotationVelocityLossPerTick;
-	if (mCurrentRotationSpeed < 0)
-	{
-		mCurrentRotationSpeed = 0;
-	}
-
-	mCurrentRotationSpeed *= rotSign;
-}
 
 
 void VelocityComponent::HandleVelocityChangeEvents(Event *event)
@@ -80,17 +81,17 @@ void VelocityComponent::HandleVelocityChangeEvents(Event *event)
 	int ySign = SIGNUM(mCurrentYVelocity);
 	int rotateSign = SIGNUM(mCurrentRotationSpeed);
 
-	if (fabsf(mCurrentXVelocity) > mMaxVelocity)
+	if (fabs(mCurrentXVelocity) > mMaxVelocity)
 	{
 		mCurrentXVelocity = mMaxVelocity*xSign;
 	}
 
-	if (fabsf(mCurrentYVelocity) > mMaxVelocity)
+	if (fabs(mCurrentYVelocity) > mMaxVelocity)
 	{
 		mCurrentYVelocity = mMaxVelocity*ySign;
 	}
 
-	if (fabsf(mCurrentRotationSpeed) > mMaxRotationSpeed)
+	if (fabs(mCurrentRotationSpeed) > mMaxRotationSpeed)
 	{
 		mCurrentRotationSpeed = mMaxRotationSpeed*rotateSign;
 	}

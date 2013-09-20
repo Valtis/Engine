@@ -2,10 +2,28 @@
 
 Component::Component() : mEventHandler(nullptr)
 {
-    //ctor
+
 }
 
 Component::~Component()
 {
-    //dtor
+
+}
+
+void Component::AttachScript(std::string scriptFile)
+{
+	mLuaState.Open();
+	mLuaState.LoadScriptFile(scriptFile);
+	mLuaState.OpenLuaLibrary(luaopen_io, LUA_IOLIBNAME); // DEBUG CODE 
+	
+	OnAttachingScript();
+}
+
+
+void Component::Update(double ticksPassed)
+{
+	if (mLuaState.FunctionExists("OnUpdate"))
+	{
+		luabind::call_function<void>(mLuaState.State(), "OnUpdate"/*,ticksPassed*/);
+	}
 }

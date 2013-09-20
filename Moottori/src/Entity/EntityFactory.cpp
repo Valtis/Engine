@@ -10,14 +10,17 @@
 
 namespace EntityFactory
 {
-	std::unique_ptr<Entity> CreatePlayer(int x, int y,  double maxVelocity, double maxRotationSpeed, double speedLossPerTick, double rotationSpeedLossPerTick, 
+	std::unique_ptr<Entity> CreatePlayer(int x, int y,  double maxVelocity, double maxRotationSpeed,
 		double maxAcceleration, double maxRotationAcceleration, std::vector<int> spriteIDs, UI &ui)
 	{
 		std::unique_ptr<Entity> entity(new Entity());
 		entity->AddComponent(ComponentType::Location, std::unique_ptr<Component>(new LocationComponent(x, y)));
 		entity->AddComponent(ComponentType::Graphics, std::unique_ptr<Component>(new GraphicsComponent(spriteIDs)));
 		entity->AddComponent(ComponentType::Input, std::unique_ptr<Component>(new InputComponent(ui)));
-		entity->AddComponent(ComponentType::Velocity, std::unique_ptr<Component>(new VelocityComponent(maxVelocity, maxRotationSpeed, speedLossPerTick, rotationSpeedLossPerTick)));
+		entity->AddComponent(ComponentType::Velocity, std::unique_ptr<Component>(new VelocityComponent(maxVelocity, maxRotationSpeed)));
+		
+		entity->GetComponent(ComponentType::Velocity)->AttachScript("data/scripts/ship_velocity.lua"); // HARD CODED TEST VALUE 
+
 		entity->AddComponent(ComponentType::Acceleration, std::unique_ptr<Component>(new AccelerationComponent(maxAcceleration, maxRotationAcceleration)));
 		return entity;
 	}

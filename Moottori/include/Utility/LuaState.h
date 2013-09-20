@@ -7,50 +7,80 @@
 class LuaState
 {
 public:
-	LuaState() : state(nullptr) { }
+	LuaState() : mState(nullptr), mScriptLoaded(false) { }
 
 	~LuaState() 
 	{
-		lua_close(state);
+		if (mState != nullptr)
+		{
+			lua_close(mState);
+		}
 	}
 
 	void Open()
 	{
-		state = lua_open();
-		luabind::open(state);
+		mState = lua_open();
+		luabind::open(mState);
 	}
 
 	void LoadScriptFile(std::string fileName)
 	{
-		if (state == nullptr)
+		if (mState == nullptr)
 		{
 			throw std::logic_error("lua_State was not opened before attempting to use one!");
 		}
-		luaL_dofile(state, fileName.c_str());
+		luaL_dofile(mState, fileName.c_str());
+		mScriptLoaded = true;
 	}
 
 	void OpenLuaLibrary(lua_CFunction f, std::string libraryName)
 	{
-		if (state == nullptr)
+		if (mState == nullptr)
 		{
 			throw std::logic_error("lua_State was not opened before attempting to use one!");
 		}
 
-		lua_pushcfunction(state, f);
-		lua_pushstring(state, LUA_IOLIBNAME);
-		lua_call(state, 1, 0);
+		lua_pushcfunction(mState, f);
+		lua_pushstring(mState, LUA_IOLIBNAME);
+		lua_call(mState, 1, 0);
 	}
 
 
 	lua_State *State() { 
-		if (state == nullptr)
+		if (mState == nullptr)
 		{
 			throw std::logic_error("lua_State was not opened before attempting to use one!");
 		}
-		return state; 
+		return mState; 
 	}
-	
+
+	bool ScriptLoaded() 
+	{
+		return mScriptLoaded;
+	}
+
+	bool FunctionExists(std::string name)
+	{
+		if (!ScriptLoaded())
+		{		
+			return false;
+		}
+
+		if (mState == nullptr)
+		{
+			throw std::logic_error("lua_State was not opened before attempting to use one!");
+		}
+
+		luabind::object g = luabind::globals(mState);
+		luabind::object fun = g[name.c_str()];
+		if (fun.is_valid()) {
+			return luabind::type(fun)== LUA_TFUNCTION;
+		}
+		return false;
+	}
+
 private:
-	lua_State *state;
+	lua_State *mState;
+	bool mScriptLoaded;
 };
 

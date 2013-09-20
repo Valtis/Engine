@@ -5,7 +5,7 @@
 class VelocityComponent : public Component
 {
 public:
-	VelocityComponent(double maxVelocity, double maxRotationSpeed, double velocityLossPerTick, double rotationVelocityLossPerTick);
+	VelocityComponent(double maxVelocity, double maxRotationSpeed);
 	~VelocityComponent();
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
@@ -22,16 +22,16 @@ void Update(double ticksPassed) override;
 
 protected:
 	void OnEventHandlerRegistration() override;
+	virtual void OnAttachingScript() override;
+
+	void SendVelocityChangeMessage(double ticksPassed);
 private:
 	void HandleVelocityChangeEvents(Event *event);
-	void DecaySpeed();
 
 	double mCurrentXVelocity;
 	double mCurrentYVelocity;
 	double mCurrentRotationSpeed;
 	
-	double mVelocityLossPerTick;
-	double mRotationVelocityLossPerTick;
 
 	double mMaxVelocity;
 	double mMaxRotationSpeed;
