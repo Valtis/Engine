@@ -19,22 +19,13 @@ VelocityComponent::~VelocityComponent()
 
 }
 
-void VelocityComponent::Update(double ticksPassed)
+
+
+void VelocityComponent::SendAnimationStateEvent(bool animationState)
 {
-
-	bool animationState = false;
-	if (mCurrentRotationSpeed != 0 || mCurrentXVelocity != 0 || mCurrentYVelocity != 0)
-	{
-		SendVelocityChangeMessage(ticksPassed);
-		animationState = true;
-
-	}
-
 	GetEventHandler().AddEvent(
 		std::unique_ptr<ChangeAnimationStateEvent>(
 		new ChangeAnimationStateEvent(animationState)));
-
-	Component::Update(ticksPassed);
 }
 
 void VelocityComponent::SendVelocityChangeMessage(double ticksPassed)
@@ -48,6 +39,7 @@ void VelocityComponent::OnAttachingScript()
 	luabind::module(mLuaState.State()) [
 		luabind::class_<VelocityComponent>("VelocityComponent")
 			.def("SendVelocityChangeMessage", &VelocityComponent::SendVelocityChangeMessage)
+			.def("SendAnimationStateEvent", &VelocityComponent::SendAnimationStateEvent)
 			.def_readwrite("x_velocity", &VelocityComponent::mCurrentXVelocity)
 			.def_readwrite("y_velocity", &VelocityComponent::mCurrentYVelocity)
 			.def_readwrite("rotation_velocity", &VelocityComponent::mCurrentRotationSpeed)
@@ -55,7 +47,7 @@ void VelocityComponent::OnAttachingScript()
 
 	luabind::globals(mLuaState.State())["velocity_component"] = this;
 
-	mLuaState.OpenLuaLibrary(luaopen_math, LUA_MATHLIBNAME);  
+
 }
 
 

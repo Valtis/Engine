@@ -18,13 +18,12 @@ private:
 public:
 #endif
 
-void Update(double ticksPassed) override;
-
 protected:
 	void OnEventHandlerRegistration() override;
 	virtual void OnAttachingScript() override;
 
 	void SendVelocityChangeMessage(double ticksPassed);
+	void SendAnimationStateEvent(bool animationState);
 private:
 	void HandleVelocityChangeEvents(Event *event);
 
