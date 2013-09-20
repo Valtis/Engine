@@ -38,9 +38,14 @@ function DecaySpeed()
 end
 
 
-function OnUpdate()
+function OnUpdate(ticks_passed)
+	
+	animation_state = false
 	if velocity_component.x_velocity ~= 0  or velocity_component.y_velocity ~= 0 or velocity_component.rotation_velocity ~= 0  then
-		DecaySpeed()
+		velocity_component:SendVelocityChangeMessage(ticks_passed)
+		DecaySpeed()		
+		animation_state = true
 	end
+	velocity_component:SendAnimationStateEvent(animation_state)
 end
 
