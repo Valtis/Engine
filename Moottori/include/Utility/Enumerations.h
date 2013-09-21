@@ -1,6 +1,6 @@
 #pragma once
 
-enum class ComponentType : int { None, Input, Acceleration, Velocity, Location, Graphics };
+enum class ComponentType : int { None, Input, Acceleration, Velocity, Location, Graphics, Collision, Hitpoints };
 
 enum class ControllerType : int { None, Keyboard };
 enum class UIEventState : int {None, Start, Stop };

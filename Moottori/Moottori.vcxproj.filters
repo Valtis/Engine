@@ -61,6 +61,12 @@
     <Filter Include="Source Files\UI\Controller">
       <UniqueIdentifier>{4f032beb-2b4f-426a-ac6e-d5c8c1542f0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Level">
+      <UniqueIdentifier>{e33de579-2ba1-4dbf-9a36-6e873592c626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Level">
+      <UniqueIdentifier>{3a86329a-a2ea-4243-9caa-4ab515640a67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Component\Component.h">
@@ -159,6 +165,12 @@
     <ClInclude Include="include\Utility\LuaState.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="include\Component\CollisionAreaComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Level\Level.h">
+      <Filter>Header Files\Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -223,6 +235,9 @@
     </ClCompile>
     <ClCompile Include="src\UI\Controller\KeyboardController.cpp">
       <Filter>Source Files\UI\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Level\Level.cpp">
+      <Filter>Source Files\Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

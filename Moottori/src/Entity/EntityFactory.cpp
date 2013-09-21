@@ -7,6 +7,7 @@
 #include "Component/InputComponent.h"
 #include "Component/VelocityComponent.h"
 #include "Component/AccelerationComponent.h"
+#include "Component/CollisionAreaComponent.h"
 
 LuaState EntityFactory::mLuaState;
 bool EntityFactory::mLuaStateIsInitialized = false;
@@ -32,7 +33,8 @@ void EntityFactory::RegisterMethods()
 			luabind::def("AddGraphicsComponent", &AddGraphicsComponent),
 			luabind::def("AddSprite", &AddSprite),
 			luabind::def("AddVelocityComponent", &AddVelocityComponent),
-			luabind::def("AddAccelerationComponent", &AddAccelerationComponent)
+			luabind::def("AddAccelerationComponent", &AddAccelerationComponent),
+			luabind::def("AddCollisionComponent", &AddCollisionComponent)
 	];
 }
 
@@ -79,6 +81,12 @@ void EntityFactory::AddGraphicsComponent(std::string scriptFile)
 	mEntityBeingCreated->AddComponent(ComponentType::Graphics, std::move(c));
 }
 
+void EntityFactory::AddCollisionComponent(std::string scriptFile)
+{
+	std::unique_ptr<Component> c(new CollisionAreaComponent());
+	c->AttachScript(scriptFile);
+	mEntityBeingCreated->AddComponent(ComponentType::Collision, std::move(c));
+}
 
 void EntityFactory::AddInputComponent(std::string scriptFile)
 {
