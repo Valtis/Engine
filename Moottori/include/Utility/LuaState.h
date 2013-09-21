@@ -2,6 +2,9 @@
 #include <luabind/luabind.hpp>
 #include <stdexcept>
 
+// variadic template would be better but visual studio compiler support for them is limited
+#define LUA_CALL_FUNCTION(return_type, state, name, ...) luabind::call_function<return_type>((state), (name), __VA_ARGS__)
+
 
 // a lightweight wrapper around lua_State; mostly meant to handle releasing the resources once not needed anymore
 class LuaState
