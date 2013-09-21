@@ -51,12 +51,12 @@ void VelocityComponent::OnAttachingScript()
 
 void VelocityComponent::OnEventHandlerRegistration()
 {
-	GetEventHandler().RegisterCallback(EventType::ChangeVelocity, [&](Event *event) { this->HandleVelocityChangeEvents(event); });
+	GetEventHandler().RegisterCallback(EventType::ChangeVelocity, [&](Event *event) { this->HandleVelocityChangeEvent(event); });
 }
 
 
 
-void VelocityComponent::HandleVelocityChangeEvents(Event *event)
+void VelocityComponent::HandleVelocityChangeEvent(Event *event)
 {
 	ChangeVelocityEvent *changeEvent = dynamic_cast<ChangeVelocityEvent *>(event);
 	SDL_assert(changeEvent != nullptr);

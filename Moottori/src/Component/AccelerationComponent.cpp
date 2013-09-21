@@ -7,7 +7,7 @@
 
 void AccelerationComponent::OnEventHandlerRegistration()
 {
-	GetEventHandler().RegisterCallback(EventType::ChangeAcceleration, [&](Event *event) { this->HandleAccelerationChangeEvents(event); } );
+	GetEventHandler().RegisterCallback(EventType::ChangeAcceleration, [&](Event *event) { this->HandleAccelerationChangeEvent(event); } );
 }
 
 void AccelerationComponent::OnAttachingScript()
@@ -44,7 +44,7 @@ void AccelerationComponent::SendDirectionQueryMessage()
 
 
 
-void AccelerationComponent::HandleAccelerationChangeEvents(Event *event)
+void AccelerationComponent::HandleAccelerationChangeEvent(Event *event)
 {
 	ChangeAccelerationEvent *changeEvent = dynamic_cast<ChangeAccelerationEvent *>(event);
 	SDL_assert(changeEvent != nullptr);

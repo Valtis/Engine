@@ -3,6 +3,7 @@
 #include <queue>
 #include <set>
 #include "UI/UI.h"
+#include "Collision/CollisionManager.h"
 #include "Utility/Enumerations.h"
 class Event;
 class Level;
@@ -48,4 +49,5 @@ private:
 	UI mUI;
 
 	std::unique_ptr<Level> mLevel; // TODO - extract to (and create a) level manager 
+	CollisionManager mCollisionManager;
 };

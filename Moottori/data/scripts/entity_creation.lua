@@ -12,5 +12,6 @@ function CreatePlayer()
 	AddVelocityComponent("data/scripts/ship_velocity.lua")
 	AddAccelerationComponent("data/scripts/ship_acceleration.lua")
 	AddGraphicsComponent("")
+	AddCollisionComponent("", 25)	
 	AddSprites()
 end

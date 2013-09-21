@@ -22,4 +22,5 @@ protected:
 private:
 	bool InputHandler(Event *event);
 	void SendAccelerationChangeMessage(Direction accelerationDirection, Direction rotationDirection, UIEventState eventState);
+	void SendAnimationStateMessage(int animationID, bool animationState);
 };

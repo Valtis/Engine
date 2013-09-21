@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Collision\CollisionManager.h" />
     <ClInclude Include="include\Component\AccelerationComponent.h" />
     <ClInclude Include="include\Component\CollisionAreaComponent.h" />
     <ClInclude Include="include\Component\Component.h" />
@@ -22,6 +23,7 @@
     <ClInclude Include="include\Entity\Entity.h" />
     <ClInclude Include="include\Entity\EntityFactory.h" />
     <ClInclude Include="include\Entity\EntityManager.h" />
+    <ClInclude Include="include\Event\BoundaryCollisionEvent.h" />
     <ClInclude Include="include\Event\ChangeAccelerationEvent.h" />
     <ClInclude Include="include\Event\ChangeAnimationStateEvent.h" />
     <ClInclude Include="include\Event\ChangeLocationEvent.h" />
@@ -47,6 +49,7 @@
     <ClInclude Include="include\Utility\UniqueID.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Collision\CollisionManager.cpp" />
     <ClCompile Include="src\Component\AccelerationComponent.cpp" />
     <ClCompile Include="src\Component\Component.cpp" />
     <ClCompile Include="src\Component\GraphicsComponent.cpp" />
@@ -76,6 +79,11 @@
     <None Include="data\scripts\ship_acceleration.lua" />
     <None Include="data\scripts\ship_input.lua" />
     <None Include="data\scripts\ship_velocity.lua" />
+    <None Include="data\spritesheets\sprites.dat" />
+    <None Include="data\spritesheets\spritesheets.dat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\spritesheets\testimap.bmp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{39514168-5CDD-4896-80D5-F8A83C882418}</ProjectGuid>

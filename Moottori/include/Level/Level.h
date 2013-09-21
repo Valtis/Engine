@@ -14,6 +14,8 @@ public:
 	int GetWidth() const { return mWidth; }
 	int GetHeight() const { return mHeight; }
 
+	std::vector<int> GetEntities() { return mLevelEntities; }
+
 
 private:
 	void UpdateEntities(double ticksPassed);

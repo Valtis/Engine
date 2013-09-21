@@ -3,6 +3,7 @@
 #include "Utility/Defines.h"
 #include "Event/UIEvent.h"
 #include "Event/ChangeAccelerationEvent.h"
+#include "Event/ChangeAnimationStateEvent.h"
 #include <memory>
 
 InputComponent::InputComponent(UI &ui)
@@ -21,9 +22,17 @@ void InputComponent::OnAttachingScript()
 	luabind::module(mLuaState.State()) [
 		luabind::class_<InputComponent>("InputComponent")
 			.def("SendAccelerationChangeMessage", &InputComponent::SendAccelerationChangeMessage)
+			.def("SendAnimationStateMessage", &InputComponent::SendAnimationStateMessage)
 	];
 
 	luabind::globals(mLuaState.State())["input_component"] = this;
+}
+
+void InputComponent::SendAnimationStateMessage(int animationID, bool animationState)
+{
+	GetEventHandler().AddEvent(
+		std::unique_ptr<ChangeAnimationStateEvent>(
+		new ChangeAnimationStateEvent(animationID, animationState)));
 }
 
 

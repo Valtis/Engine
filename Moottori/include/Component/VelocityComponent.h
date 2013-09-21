@@ -26,7 +26,7 @@ private:
 	void SendVelocityChangeMessage(double ticksPassed);
 	void SendAnimationStateMessage(int animationID, bool animationState);
 	
-	void HandleVelocityChangeEvents(Event *event);
+	void HandleVelocityChangeEvent(Event *event);
 
 	double mCurrentXVelocity;
 	double mCurrentYVelocity;

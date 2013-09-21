@@ -63,6 +63,7 @@ void Engine::UpdateGameState()
 	{
 		double ticksPassed = (double)(currentTick - mLastGameLogicTick)/(double)mGameLogicTickLength;
 		mLevel->Update(ticksPassed); // todo: replace with level manager code
+		mCollisionManager.Update(ticksPassed);
 		mLastGameLogicTick = SDL_GetTicks();
 	}
 	//
@@ -144,6 +145,11 @@ void Engine::Initialize()
 
 	EntityManager::Instance().AddEntity(std::move(e));
 
+	mCollisionManager.SetCollidabeEntities(mLevel->GetEntities());
+	mCollisionManager.SetLevelWidth(mLevel->GetWidth());
+	mCollisionManager.SetLevelHeight(mLevel->GetHeight());
+
+	// END OF TEST CODE
 
 	mLastDrawTick = SDL_GetTicks();
 	mLastGameLogicTick = SDL_GetTicks();

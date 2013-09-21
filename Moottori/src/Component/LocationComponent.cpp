@@ -1,12 +1,15 @@
 #include "Component/LocationComponent.h"
 #include "Event/ChangeLocationEvent.h"
 #include "Event/QueryDirectionEvent.h"
+#include "Event/BoundaryCollisionEvent.h"
+
 #include <SDL_assert.h>
 #include <cmath>
 void LocationComponent::OnEventHandlerRegistration()
 {
-	GetEventHandler().RegisterCallback(EventType::ChangeLocation, [&](Event *event) { this->HandleLocationChangeEvents(event); } );
+	GetEventHandler().RegisterCallback(EventType::ChangeLocation, [&](Event *event) { this->HandleLocationChangeEvent(event); } );
 	GetEventHandler().RegisterCallback(EventType::QueryDirection, [&](Event *event) { this->HandleDirectionQueryEvent(event); } );
+	GetEventHandler().RegisterCallback(EventType::BoundaryCollision, [&](Event *event) { this->HandleBoundaryCollisionEvent(event); } );
 }
 
 void LocationComponent::OnAttachingScript()
@@ -21,7 +24,7 @@ void LocationComponent::OnAttachingScript()
 	luabind::globals(mLuaState.State())["location_component"] = this;
 }
 
-void LocationComponent::HandleLocationChangeEvents(Event *event) 
+void LocationComponent::HandleLocationChangeEvent(Event *event) 
 {
 	auto locationEvent = dynamic_cast<ChangeLocationEvent *>(event);
 	SDL_assert(locationEvent != nullptr);
@@ -34,6 +37,25 @@ void LocationComponent::HandleLocationChangeEvents(Event *event)
 			locationEvent->GetXChange(),
 			locationEvent->GetYChange(),
 			locationEvent->GetRotationChange());
+	}
+}
+
+
+void LocationComponent::HandleBoundaryCollisionEvent(Event *event) 
+{
+	auto collisionEvent = dynamic_cast<BoundaryCollisionEvent *>(event);
+	SDL_assert(collisionEvent != nullptr);
+	
+	if (mLuaState.FunctionExists("OnBoundaryCollisionEvent"))
+	{
+
+		luabind::call_function<void>(mLuaState.State(),
+			"OnBoundaryCollisionEvent",
+			static_cast<int>(collisionEvent->GetCollisionDirection()),
+			collisionEvent->GetMinX(),
+			collisionEvent->GetMinY(),
+			collisionEvent->GetMaxX(),
+			collisionEvent->GetMaxY());
 	}
 }
 

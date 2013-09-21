@@ -67,6 +67,12 @@
     <Filter Include="Source Files\Level">
       <UniqueIdentifier>{3a86329a-a2ea-4243-9caa-4ab515640a67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Collision">
+      <UniqueIdentifier>{885ca4e6-daa5-4d7d-8bd2-52f62da4f8d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Collision">
+      <UniqueIdentifier>{5cc5ea91-a7eb-4eb5-ab65-ae2f0432a50e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Component\Component.h">
@@ -171,6 +177,12 @@
     <ClInclude Include="include\Level\Level.h">
       <Filter>Header Files\Level</Filter>
     </ClInclude>
+    <ClInclude Include="include\Collision\CollisionManager.h">
+      <Filter>Header Files\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Event\BoundaryCollisionEvent.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -239,6 +251,9 @@
     <ClCompile Include="src\Level\Level.cpp">
       <Filter>Source Files\Level</Filter>
     </ClCompile>
+    <ClCompile Include="src\Collision\CollisionManager.cpp">
+      <Filter>Source Files\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\scripts\ship_velocity.lua">
@@ -256,5 +271,16 @@
     <None Include="data\scripts\ship_input.lua">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="data\spritesheets\sprites.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\spritesheets\spritesheets.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\spritesheets\testimap.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

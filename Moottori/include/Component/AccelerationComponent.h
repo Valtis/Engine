@@ -22,7 +22,7 @@ protected:
 private:
 	void SendDirectionQueryMessage();
 	void SendAccelerationChangeMessage(double ticksPassed);
-	void HandleAccelerationChangeEvents(Event *event);
+	void HandleAccelerationChangeEvent(Event *event);
 
 	double mCurrentXAcceleration;
 	double mCurrentYAcceleration;
