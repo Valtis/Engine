@@ -135,7 +135,7 @@ void Engine::Initialize()
 	ids.push_back(200005);
 
 
-	e = EntityFactory::CreatePlayer(250, 250, 8, 8, 3, 5, ids, mUI);
+	e = EntityFactory::CreatePlayer(250, 250, 3, 5, ids, mUI);
 	Renderer::Instance().AddEntity(e->GetID());
 
 	// create camera for ui

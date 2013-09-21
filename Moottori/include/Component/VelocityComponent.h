@@ -5,7 +5,7 @@
 class VelocityComponent : public Component
 {
 public:
-	VelocityComponent(double maxVelocity, double maxRotationSpeed);
+	VelocityComponent();
 	~VelocityComponent();
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 

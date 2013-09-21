@@ -8,8 +8,8 @@
 
 #define SIGNUM(x) (((x) < 0) ? -1 : ((x) > 0))
 
-VelocityComponent::VelocityComponent(double maxVelocity, double maxRotationSpeed) 
-	: mCurrentXVelocity(0), mCurrentYVelocity(0), mCurrentRotationSpeed(0), mMaxVelocity(maxVelocity), mMaxRotationSpeed(maxRotationSpeed)
+VelocityComponent::VelocityComponent() 
+	: mCurrentXVelocity(0), mCurrentYVelocity(0), mCurrentRotationSpeed(0)
 {
 
 }
@@ -59,33 +59,17 @@ void VelocityComponent::OnEventHandlerRegistration()
 
 
 
-
 void VelocityComponent::HandleVelocityChangeEvents(Event *event)
 {
 	ChangeVelocityEvent *changeEvent = dynamic_cast<ChangeVelocityEvent *>(event);
 	SDL_assert(changeEvent != nullptr);
 
-	mCurrentXVelocity += changeEvent->GetXVelocityChange();
-	mCurrentYVelocity += changeEvent->GetYVelocityChange();
-	mCurrentRotationSpeed += changeEvent->GetRotationChange();
-
-	int xSign = SIGNUM(mCurrentXVelocity);
-	int ySign = SIGNUM(mCurrentYVelocity);
-	int rotateSign = SIGNUM(mCurrentRotationSpeed);
-
-	if (fabs(mCurrentXVelocity) > mMaxVelocity)
+	if (mLuaState.FunctionExists("OnVelocityChangeEvent"))
 	{
-		mCurrentXVelocity = mMaxVelocity*xSign;
+		luabind::call_function<void>(mLuaState.State(), 
+			"OnVelocityChangeEvent", 
+			changeEvent->GetXVelocityChange(), 
+			changeEvent->GetYVelocityChange(), 
+			changeEvent->GetRotationChange());
 	}
-
-	if (fabs(mCurrentYVelocity) > mMaxVelocity)
-	{
-		mCurrentYVelocity = mMaxVelocity*ySign;
-	}
-
-	if (fabs(mCurrentRotationSpeed) > mMaxRotationSpeed)
-	{
-		mCurrentRotationSpeed = mMaxRotationSpeed*rotateSign;
-	}
-
 }
