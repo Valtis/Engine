@@ -9,15 +9,7 @@ function SigNum(value)
 	
 end
 
-function DecaySpeed()
-	
-	velocity_loss_per_tick = 0.3
-	rotation_velocity_loss_per_tick = 1
-	
-	x_velocity = velocity_component.x_velocity
-	y_velocity = velocity_component.y_velocity
-	rotation_velocity =  velocity_component.rotation_velocity
-
+function UpdateXYVelocities(x_velocity, y_velocity, velocity_loss_per_tick)
 	angle = math.atan2(y_velocity, x_velocity)
 	totalVelocity = math.sqrt(x_velocity*x_velocity + y_velocity*y_velocity) - velocity_loss_per_tick
 	
@@ -27,7 +19,9 @@ function DecaySpeed()
 	
 	velocity_component.x_velocity = math.abs(totalVelocity)*math.cos(angle)
 	velocity_component.y_velocity = math.abs(totalVelocity)*math.sin(angle)
+end
 
+function UpdateRotationVelocity(rotation_velocity, rotation_velocity_loss_per_tick)
 	rotSign = SigNum(rotation_velocity)
 	
 	rotation_velocity = math.abs(rotation_velocity) - rotation_velocity_loss_per_tick
@@ -36,6 +30,19 @@ function DecaySpeed()
 	end
 
 	velocity_component.rotation_velocity = rotSign*rotation_velocity
+end
+
+function DecaySpeed()
+	
+	velocity_loss_per_tick = 0.3
+	rotation_velocity_loss_per_tick = 1
+	
+	x_velocity = velocity_component.x_velocity
+	y_velocity = velocity_component.y_velocity
+	rotation_velocity =  velocity_component.rotation_velocity
+	
+	UpdateXYVelocities(x_velocity, y_velocity, velocity_loss_per_tick)
+	UpdateRotationVelocity(rotation_velocity, rotation_velocity_loss_per_tick)
 	
 end
 
@@ -62,7 +69,7 @@ function OnVelocityChangeEvent(x_velocity_change, y_velocity_change, rotation_ve
 	x_sign = SigNum(velocity_component.x_velocity)
 	y_sign = SigNum(velocity_component.y_velocity)
 	rotate_sign = SigNum(velocity_component.rotation_velocity)
-
+	
 	if math.abs(velocity_component.x_velocity) > max_velocity then
 		velocity_component.x_velocity = max_velocity*x_sign
 	end
