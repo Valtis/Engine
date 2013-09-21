@@ -16,6 +16,22 @@ InputComponent::~InputComponent()
 
 }
 
+void InputComponent::OnAttachingScript()
+{
+	luabind::module(mLuaState.State()) [
+		luabind::class_<InputComponent>("InputComponent")
+			.def("SendAccelerationChangeMessage", &InputComponent::SendAccelerationChangeMessage)
+	];
+
+	luabind::globals(mLuaState.State())["input_component"] = this;
+}
+
+
+void InputComponent::SendAccelerationChangeMessage(Direction accelerationDirection, Direction rotationDirection, UIEventState eventState)
+{
+	GetEventHandler().ProcessEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(accelerationDirection, rotationDirection, eventState)));
+}
+
 bool InputComponent::InputHandler(Event *event)
 {
 	UIEvent *uiEvent = dynamic_cast<UIEvent *>(event);
@@ -24,41 +40,15 @@ bool InputComponent::InputHandler(Event *event)
 	{
 		return false;
 	}
-	Direction accelerationDirection = Direction::None;
-	Direction rotationDirection = Direction::None;
-	switch (uiEvent->GetUIEventType())
+
+	if (mLuaState.FunctionExists("OnInputEvent"))
 	{
-		case UIEventType::MoveUp:
-			accelerationDirection = Direction::Up;
-
-			break;
-		case UIEventType::MoveDown:
-			accelerationDirection = Direction::Bottom;
-			break;
-		case UIEventType::MoveLeft:
-			accelerationDirection = Direction::Left;
-			break;
-		case UIEventType::MoveRight:
-			accelerationDirection = Direction::Right;
-			break;
-
-		case UIEventType::RotateLeft:
-			rotationDirection = Direction::Left;
-			break;
-		case UIEventType::RotateRight:
-			rotationDirection = Direction::Right;
-			break;
-		case UIEventType::MoveForward:
-			accelerationDirection = Direction::Forward;
-			break;
-		case UIEventType::MoveBackwards:
-			accelerationDirection = Direction::Backward;
-			break;
-		default:
-			return false;
+		return luabind::call_function<bool>(mLuaState.State(), 
+			"OnInputEvent", 
+			static_cast<int>(uiEvent->GetUIEventType()), 
+			static_cast<int>(uiEvent->GetUIEventState())
+			);
 	}
 
-	GetEventHandler().ProcessEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(accelerationDirection, rotationDirection, uiEvent->GetUIEventState())));
-
-	return true;
+	return false;
 }

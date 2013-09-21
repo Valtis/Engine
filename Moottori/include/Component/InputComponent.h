@@ -2,9 +2,9 @@
 class UI;
 class InputComponent : public Component
 {
-	public:
-		InputComponent(UI &ui);
-		~InputComponent();
+public:
+	InputComponent(UI &ui);
+	~InputComponent();
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
 	InputComponent(const InputComponent &) = delete;
@@ -15,12 +15,11 @@ private:
 	InputComponent &operator=(const InputComponent &);
 public:
 #endif
-		
-		
 
-	private:
-		bool InputHandler(Event *event);
+protected:
+	void OnAttachingScript() override;
 
-
-
+private:
+	bool InputHandler(Event *event);
+	void SendAccelerationChangeMessage(Direction accelerationDirection, Direction rotationDirection, UIEventState eventState);
 };

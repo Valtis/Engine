@@ -235,5 +235,11 @@
     <None Include="data\scripts\ship_acceleration.lua">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="data\scripts\entity_creation.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\ship_input.lua">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

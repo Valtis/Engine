@@ -7,7 +7,7 @@ function AddSprites()
 end
 
 function CreatePlayer()
-	AddInputComponent("")
+	AddInputComponent("data/scripts/ship_input.lua")
 	AddLocationComponent(250, 250, "data/scripts/location.lua")
 	AddVelocityComponent("data/scripts/ship_velocity.lua")
 	AddAccelerationComponent("data/scripts/ship_acceleration.lua")

@@ -68,8 +68,10 @@
     <ClCompile Include="src\Utility\UniqueID.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="data\scripts\entity_creation.lua" />
     <None Include="data\scripts\location.lua" />
     <None Include="data\scripts\ship_acceleration.lua" />
+    <None Include="data\scripts\ship_input.lua" />
     <None Include="data\scripts\ship_velocity.lua" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
