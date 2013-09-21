@@ -15,7 +15,6 @@ struct FrameData
 class GraphicsComponent : public Component
 {
 public:
-	GraphicsComponent(std::vector<int> spriteIDs);
 	GraphicsComponent();
 	~GraphicsComponent();
 
@@ -34,7 +33,7 @@ public:
 
 	void SetAnimationState(bool state) {  mIsAnimating = state; }
 			
-	void AddSpriteID(int id);
+	void AddSprite(int animationID, int spriteID, int ticksToNextFrame);
 	void ClearSpriteIDs();
 
 	int GetCurrentSpriteID();

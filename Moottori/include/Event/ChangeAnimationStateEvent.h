@@ -3,10 +3,11 @@
 class ChangeAnimationStateEvent : public Event
 {
 public:
-	ChangeAnimationStateEvent(bool state) : mNewState(state) { } 
+	ChangeAnimationStateEvent(int animationID, bool state) : mAnimationID(animationID), mNewState(state) { } 
 
+	int GetAnimationID() const { return mAnimationID; }
 	bool GetNewAnimationState() const { return mNewState; };
-	
+		
 	EventType GetType() const override { return EventType::ChangeAnimationState; }
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
@@ -20,6 +21,7 @@ public:
 #endif
 
 private:
+	const int mAnimationID;
 	const bool mNewState;
 
 };

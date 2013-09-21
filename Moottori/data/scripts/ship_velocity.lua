@@ -49,12 +49,14 @@ end
 function OnUpdate(ticks_passed)
 	
 	animation_state = false
+	animation_id = 0 -- default idle animation --- animation_id defined in player_creation.lua
 	if velocity_component.x_velocity ~= 0  or velocity_component.y_velocity ~= 0 or velocity_component.rotation_velocity ~= 0  then
 		velocity_component:SendVelocityChangeMessage(ticks_passed)
 		DecaySpeed()		
 		animation_state = true
+		animation_id = 1 -- ship go wroom
 	end
-	velocity_component:SendAnimationStateMessage(animation_state)
+	velocity_component:SendAnimationStateMessage(animation_id, animation_state)
 end
 
 function OnVelocityChangeEvent(x_velocity_change, y_velocity_change, rotation_velocity_change)

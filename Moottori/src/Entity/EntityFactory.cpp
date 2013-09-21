@@ -8,22 +8,97 @@
 #include "Component/VelocityComponent.h"
 #include "Component/AccelerationComponent.h"
 
-namespace EntityFactory
+LuaState EntityFactory::mLuaState;
+bool EntityFactory::mLuaStateIsInitialized = false;
+std::unique_ptr<Entity> EntityFactory::mEntityBeingCreated(nullptr);
+UI *EntityFactory::mUI = nullptr; 
+
+void EntityFactory::InitializeLuaState()
 {
-	std::unique_ptr<Entity> CreatePlayer(int x, int y, std::vector<int> spriteIDs, UI &ui)
+	mLuaState.Open();
+	mLuaState.OpenLuaLibrary(luaopen_io, LUA_IOLIBNAME);
+	mLuaState.OpenLuaLibrary(luaopen_math, LUA_MATHLIBNAME);  
+
+	RegisterMethods();
+
+	mLuaStateIsInitialized = true;
+}
+
+void EntityFactory::RegisterMethods()
+{
+	luabind::module(mLuaState.State()) [
+			luabind::def("AddInputComponent", &AddInputComponent),
+			luabind::def("AddLocationComponent", &AddLocationComponent),
+			luabind::def("AddGraphicsComponent", &AddGraphicsComponent),
+			luabind::def("AddSprite", &AddSprite),
+			luabind::def("AddVelocityComponent", &AddVelocityComponent),
+			luabind::def("AddAccelerationComponent", &AddAccelerationComponent)
+	];
+}
+
+
+std::unique_ptr<Entity> EntityFactory::CreateEntity(std::string functionName, UI *ui)
+{
+	if (mLuaState.FunctionExists(functionName))
 	{
-		std::unique_ptr<Entity> entity(new Entity());
-		entity->AddComponent(ComponentType::Location, std::unique_ptr<Component>(new LocationComponent(x, y)));
-		entity->GetComponent(ComponentType::Location)->AttachScript("data/scripts/location.lua"); // HARD CODED TEST VALUE 
-
-		entity->AddComponent(ComponentType::Graphics, std::unique_ptr<Component>(new GraphicsComponent(spriteIDs)));
-		entity->AddComponent(ComponentType::Input, std::unique_ptr<Component>(new InputComponent(ui)));
-		entity->AddComponent(ComponentType::Velocity, std::unique_ptr<Component>(new VelocityComponent()));
-		
-		entity->GetComponent(ComponentType::Velocity)->AttachScript("data/scripts/ship_velocity.lua"); // HARD CODED TEST VALUE 
-
-		entity->AddComponent(ComponentType::Acceleration, std::unique_ptr<Component>(new AccelerationComponent()));
-		entity->GetComponent(ComponentType::Acceleration)->AttachScript("data/scripts/ship_acceleration.lua"); // HARD CODED TEST VALUE 
-		return entity;
+		mUI = ui;
+		mEntityBeingCreated.reset(new Entity);
+		luabind::call_function<void>(mLuaState.State(), functionName.c_str());
+		mUI = nullptr;
+		return std::move(mEntityBeingCreated);
 	}
+
+	throw std::runtime_error("Invalid creation script function: " + functionName);
+}
+
+void EntityFactory::AddAccelerationComponent(std::string scriptFile)
+{
+	std::unique_ptr<Component> c(new AccelerationComponent());
+	c->AttachScript(scriptFile);
+	mEntityBeingCreated->AddComponent(ComponentType::Acceleration, std::move(c));
+}
+
+void EntityFactory::AddVelocityComponent(std::string scriptFile)
+{
+	std::unique_ptr<Component> c(new VelocityComponent());
+	c->AttachScript(scriptFile);
+	mEntityBeingCreated->AddComponent(ComponentType::Velocity, std::move(c));
+}
+
+void EntityFactory::AddLocationComponent(int x, int y, std::string scriptFile)
+{
+	std::unique_ptr<Component> c(new LocationComponent(x, y));
+	c->AttachScript(scriptFile);
+	mEntityBeingCreated->AddComponent(ComponentType::Location, std::move(c));
+}
+
+void EntityFactory::AddGraphicsComponent(std::string scriptFile)
+{
+	std::unique_ptr<Component> c(new GraphicsComponent());
+	c->AttachScript(scriptFile);
+	mEntityBeingCreated->AddComponent(ComponentType::Graphics, std::move(c));
+}
+
+
+void EntityFactory::AddInputComponent(std::string scriptFile)
+{
+	if (mUI == nullptr)
+	{
+		return;
+	}
+
+	std::unique_ptr<Component> c(new InputComponent(*mUI));
+	c->AttachScript(scriptFile);
+	mEntityBeingCreated->AddComponent(ComponentType::Input, std::move(c));
+}
+
+void EntityFactory::AddSprite(int animationID, int spriteID, int ticksToNextFrame)
+{
+	auto graphicsComponent = dynamic_cast<GraphicsComponent *>(mEntityBeingCreated->GetComponent(ComponentType::Graphics));
+	if (graphicsComponent == nullptr)
+	{
+		return;
+	}
+
+	graphicsComponent->AddSprite(animationID, spriteID, ticksToNextFrame);
 }

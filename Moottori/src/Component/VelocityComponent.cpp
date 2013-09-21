@@ -21,11 +21,11 @@ VelocityComponent::~VelocityComponent()
 
 
 
-void VelocityComponent::SendAnimationStateMessage(bool animationState)
+void VelocityComponent::SendAnimationStateMessage(int animationID, bool animationState)
 {
 	GetEventHandler().AddEvent(
 		std::unique_ptr<ChangeAnimationStateEvent>(
-		new ChangeAnimationStateEvent(animationState)));
+		new ChangeAnimationStateEvent(animationID, animationState)));
 }
 
 void VelocityComponent::SendVelocityChangeMessage(double ticksPassed)

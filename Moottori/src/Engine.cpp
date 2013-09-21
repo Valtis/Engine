@@ -104,7 +104,7 @@ void Engine::Initialize()
 	l->SetY(0);
 
 	std::unique_ptr<GraphicsComponent> g(new GraphicsComponent);
-	g->AddSpriteID(200000);
+	g->AddSprite(0, 200000, 0);
 
 	e->AddComponent(ComponentType::Location, std::move(l));
 	e->AddComponent(ComponentType::Graphics, std::move(g));
@@ -118,7 +118,7 @@ void Engine::Initialize()
 	l->SetY(200);
 
 	g.reset(new GraphicsComponent);
-	g->AddSpriteID(200001);
+	g->AddSprite(0, 200001, 0);
 
 	e->AddComponent(ComponentType::Location, std::move(l));
 	e->AddComponent(ComponentType::Graphics, std::move(g));
@@ -126,16 +126,9 @@ void Engine::Initialize()
 	Renderer::Instance().AddEntity(e->GetID());
 	EntityManager::Instance().AddEntity(std::move(e));
 
+	EntityFactory::RegisterCreationScript("data/scripts/entity_creation.lua");
 	
-
-	std::vector<int> ids;
-	ids.push_back(200002);
-	ids.push_back(200003);
-	ids.push_back(200004);
-	ids.push_back(200005);
-
-
-	e = EntityFactory::CreatePlayer(250, 250, ids, mUI);
+	e = EntityFactory::CreateEntity("CreatePlayer", &mUI);
 	Renderer::Instance().AddEntity(e->GetID());
 
 	// create camera for ui

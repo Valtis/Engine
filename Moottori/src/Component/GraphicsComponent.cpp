@@ -2,20 +2,7 @@
 #include "Event/ChangeAnimationStateEvent.h"
 #include <SDL_assert.h>
 
-GraphicsComponent::GraphicsComponent(std::vector<int> spriteIDs) : 
-	mIsAnimating(false), mGraphicsData(), mCurrentSprite(0), mCurrentAnimationID(0)
-{
-	// test code
-	// todo: replace 
-	for (int id : spriteIDs)
-	{
-		FrameData frameData;
-		frameData.spriteID = id;
-		frameData.mTicksToNextFrame = 5; // test value
-		frameData.mCurrentTickCount = 0;
-		mGraphicsData[0].push_back(frameData);
-	}
-}
+
 
 GraphicsComponent::GraphicsComponent() : 
 	mIsAnimating(false), mGraphicsData(), mCurrentSprite(0), mCurrentAnimationID(0)
@@ -48,13 +35,13 @@ void GraphicsComponent::Update(double ticksPassed)
 	}
 }
 
-void GraphicsComponent::AddSpriteID(int id)
+void GraphicsComponent::AddSprite(int animationID, int spriteID, int ticksToNextFrame)
 {
 	FrameData data;
 	data.mCurrentTickCount = 0;
-	data.mTicksToNextFrame  = 0;
-	data.spriteID = id;
-	mGraphicsData[0].push_back(data);
+	data.mTicksToNextFrame  = ticksToNextFrame;
+	data.spriteID = spriteID;
+	mGraphicsData[animationID].push_back(data);
 }
 
 void GraphicsComponent::ClearSpriteIDs()
@@ -97,6 +84,7 @@ void GraphicsComponent::HandleAnimationStateChangeEvent(Event *event)
 	auto animationEvent = dynamic_cast<ChangeAnimationStateEvent *>(event);
 	SDL_assert(animationEvent != nullptr);
 
+	mCurrentAnimationID = animationEvent->GetAnimationID();
 	mIsAnimating = animationEvent->GetNewAnimationState();
 	if (!mIsAnimating)
 	{

@@ -24,7 +24,7 @@ protected:
 private:
 	
 	void SendVelocityChangeMessage(double ticksPassed);
-	void SendAnimationStateMessage(bool animationState);
+	void SendAnimationStateMessage(int animationID, bool animationState);
 	
 	void HandleVelocityChangeEvents(Event *event);
 

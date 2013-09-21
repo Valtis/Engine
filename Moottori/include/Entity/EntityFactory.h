@@ -2,11 +2,48 @@
 
 #include <memory>
 #include <vector>
-#include "Utility/UniqueID.h"
+#include "Utility/LuaState.h"
 
 class Entity;
 class UI;
-namespace EntityFactory
+
+class EntityFactory
 {
-	std::unique_ptr<Entity> CreatePlayer(int x, int y, std::vector<int> spriteIDs, UI &ui);
-}
+public:
+
+	static void RegisterCreationScript(std::string scriptName)
+	{
+		if (!mLuaStateIsInitialized)
+		{
+			InitializeLuaState();
+		}
+
+		mLuaState.LoadScriptFile(scriptName);
+		
+	}
+
+
+	static std::unique_ptr<Entity> CreateEntity(std::string functionName, UI *ui); // todo: hide UI behind interface; needed here so that input component can register itself for input
+	static std::unique_ptr<Entity> CreateEntity(std::string functionName) { /* todo: implement */ }
+
+private:
+
+
+
+
+	static void AddInputComponent(std::string scriptFile);
+	static void AddLocationComponent(int x, int y, std::string scriptFile);
+	static void AddGraphicsComponent(std::string scriptFile);
+	static void AddSprite(int animationID, int spriteID, int ticksToNextFrame);
+	static void AddVelocityComponent(std::string scriptFile);
+	static void AddAccelerationComponent(std::string scriptFile);
+
+	static void InitializeLuaState();
+	static void RegisterMethods();
+
+
+	static LuaState mLuaState;
+	static bool mLuaStateIsInitialized;
+	static std::unique_ptr<Entity> mEntityBeingCreated; 
+	static UI *mUI; // place holder, figure better way to pass parameters around
+};
