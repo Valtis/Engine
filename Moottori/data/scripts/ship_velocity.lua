@@ -54,7 +54,7 @@ function OnUpdate(ticks_passed)
 		DecaySpeed()		
 		animation_state = true
 	end
-	velocity_component:SendAnimationStateEvent(animation_state)
+	velocity_component:SendAnimationStateMessage(animation_state)
 end
 
 function OnVelocityChangeEvent(x_velocity_change, y_velocity_change, rotation_velocity_change)

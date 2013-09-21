@@ -21,10 +21,11 @@ public:
 protected:
 	void OnEventHandlerRegistration() override;
 	virtual void OnAttachingScript() override;
-
-	void SendVelocityChangeMessage(double ticksPassed);
-	void SendAnimationStateEvent(bool animationState);
 private:
+	
+	void SendVelocityChangeMessage(double ticksPassed);
+	void SendAnimationStateMessage(bool animationState);
+	
 	void HandleVelocityChangeEvents(Event *event);
 
 	double mCurrentXVelocity;

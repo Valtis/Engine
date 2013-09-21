@@ -10,128 +10,51 @@ void AccelerationComponent::OnEventHandlerRegistration()
 	GetEventHandler().RegisterCallback(EventType::ChangeAcceleration, [&](Event *event) { this->HandleAccelerationChangeEvents(event); } );
 }
 
-
-void AccelerationComponent::Update(double ticksPassed) 
+void AccelerationComponent::OnAttachingScript()
 {
-	if (mCurrentXAcceleration != 0 || mCurrentYAcceleration !=0 || mCurrentRotationAcceleration != 0)
-	{
-		GetEventHandler().ProcessEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(mCurrentXAcceleration*ticksPassed, 
-			mCurrentYAcceleration*ticksPassed, mCurrentRotationAcceleration*ticksPassed)));
-	}
 
+	luabind::module(mLuaState.State()) [
+		luabind::class_<AccelerationComponent>("AccelerationComponent")
+			.def("SendAccelerationChangeMessage", &AccelerationComponent::SendAccelerationChangeMessage)
+			.def("GetCurrentDirection", &AccelerationComponent::SendDirectionQueryMessage)
+			.def_readwrite("x_acceleration", &AccelerationComponent::mCurrentXAcceleration)
+			.def_readwrite("y_acceleration", &AccelerationComponent::mCurrentYAcceleration)
+			.def_readwrite("rotation_acceleration", &AccelerationComponent::mCurrentRotationAcceleration)
+	];
+
+	luabind::globals(mLuaState.State())["acceleration_component"] = this;
 }
+
+void AccelerationComponent::SendAccelerationChangeMessage(double ticksPassed)
+{
+	GetEventHandler().ProcessEvent(std::unique_ptr<ChangeVelocityEvent>(new ChangeVelocityEvent(mCurrentXAcceleration*ticksPassed, 
+			mCurrentYAcceleration*ticksPassed, mCurrentRotationAcceleration*ticksPassed)));
+}
+
+void AccelerationComponent::SendDirectionQueryMessage()
+{
+	double rotation;
+	bool wasHandled;
+	GetEventHandler().ProcessEvent(std::unique_ptr<QueryDirectionEvent>(new QueryDirectionEvent(rotation, wasHandled)));
+	// little ugly, but afaik (do correct me if I am wrong), you cannot use references\pointers from lua code and c++ doesn't support multiple return values natively
+	lua_pushnumber(mLuaState.State(), rotation);
+	lua_pushinteger(mLuaState.State(), wasHandled);
+	lua_pushinteger(mLuaState.State(), 2); // number of parameters into stack
+}
+
+
 
 void AccelerationComponent::HandleAccelerationChangeEvents(Event *event)
 {
 	ChangeAccelerationEvent *changeEvent = dynamic_cast<ChangeAccelerationEvent *>(event);
 	SDL_assert(changeEvent != nullptr);
 
-	GetXYVelocity(changeEvent);
-	GetTurnSpeed(changeEvent);
-
-}
-
-void AccelerationComponent::GetXYVelocity(ChangeAccelerationEvent *changeEvent)
-{
-	double velocityChange = mMaxAcceleration;
-	if (changeEvent->GetState() == UIEventState::Stop)
+	if (mLuaState.FunctionExists("OnAccelerationChangeEvent"))
 	{
-		velocityChange = 0;
+		luabind::call_function<void>(mLuaState.State(), 
+			"OnAccelerationChangeEvent", 
+			static_cast<int>(changeEvent->GetDirection()), 
+			static_cast<int>(changeEvent->GetTurnDirection()),
+			static_cast<int>(changeEvent->GetState()));
 	}
-	switch (changeEvent->GetDirection())
-	{
-		case Direction::Forward:
-		case Direction::Backward:
-			HandleForwardBackwardMovement(changeEvent->GetDirection(), velocityChange);
-			break;
-	case Direction::Up:
-		mCurrentYAcceleration = -velocityChange;
-		break;
-
-	case Direction::TopRight:
-		mCurrentXAcceleration = sqrt(velocityChange);
-		mCurrentYAcceleration = -sqrt(velocityChange);
-		break;
-	case Direction::Right:
-		mCurrentXAcceleration = velocityChange;
-		break;
-
-	case Direction::BottomRight:
-		mCurrentXAcceleration = sqrt(velocityChange);
-		mCurrentYAcceleration = sqrt(velocityChange);
-		break;
-
-	case Direction::Bottom:
-		mCurrentYAcceleration = velocityChange;
-		break;
-
-	case Direction::BottomLeft:
-		mCurrentXAcceleration = -sqrt(velocityChange);
-		mCurrentYAcceleration = sqrt(velocityChange);
-		break;
-
-	case Direction::Left:
-		mCurrentXAcceleration  =-velocityChange;
-		mCurrentYAcceleration = 0;
-		break;
-	case Direction::TopLeft:
-		mCurrentXAcceleration = -sqrt(velocityChange);
-		mCurrentYAcceleration = -sqrt(velocityChange);
-		break;
-	default:
-		break;
-	}
-}
-
-
-void AccelerationComponent::GetTurnSpeed(ChangeAccelerationEvent *changeEvent)
-{
-
-	double velocityChange = mMaxRotationAcceleration;
-	if (changeEvent->GetState() == UIEventState::Stop)
-	{
-		velocityChange = 0;
-	}
-
-	switch (changeEvent->GetTurnDirection())
-	{
-
-	case Direction::Right:
-		mCurrentRotationAcceleration = velocityChange;
-		break;
-
-	case Direction::Left:
-		mCurrentRotationAcceleration = -velocityChange;
-		break;
-	default:
-		break;
-	}
-}
-
-
-
-void AccelerationComponent::HandleForwardBackwardMovement(Direction direction, double velocityChange)
-{
-	// need direction to calculate proper xy-vectors
-	// query it
-	double rotation = 0;
-	bool wasHandled = false;
-	GetEventHandler().ProcessEvent(std::unique_ptr<QueryDirectionEvent>(new QueryDirectionEvent(rotation, wasHandled)));
-
-	if (!wasHandled)
-	{
-		return;
-	}
-	// shift rotation: currently 0 degrees is upwards, we want it to be on x axis
-	rotation -= 180;
-	// after this x-axis is mirrored; we need to multiply the acceleration with -1 to rectify this
-	
-	double multiplier = 1;
-	if (direction == Direction::Backward)
-	{
-		multiplier = -1;
-	}
-	
-	mCurrentXAcceleration = -1.0*multiplier*velocityChange*sin(rotation*3.1415926535/180.0);
-	mCurrentYAcceleration = multiplier*velocityChange*cos(rotation*3.1415926535/180.0);
 }

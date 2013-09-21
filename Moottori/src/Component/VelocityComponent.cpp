@@ -21,7 +21,7 @@ VelocityComponent::~VelocityComponent()
 
 
 
-void VelocityComponent::SendAnimationStateEvent(bool animationState)
+void VelocityComponent::SendAnimationStateMessage(bool animationState)
 {
 	GetEventHandler().AddEvent(
 		std::unique_ptr<ChangeAnimationStateEvent>(
@@ -34,12 +34,11 @@ void VelocityComponent::SendVelocityChangeMessage(double ticksPassed)
 }
 
 void VelocityComponent::OnAttachingScript()
-{
-	
+{	
 	luabind::module(mLuaState.State()) [
 		luabind::class_<VelocityComponent>("VelocityComponent")
 			.def("SendVelocityChangeMessage", &VelocityComponent::SendVelocityChangeMessage)
-			.def("SendAnimationStateEvent", &VelocityComponent::SendAnimationStateEvent)
+			.def("SendAnimationStateMessage", &VelocityComponent::SendAnimationStateMessage)
 			.def_readwrite("x_velocity", &VelocityComponent::mCurrentXVelocity)
 			.def_readwrite("y_velocity", &VelocityComponent::mCurrentYVelocity)
 			.def_readwrite("rotation_velocity", &VelocityComponent::mCurrentRotationSpeed)
