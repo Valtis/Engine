@@ -25,11 +25,23 @@ public:
 
 	int GetScreenWidth() const { return mScreenWidth; }
 	int GetScreenHeight() const { return mScreenHeight; }
+
+
+
 protected:
 
+	int GetLevelWidth() const { return mLevelWidth; }
+	void SetLevelWidth(int width) { mLevelWidth = width; }
+
+	
+	int GetLevelHeight() const { return mLevelHeight; }
+	void SetLevelHeight(int width) { mLevelHeight = width; }
 
 private:
 	
 	int mScreenWidth;
 	int mScreenHeight;
+
+	int mLevelWidth;
+	int mLevelHeight;
 };

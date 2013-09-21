@@ -5,9 +5,15 @@
 class Level
 {
 public:
-	Level() { }
+	Level() : mWidth(0), mHeight(0) { }
+	Level(int width, int height) : mWidth(width), mHeight(height) { }
+
 	void AddEntity(int id) { mLevelEntities.push_back(id); }
 	void Update(double ticksPassed);
+
+	int GetWidth() const { return mWidth; }
+	int GetHeight() const { return mHeight; }
+
 
 private:
 	void UpdateEntities(double ticksPassed);

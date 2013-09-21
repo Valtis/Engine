@@ -5,6 +5,7 @@
 #include "Graphics/SpriteManager.h"
 #include "Event/UIEvent.h"
 #include "Utility/Defines.h"
+#include "Level/Level.h"
 
 // feel free to delete following headers once refactored, only for testing
 #include "Entity/Entity.h"
@@ -61,7 +62,7 @@ void Engine::UpdateGameState()
 	if (currentTick > mGameLogicTickLength + mLastGameLogicTick)
 	{
 		double ticksPassed = (double)(currentTick - mLastGameLogicTick)/(double)mGameLogicTickLength;
-		EntityManager::Instance().Update(ticksPassed); // todo: replace with code that only updates entities that are currently active instead of *all* entities
+		mLevel->Update(ticksPassed); // todo: replace with level manager code
 		mLastGameLogicTick = SDL_GetTicks();
 	}
 	//
@@ -72,7 +73,7 @@ void Engine::Draw()
 	Uint32 currentTick = SDL_GetTicks();
 	if (currentTick > mDrawTickLength + mLastDrawTick)
 	{
-		mUI.Draw();
+		mUI.Draw(); // TODO: pass the ids of current level entities instead of drawing *all* entities, no matter where they are
 		mLastDrawTick = SDL_GetTicks();
 
 	}
@@ -97,11 +98,15 @@ void Engine::Initialize()
 
 	// --------------- TEST CODE ----------------------
 	// --------------- UGLY UGLY UGLY -----------------
+
+	mLevel.reset(new Level(1920, 1080));
 	
 	std::unique_ptr<Entity> e(new Entity);
 	std::unique_ptr<LocationComponent> l(new LocationComponent);
 	l->SetX(0);
 	l->SetY(0);
+
+	mLevel->AddEntity(e->GetID());
 
 	std::unique_ptr<GraphicsComponent> g(new GraphicsComponent);
 	g->AddSprite(0, 200000, 0);
@@ -113,6 +118,7 @@ void Engine::Initialize()
 	EntityManager::Instance().AddEntity(std::move(e));
 
 	e.reset(new Entity);
+	mLevel->AddEntity(e->GetID());
 	l.reset(new LocationComponent);
 	l->SetX(200);
 	l->SetY(200);
@@ -129,10 +135,11 @@ void Engine::Initialize()
 	EntityFactory::RegisterCreationScript("data/scripts/entity_creation.lua");
 	
 	e = EntityFactory::CreateEntity("CreatePlayer", &mUI);
+	mLevel->AddEntity(e->GetID());
 	Renderer::Instance().AddEntity(e->GetID());
 
 	// create camera for ui
-	std::unique_ptr<Camera> c(new EntityTrackingCamera(e->GetID()));
+	std::unique_ptr<Camera> c(new EntityTrackingCamera(e->GetID(), mLevel->GetWidth(), mLevel->GetHeight()));
 	mUI.AttachCamera(std::move(c));
 
 	EntityManager::Instance().AddEntity(std::move(e));

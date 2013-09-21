@@ -7,7 +7,7 @@ class GraphicsComponent;
 class EntityTrackingCamera : public Camera
 {
 public:
-	EntityTrackingCamera(int entityID);
+	EntityTrackingCamera(int entityID, int levelWidth, int levelHeight);
 	~EntityTrackingCamera();
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
@@ -27,6 +27,9 @@ public:
 private:
 	LocationComponent *GetLocationComponent() const;
 	GraphicsComponent *GetGraphicsComponent() const;
+
+	int CheckEdge(int coordinate, int levelSize, int screenSize) const;
+	
 	int GetXOffset() const;
 	int GetYOffset() const;
 

@@ -5,9 +5,10 @@
 #include "Component/LocationComponent.h"
 #include "Component/GraphicsComponent.h"
 
-EntityTrackingCamera::EntityTrackingCamera(int entityID) : mEntityID(entityID)
+EntityTrackingCamera::EntityTrackingCamera(int entityID, int levelWidth, int levelHeight) : mEntityID(entityID)
 {
-
+	SetLevelWidth(levelWidth);
+	SetLevelHeight(levelHeight);
 }
 
 EntityTrackingCamera::~EntityTrackingCamera()
@@ -25,10 +26,26 @@ int EntityTrackingCamera::GetX() const
 		return 0;
 	}
 	
-	// some code here that handles the case when we are close to area edges
-	return l->GetX() + GetXOffset();
+	int x = l->GetX() + GetXOffset();
+	return CheckEdge(x, GetLevelWidth(), GetScreenWidth());	
 }
 
+int EntityTrackingCamera::CheckEdge(int coordinate, int levelSize, int screenSize) const
+{
+	// left  or top edge
+	if (coordinate < screenSize/2)
+	{
+		coordinate = screenSize/2;
+	}
+
+	// right or bottom edge
+	if (coordinate > levelSize - screenSize / 2)
+	{
+		coordinate = levelSize - screenSize / 2;
+	}
+
+	return coordinate;
+}
 
 int EntityTrackingCamera::GetY() const
 {
@@ -41,8 +58,10 @@ int EntityTrackingCamera::GetY() const
 	}
 
 	// some code here that handles the case when we are close to area edges
-	return l->GetY() + GetYOffset();
+	int y = l->GetY() + GetYOffset();
+	return CheckEdge(y, GetLevelHeight(), GetScreenHeight());	
 }
+
 
 
 LocationComponent *EntityTrackingCamera::GetLocationComponent() const

@@ -5,6 +5,7 @@
 #include "UI/UI.h"
 #include "Utility/Enumerations.h"
 class Event;
+class Level;
 class Engine
 {
 public:
@@ -45,4 +46,6 @@ private:
 	std::queue<UIEventType> mEvents;
 	std::set<UIEventType> mInterestedInInputs;
 	UI mUI;
+
+	std::unique_ptr<Level> mLevel; // TODO - extract to (and create a) level manager 
 };
