@@ -67,6 +67,10 @@
     <ClCompile Include="src\Utility\StringUtility.cpp" />
     <ClCompile Include="src\Utility\UniqueID.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="data\scripts\location.lua" />
+    <None Include="data\scripts\ship_velocity.lua" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{39514168-5CDD-4896-80D5-F8A83C882418}</ProjectGuid>
     <RootNamespace>Moottori</RootNamespace>

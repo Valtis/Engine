@@ -225,4 +225,12 @@
       <Filter>Source Files\UI\Controller</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="data\scripts\ship_velocity.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\location.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

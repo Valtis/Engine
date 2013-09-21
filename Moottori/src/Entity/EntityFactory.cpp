@@ -15,6 +15,8 @@ namespace EntityFactory
 	{
 		std::unique_ptr<Entity> entity(new Entity());
 		entity->AddComponent(ComponentType::Location, std::unique_ptr<Component>(new LocationComponent(x, y)));
+		entity->GetComponent(ComponentType::Location)->AttachScript("data/scripts/location.lua"); // HARD CODED TEST VALUE 
+
 		entity->AddComponent(ComponentType::Graphics, std::unique_ptr<Component>(new GraphicsComponent(spriteIDs)));
 		entity->AddComponent(ComponentType::Input, std::unique_ptr<Component>(new InputComponent(ui)));
 		entity->AddComponent(ComponentType::Velocity, std::unique_ptr<Component>(new VelocityComponent()));

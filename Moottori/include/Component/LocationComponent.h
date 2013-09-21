@@ -29,6 +29,7 @@ public:
 
 protected:
 	void OnEventHandlerRegistration() override;
+	void OnAttachingScript() override;
 private:
 	void HandleLocationChangeEvents(Event *event);
 	void HandleDirectionQueryEvent(Event *event);

@@ -46,8 +46,6 @@ void VelocityComponent::OnAttachingScript()
 	];
 
 	luabind::globals(mLuaState.State())["velocity_component"] = this;
-
-
 }
 
 
