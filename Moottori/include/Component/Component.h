@@ -1,7 +1,11 @@
 #pragma once
 
+#include "Event/Event.h"
 #include "Event/IEventHandler.h"
+#include "Event/EventScriptCaller.h"
 #include "Utility/LuaState.h"
+#include <memory>
+
 
 class Component
 {
@@ -43,17 +47,18 @@ protected:
 	
 	}
 
-	LuaState mLuaState;
+	
 private:
 
 	
 	void HandleEvent(Event *event)
 	{
-		event->CallScript(mLuaState);
+		std::unique_ptr<EventScriptCaller> caller(new EventScriptCaller(mLuaState));
+		event->AcceptVisitor(caller.get());
 	}
 
 	IEventHandler *mEventHandler;
-
+	LuaState mLuaState;
 
 
 };

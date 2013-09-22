@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Utility/Enumerations.h"
-#include "Utility/LuaState.h"
 #include "EventVisitor.h"
 #include <stdexcept>
 class Event

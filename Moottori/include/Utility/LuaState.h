@@ -60,7 +60,7 @@ public:
 
 		if (!FunctionExists(name))
 		{
-			return;
+			throw std::runtime_error("Attempting to call script function \"" + name + "\" that does not exist!");
 		}
 
 		luabind::call_function<void>(mState, 
