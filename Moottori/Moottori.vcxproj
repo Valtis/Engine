@@ -16,6 +16,7 @@
     <ClInclude Include="include\Component\CollisionAreaComponent.h" />
     <ClInclude Include="include\Component\Component.h" />
     <ClInclude Include="include\Component\GraphicsComponent.h" />
+    <ClInclude Include="include\Component\HealthComponent.h" />
     <ClInclude Include="include\Component\InputComponent.h" />
     <ClInclude Include="include\Component\LocationComponent.h" />
     <ClInclude Include="include\Component\VelocityComponent.h" />
@@ -31,6 +32,7 @@
     <ClInclude Include="include\Event\Event.h" />
     <ClInclude Include="include\Event\IEventHandler.h" />
     <ClInclude Include="include\Event\QueryDirectionEvent.h" />
+    <ClInclude Include="include\Event\RequestTerminationEvent.h" />
     <ClInclude Include="include\Event\UIEvent.h" />
     <ClInclude Include="include\Graphics\Camera\EntityTrackingCamera.h" />
     <ClInclude Include="include\Graphics\Camera\Camera.h" />
@@ -53,6 +55,7 @@
     <ClCompile Include="src\Component\AccelerationComponent.cpp" />
     <ClCompile Include="src\Component\Component.cpp" />
     <ClCompile Include="src\Component\GraphicsComponent.cpp" />
+    <ClCompile Include="src\Component\HealthComponent.cpp" />
     <ClCompile Include="src\Component\InputComponent.cpp" />
     <ClCompile Include="src\Component\LocationComponent.cpp" />
     <ClCompile Include="src\Component\VelocityComponent.cpp" />
