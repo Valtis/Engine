@@ -17,12 +17,14 @@ private:
 	HealthComponent &operator=(const HealthComponent &);
 public:
 #endif
-
+	
 protected:
 	void OnEventHandlerRegistration() override;
 	void OnAttachingScript() override;
 
 private:
+	/*void HandleEntityCollisionMessage(Event *e);
+	void HandleBoundaryCollisionMessage(Event *e);*/
 	int mCurrentHealth;
 	int mMaxHealth;
 

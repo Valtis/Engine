@@ -18,6 +18,11 @@ private:
 public:
 #endif
 
+	void AcceptVisitor(EventVisitor *visitor) const override 
+	{
+		visitor->Visit(this);
+	}
+
 	EventType GetType() const override { return EventType::ChangeAcceleration; }
 	Direction GetDirection() const { return mDirection; }
 	Direction GetTurnDirection() const { return mTurnDirection; } 

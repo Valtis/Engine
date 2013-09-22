@@ -20,6 +20,11 @@ private:
 public:
 #endif
 
+	void AcceptVisitor(EventVisitor *visitor) const override 
+	{
+		visitor->Visit(this);
+	}
+
 private:
 	const int mAnimationID;
 	const bool mNewState;

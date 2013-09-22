@@ -50,6 +50,25 @@ public:
 		lua_call(mState, 1, 0);
 	}
 
+	template<typename ...Args>
+	void CallFunction(std::string name, Args&& ...args)
+	{
+		if (mState == nullptr)
+		{
+			throw std::logic_error("lua_State was not opened before attempting to use one!");
+		}
+
+		if (!FunctionExists(name))
+		{
+			return;
+		}
+
+		luabind::call_function<void>(mState, 
+			name.c_str(), 
+			std::forward<Args>(args)...
+			);
+	}
+
 
 	lua_State *State() { 
 		if (mState == nullptr)

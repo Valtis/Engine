@@ -20,6 +20,11 @@ public:
 	int GetID() const { return mID; }
 	EventType GetType() const override { return EventType::RequestTermination; }
 
+	void AcceptVisitor(EventVisitor *visitor) const override 
+	{
+		visitor->Visit(this);
+	}
+
 private:
 	const int mID;
 

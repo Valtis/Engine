@@ -24,6 +24,12 @@ public:
 	double GetYVelocityChange() const { return mYVelocityChange; }
 	double GetRotationChange() const { return mRotationVelocityChange; }
 
+
+	void AcceptVisitor(EventVisitor *visitor) const override 
+	{
+		visitor->Visit(this);
+	}
+
 private:
 	const double mXVelocityChange;
 	const double mYVelocityChange;

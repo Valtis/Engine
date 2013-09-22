@@ -25,17 +25,18 @@ public:
 	void RegisterEventHandler(IEventHandler *handler)
 	{
 		mEventHandler = handler;
-		OnEventHandlerRegistration();
 	}
 
 	virtual void Update(double ticksPassed);
 
 protected:
 	IEventHandler &GetEventHandler() { return *mEventHandler; }
-	virtual void OnEventHandlerRegistration()
-	{
 
+	void RegisterForEvents(EventType type)
+	{
+		mEventHandler->RegisterCallback(type, [&](Event *event) { this->HandleEvent(event); });
 	}
+
 
 	virtual void OnAttachingScript()
 	{
@@ -44,6 +45,13 @@ protected:
 
 	LuaState mLuaState;
 private:
+
+	
+	void HandleEvent(Event *event)
+	{
+		event->CallScript(mLuaState);
+	}
+
 	IEventHandler *mEventHandler;
 
 

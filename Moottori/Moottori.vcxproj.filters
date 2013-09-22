@@ -189,6 +189,15 @@
     <ClInclude Include="include\Component\HealthComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="include\Event\EntityCollisionEvent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Event\EventVisitor.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Event\EventScriptCaller.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -262,6 +271,9 @@
     </ClCompile>
     <ClCompile Include="src\Component\HealthComponent.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Event\EventScriptCaller.cpp">
+      <Filter>Source Files\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

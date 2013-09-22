@@ -16,9 +16,14 @@ private:
 public:
 #endif
 
+	
+	void AcceptVisitor(EventVisitor *visitor) const override 
+	{
+		visitor->Visit(this);
+	}
+
 
 	EventType GetType() const override { return EventType::BoundaryCollision; }
-
 	Direction GetCollisionDirection() const { return mCollisionDirection; }
 	
 	int GetMinX() const { return mMinX; }
