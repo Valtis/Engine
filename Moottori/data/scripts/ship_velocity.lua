@@ -72,7 +72,7 @@ function OnUpdate(ticks_passed)
 end
 
 function OnVelocityChangeEvent(x_velocity_change, y_velocity_change, rotation_velocity_change)
-	
+
 	max_velocity = 8
 	max_rotation_speed = 8
 	
@@ -97,6 +97,6 @@ function OnVelocityChangeEvent(x_velocity_change, y_velocity_change, rotation_ve
 	end
 end
 
-function OnScriptInit()
+function OnRegisterForEvents()
 	component:RegisterForEvents(EventType_ChangeVelocity)
 end

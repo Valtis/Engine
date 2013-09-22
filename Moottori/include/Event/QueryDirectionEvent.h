@@ -26,7 +26,8 @@ public:
 	
 	void AcceptVisitor(EventVisitor *visitor) const override 
 	{
-		visitor->Visit(this);
+		visitor->Visit(this, mDirection);
+		mWasHandled = true;
 	}
 
 private:

@@ -17,19 +17,16 @@ function OnLocationChangeEvent(x_change, y_change, rotation_change)
 end
 
 function OnBoundaryCollisionEvent(direction, minX, minY, maxX, maxY)
-	io.write(minX)
-	io.write("\n")
 	location_component.x = math.min(math.max(location_component.x, minX), maxX)
 	location_component.y = math.min(math.max(location_component.y, minY), maxY)
 end
 
 function OnDirectionQuery()
-{
-	return location_component.x, location_component.y
-}
+	return location_component.rotation, true;
+end
 
-function OnScriptInit()
+function OnRegisterForEvents()
 	component:RegisterForEvents(EventType_ChangeLocation)
 	component:RegisterForEvents(EventType_BoundaryCollision)
+	component:RegisterForEvents(EventType_QueryDirection)
 end
-´

@@ -46,6 +46,25 @@ public:
 		lua_call(mState, 1, 0);
 	}
 
+
+	// calling the template version without parameters causes internal compiler error on vs 2012
+	template <typename T>
+	T CallFunction(std::string name)
+	{
+		if (mState == nullptr)
+		{
+			throw std::logic_error("lua_State was not opened before attempting to use one!");
+		}
+
+		if (!FunctionExists(name))
+		{
+			throw std::runtime_error("Attempting to call script function \"" + name + "\" that does not exist!");
+		}
+
+		return luabind::call_function<T>(mState, 
+			name.c_str());
+	}
+
 	void CallFunction(std::string name)
 	{
 		if (mState == nullptr)
@@ -80,6 +99,26 @@ public:
 			std::forward<Args>(args)...
 			);
 	}
+
+	template<typename T, typename ...Args>
+	T CallFunction(std::string name, Args&& ...args)
+	{
+		if (mState == nullptr)
+		{
+			throw std::logic_error("lua_State was not opened before attempting to use one!");
+		}
+
+		if (!FunctionExists(name))
+		{
+			throw std::runtime_error("Attempting to call script function \"" + name + "\" that does not exist!");
+		}
+
+		return luabind::call_function<T>(mState, 
+			name.c_str(), 
+			std::forward<Args>(args)...
+			);
+	}
+
 
 
 	lua_State *State() { 

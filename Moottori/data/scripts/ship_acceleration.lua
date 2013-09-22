@@ -58,6 +58,7 @@ function ChangeXYAcceleration(move_direction, event_state)
 	rotation = 0
 	wasAnswered = 0
 	rotation, wasAnswered = acceleration_component:GetCurrentDirection()
+	io.write("Rotation: " .. rotation .. "\n");
 	
 	
 	-- it is possible that the entity does not have location component or the component does not handle the query
@@ -86,6 +87,7 @@ function ChangeRotationAcceleration(turn_direction, event_state)
 end
 
 function OnAccelerationChangeEvent(move_direction, turn_direction, event_state)
+	
 	ChangeXYAcceleration(move_direction, event_state)
 	ChangeRotationAcceleration(turn_direction, event_state)
 end
@@ -94,12 +96,10 @@ function OnUpdate(ticksPassed)
 	if acceleration_component.x_acceleration ~= 0 or 
 	   acceleration_component.y_acceleration ~=0 or 
 	   acceleration_component.rotation_acceleration ~= 0 then
-		
-		acceleration_component:SendAccelerationChangeMessage(ticksPassed)
-	
+	   acceleration_component:SendAccelerationChangeMessage(ticksPassed)
 	end
 end
 
-function OnScriptInit()
+function OnRegisterForEvents()
 	component:RegisterForEvents(EventType_ChangeAcceleration)
 end

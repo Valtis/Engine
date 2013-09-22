@@ -16,7 +16,7 @@ public:
 	virtual void Visit(const ChangeVelocityEvent *event) const = 0;
 	virtual void Visit(const ChangeLocationEvent *event) const = 0;
 	virtual void Visit(const ChangeAnimationStateEvent *event) const = 0;
-	virtual void Visit(const QueryDirectionEvent *event) const = 0;
+	virtual void Visit(const QueryDirectionEvent *event, double &rotation) const = 0;
 	virtual void Visit(const RequestTerminationEvent *event) const = 0;
 
 };

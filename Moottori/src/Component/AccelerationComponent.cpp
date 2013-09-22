@@ -28,11 +28,11 @@ void AccelerationComponent::SendAccelerationChangeMessage(double ticksPassed)
 
 void AccelerationComponent::SendDirectionQueryMessage()
 {
-	double rotation;
-	bool wasHandled;
+	double rotation = 0;
+	bool wasHandled = false;
 	GetEventHandler().ProcessEvent(std::unique_ptr<QueryDirectionEvent>(new QueryDirectionEvent(rotation, wasHandled)));
-	// little ugly, but afaik (do correct me if I am wrong), you cannot use references\pointers from lua code and c++ doesn't support multiple return values natively
-	/*lua_pushnumber(mLuaState.State(), rotation);
+	
+	lua_pushnumber(mLuaState.State(), rotation);
 	lua_pushinteger(mLuaState.State(), wasHandled);
-	lua_pushinteger(mLuaState.State(), 2); // number of parameters into stack*/
+	lua_pushinteger(mLuaState.State(), 2); // number of parameters into stack
 }

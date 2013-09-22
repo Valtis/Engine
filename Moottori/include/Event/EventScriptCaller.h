@@ -24,7 +24,7 @@ public:
 	virtual void Visit(const ChangeVelocityEvent *event) const override;
 	virtual void Visit(const ChangeLocationEvent *event) const override;
 	virtual void Visit(const ChangeAnimationStateEvent *event) const override;
-	virtual void Visit(const QueryDirectionEvent *event) const override;
+	virtual void Visit(const QueryDirectionEvent *event, double &rotation) const override;
 	virtual void Visit(const RequestTerminationEvent *event) const override;
 
 private:
