@@ -22,7 +22,7 @@ function OnBoundaryCollisionEvent(direction, minX, minY, maxX, maxY)
 end
 
 function OnDirectionQuery()
-	return location_component.rotation, true;
+	return location_component.rotation
 end
 
 function OnRegisterForEvents()

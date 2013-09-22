@@ -58,8 +58,6 @@ function ChangeXYAcceleration(move_direction, event_state)
 	rotation = 0
 	wasAnswered = 0
 	rotation, wasAnswered = acceleration_component:GetCurrentDirection()
-	io.write("Rotation: " .. rotation .. "\n");
-	
 	
 	-- it is possible that the entity does not have location component or the component does not handle the query
 	if wasAnswered == 0 then

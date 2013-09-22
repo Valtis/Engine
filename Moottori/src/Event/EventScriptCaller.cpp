@@ -10,7 +10,7 @@
 
 void EventScriptCaller::Visit(const BoundaryCollisionEvent *event) const
 {
-	mState.CallFunction("OnBoundaryCollisionEvent", event->GetMinX(), event->GetMinY(), event->GetMaxX(), event->GetMaxY());
+	mState.CallFunction("OnBoundaryCollisionEvent", static_cast<int>(event->GetCollisionDirection()), event->GetMinX(), event->GetMinY(), event->GetMaxX(), event->GetMaxY());
 }
 
 
