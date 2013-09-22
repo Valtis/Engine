@@ -26,10 +26,7 @@ void Component::AttachScript(std::string scriptFile)
 
 	luabind::globals(mLuaState.State())["component"] = this;	
 
-	if (mLuaState.FunctionExists("OnScriptInit"))
-	{
-		mLuaState.CallFunction("OnScriptInit");
-	}	
+	OnAttachingScript();
 }
 
 

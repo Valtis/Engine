@@ -5,11 +5,6 @@
 #include <cmath>
 #include "SDL_assert.h"
 
-void AccelerationComponent::OnEventHandlerRegistration()
-{
-	GetEventHandler().RegisterCallback(EventType::ChangeAcceleration, [&](Event *event) { this->HandleAccelerationChangeEvent(event); } );
-}
-
 void AccelerationComponent::OnAttachingScript()
 {
 
@@ -37,24 +32,7 @@ void AccelerationComponent::SendDirectionQueryMessage()
 	bool wasHandled;
 	GetEventHandler().ProcessEvent(std::unique_ptr<QueryDirectionEvent>(new QueryDirectionEvent(rotation, wasHandled)));
 	// little ugly, but afaik (do correct me if I am wrong), you cannot use references\pointers from lua code and c++ doesn't support multiple return values natively
-	lua_pushnumber(mLuaState.State(), rotation);
+	/*lua_pushnumber(mLuaState.State(), rotation);
 	lua_pushinteger(mLuaState.State(), wasHandled);
-	lua_pushinteger(mLuaState.State(), 2); // number of parameters into stack
-}
-
-
-
-void AccelerationComponent::HandleAccelerationChangeEvent(Event *event)
-{
-	ChangeAccelerationEvent *changeEvent = dynamic_cast<ChangeAccelerationEvent *>(event);
-	SDL_assert(changeEvent != nullptr);
-
-	if (mLuaState.FunctionExists("OnAccelerationChangeEvent"))
-	{
-		luabind::call_function<void>(mLuaState.State(), 
-			"OnAccelerationChangeEvent", 
-			static_cast<int>(changeEvent->GetDirection()), 
-			static_cast<int>(changeEvent->GetTurnDirection()),
-			static_cast<int>(changeEvent->GetState()));
-	}
+	lua_pushinteger(mLuaState.State(), 2); // number of parameters into stack*/
 }

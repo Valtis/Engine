@@ -15,12 +15,6 @@ GraphicsComponent::~GraphicsComponent()
 
 }
 
-void GraphicsComponent::OnEventHandlerRegistration()
-{
-	GetEventHandler().RegisterCallback(EventType::ChangeAnimationState, 
-		[&](Event *event) { this->HandleAnimationStateChangeEvent(event); } );
-}
-
 void GraphicsComponent::Update(double ticksPassed)
 {
 	if (mIsAnimating)
@@ -78,7 +72,7 @@ void GraphicsComponent::ResetSprite()
 	mCurrentSprite = 0;
 }
 
-
+/*
 void GraphicsComponent::HandleAnimationStateChangeEvent(Event *event)
 {
 	auto animationEvent = dynamic_cast<ChangeAnimationStateEvent *>(event);
@@ -91,4 +85,4 @@ void GraphicsComponent::HandleAnimationStateChangeEvent(Event *event)
 		ResetSprite();
 	}
 
-}
+}*/

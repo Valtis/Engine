@@ -1,6 +1,7 @@
 #include "Event/EventScriptCaller.h"
 #include "Event/BoundaryCollisionEvent.h"
 #include "Event/ChangeAccelerationEvent.h"
+#include "Event/ChangeVelocityEvent.h"
 #include "Event/ChangeAnimationStateEvent.h"
 #include "Event/ChangeLocationEvent.h"
 #include "Event/QueryDirectionEvent.h"
@@ -17,15 +18,21 @@ void EventScriptCaller::Visit(const ChangeAccelerationEvent *event) const
 	mState.CallFunction("OnAccelerationChangeEvent", static_cast<int>(event->GetDirection()), static_cast<int>(event->GetTurnDirection()), static_cast<int>(event->GetState()));
 }
 
-void EventScriptCaller::Visit(const ChangeAnimationStateEvent *event) const 
+void EventScriptCaller::Visit(const ChangeVelocityEvent *event) const 
 {
-	mState.CallFunction("OnAnimationStateChangeEvent", event->GetAnimationID(), event->GetNewAnimationState());
+	mState.CallFunction("OnVelocityChangeEvent", event->GetXVelocityChange(), event->GetYVelocityChange(), event->GetRotationChange());
 }
 
 void EventScriptCaller::Visit(const ChangeLocationEvent *event) const 
 {
 	mState.CallFunction("OnLocationChangeEvent", event->GetXChange(), event->GetYChange(), event->GetRotationChange());
 }
+
+void EventScriptCaller::Visit(const ChangeAnimationStateEvent *event) const 
+{
+	mState.CallFunction("OnAnimationStateChangeEvent", event->GetAnimationID(), event->GetNewAnimationState());
+}
+
 
 void EventScriptCaller::Visit(const QueryDirectionEvent *event) const 
 {

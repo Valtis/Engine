@@ -28,7 +28,7 @@ private:
 public:
 #endif
 
-	void HandleAnimationStateChangeEvent(Event *event);
+	//void HandleAnimationStateChangeEvent(Event *event);
 	void Update(double ticksPassed) override;
 
 	void SetAnimationState(bool state) {  mIsAnimating = state; }
@@ -43,9 +43,9 @@ public:
 	void PreviousSprite();
 	void ResetSprite();
 protected:
-	void OnEventHandlerRegistration() override;
+
 private:
-	// todo: split to another class? should this component really hold this much responsibility?
+	// todo: split to another class? should this component really hold this much responsibility? (animations mostly)
 
 	bool mIsAnimating;
 	std::unordered_map<int, std::vector<FrameData>> mGraphicsData;

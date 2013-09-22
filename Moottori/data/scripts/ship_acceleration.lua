@@ -1,5 +1,17 @@
 -- TODO: import the enums from the code, this is just a placeholder for now
 
+--EventTypes
+EventType_None = 0
+EventType_UIEvent = 1
+EventType_QueryDirection = 2
+EventType_ChangeAcceleration = 3
+EventType_ChangeVelocity = 4
+EventType_ChangeLocation = 5
+EventType_ChangeAnimationState = 6
+EventType_RequestTermination = 7
+EventType_BoundaryCollision = 8
+EventType_EntityCollision = 9
+
 -- Directions
 Direction_None = 0
 Direction_Up = 1
@@ -86,4 +98,8 @@ function OnUpdate(ticksPassed)
 		acceleration_component:SendAccelerationChangeMessage(ticksPassed)
 	
 	end
+end
+
+function OnScriptInit()
+	component:RegisterForEvents(EventType_ChangeAcceleration)
 end

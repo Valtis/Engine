@@ -29,6 +29,12 @@ public:
 	void RegisterEventHandler(IEventHandler *handler)
 	{
 		mEventHandler = handler;
+		
+		if (mLuaState.FunctionExists("OnRegisterForEvents"))
+		{
+			mLuaState.CallFunction("OnRegisterForEvents");
+		}	
+
 	}
 
 	virtual void Update(double ticksPassed);
@@ -45,7 +51,8 @@ protected:
 	virtual void OnAttachingScript()
 	{
 	
-	}
+	}	
+	LuaState mLuaState;
 
 	
 private:
@@ -58,7 +65,5 @@ private:
 	}
 
 	IEventHandler *mEventHandler;
-	LuaState mLuaState;
-
 
 };

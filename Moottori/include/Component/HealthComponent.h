@@ -19,7 +19,6 @@ public:
 #endif
 	
 protected:
-	void OnEventHandlerRegistration() override;
 	void OnAttachingScript() override;
 
 private:

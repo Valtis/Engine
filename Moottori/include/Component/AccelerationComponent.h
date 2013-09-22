@@ -16,13 +16,12 @@ public:
 #endif
 
 protected:
-	void OnEventHandlerRegistration() override;
+
 	void OnAttachingScript() override;
 
 private:
 	void SendDirectionQueryMessage();
 	void SendAccelerationChangeMessage(double ticksPassed);
-	void HandleAccelerationChangeEvent(Event *event);
 
 	double mCurrentXAcceleration;
 	double mCurrentYAcceleration;

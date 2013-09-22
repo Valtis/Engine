@@ -28,12 +28,9 @@ public:
 	void SetRotation(double r) { mRotation = r; }
 
 protected:
-	void OnEventHandlerRegistration() override;
+	
 	void OnAttachingScript() override;
 private:
-	void HandleLocationChangeEvent(Event *event);
-	void HandleDirectionQueryEvent(Event *event);
-	void HandleBoundaryCollisionEvent(Event *event);
 	double mX;
 	double mY;
 	double mRotation;

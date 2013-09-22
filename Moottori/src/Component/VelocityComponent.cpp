@@ -46,27 +46,3 @@ void VelocityComponent::OnAttachingScript()
 
 	luabind::globals(mLuaState.State())["velocity_component"] = this;
 }
-
-
-
-void VelocityComponent::OnEventHandlerRegistration()
-{
-	GetEventHandler().RegisterCallback(EventType::ChangeVelocity, [&](Event *event) { this->HandleVelocityChangeEvent(event); });
-}
-
-
-
-void VelocityComponent::HandleVelocityChangeEvent(Event *event)
-{
-	ChangeVelocityEvent *changeEvent = dynamic_cast<ChangeVelocityEvent *>(event);
-	SDL_assert(changeEvent != nullptr);
-
-	if (mLuaState.FunctionExists("OnVelocityChangeEvent"))
-	{
-		luabind::call_function<void>(mLuaState.State(), 
-			"OnVelocityChangeEvent", 
-			changeEvent->GetXVelocityChange(), 
-			changeEvent->GetYVelocityChange(), 
-			changeEvent->GetRotationChange());
-	}
-}

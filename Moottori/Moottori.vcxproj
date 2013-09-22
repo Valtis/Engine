@@ -81,6 +81,7 @@
     <ClCompile Include="src\Utility\UniqueID.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\README.md" />
     <None Include="data\scripts\entity_creation.lua" />
     <None Include="data\scripts\location.lua" />
     <None Include="data\scripts\ship_acceleration.lua" />

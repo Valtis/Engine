@@ -4,10 +4,6 @@
 #include <luabind/luabind.hpp>
 #include <stdexcept>
 
-// variadic template would be better but visual studio compiler support for them is limited
-#define LUA_CALL_FUNCTION(return_type, state, name, ...) luabind::call_function<return_type>((state), (name), __VA_ARGS__)
-
-
 // a lightweight wrapper around lua_State; mostly meant to handle releasing the resources once not needed anymore
 class LuaState
 {
@@ -48,6 +44,22 @@ public:
 		lua_pushcfunction(mState, f);
 		lua_pushstring(mState, LUA_IOLIBNAME);
 		lua_call(mState, 1, 0);
+	}
+
+	void CallFunction(std::string name)
+	{
+		if (mState == nullptr)
+		{
+			throw std::logic_error("lua_State was not opened before attempting to use one!");
+		}
+
+		if (!FunctionExists(name))
+		{
+			throw std::runtime_error("Attempting to call script function \"" + name + "\" that does not exist!");
+		}
+
+		luabind::call_function<void>(mState, 
+			name.c_str());
 	}
 
 	template<typename ...Args>
