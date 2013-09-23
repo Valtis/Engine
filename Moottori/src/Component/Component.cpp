@@ -1,6 +1,10 @@
 #include "Component/Component.h"
 #include "Event/EventScriptCaller.h"
-Component::Component() : mEventHandler(nullptr)
+
+
+
+
+Component::Component() : mEventSender()
 {
 
 }
@@ -44,4 +48,19 @@ void Component::HandleEvent(Event *event)
 void Component::RegisterForEvents(EventType type)
 {
 	mEventHandler->RegisterCallback(type, [&](Event *event) { this->HandleEvent(event); });
+}
+
+void Component::RegisterEventHandler(IEventHandler *handler)
+{
+	mEventHandler = handler;
+	if (mLuaState.ScriptLoaded())
+	{
+		mEventSender.Init(mEventHandler, &mLuaState);
+	}
+
+	if (mLuaState.FunctionExists("OnRegisterForEvents"))
+	{
+		
+		mLuaState.CallFunction("OnRegisterForEvents");
+	}	
 }

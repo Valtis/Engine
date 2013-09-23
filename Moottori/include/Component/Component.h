@@ -1,13 +1,11 @@
 #pragma once
-
-#include "Event/Event.h"
-#include "Event/IEventHandler.h"
-
-//#include "Event/EventSender.h"
 #include "Utility/LuaState.h"
-#include <memory>
-
-
+#include "Event/EventSender.h"
+#include "Utility/Enumerations.h"
+#include "Event/IEventHandler.h"
+#include "Event/Event.h"
+class IEventHandler;
+class Event;
 class Component
 {
 public:
@@ -27,25 +25,12 @@ public:
 
 	void AttachScript(std::string scriptFile);
 
-	void RegisterEventHandler(IEventHandler *handler)
-	{
-		mEventHandler = handler;
-		
-		if (mLuaState.FunctionExists("OnRegisterForEvents"))
-		{
-			mLuaState.CallFunction("OnRegisterForEvents");
-		}	
-
-	}
+	void RegisterEventHandler(IEventHandler *handler);
 
 	void Update(double ticksPassed);
 
 protected:
 	IEventHandler &GetEventHandler() { return *mEventHandler; }
-
-
-
-
 	virtual void OnAttachingScript()
 	{
 	
@@ -54,10 +39,8 @@ protected:
 
 	
 private:
-		void RegisterForEvents(EventType type);
-//	EventSender mEventSender;
-	
-	void HandleEvent(Event *event);
 	IEventHandler *mEventHandler;
-
+	void HandleEvent(Event *event);
+	void RegisterForEvents(EventType type);
+	EventSender mEventSender;
 };

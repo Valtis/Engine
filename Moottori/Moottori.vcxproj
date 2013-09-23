@@ -31,7 +31,9 @@
     <ClInclude Include="include\Event\ChangeVelocityEvent.h" />
     <ClInclude Include="include\Event\EntityCollisionEvent.h" />
     <ClInclude Include="include\Event\Event.h" />
+    <ClInclude Include="include\Event\EventFactory.h" />
     <ClInclude Include="include\Event\EventScriptCaller.h" />
+    <ClInclude Include="include\Event\EventSender.h" />
     <ClInclude Include="include\Event\EventVisitor.h" />
     <ClInclude Include="include\Event\IEventHandler.h" />
     <ClInclude Include="include\Event\QueryDirectionEvent.h" />
@@ -67,7 +69,9 @@
     <ClCompile Include="src\Entity\EntityFactory.cpp" />
     <ClCompile Include="src\Entity\EntityManager.cpp" />
     <ClCompile Include="src\Event\Event.cpp" />
+    <ClCompile Include="src\Event\EventFactory.cpp" />
     <ClCompile Include="src\Event\EventScriptCaller.cpp" />
+    <ClCompile Include="src\Event\EventSender.cpp" />
     <ClCompile Include="src\Graphics\Camera\EntityTrackingCamera.cpp" />
     <ClCompile Include="src\Graphics\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Graphics\Sprite.cpp" />

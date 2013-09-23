@@ -26,7 +26,7 @@ function ChangeXYAcceleration(move_direction, event_state)
 	
 	rotation = 0
 	wasAnswered = 0
-	rotation, wasAnswered = acceleration_component:GetCurrentDirection()
+	rotation, wasAnswered = messaging:SendDirectionQueryMessage()
 	
 	-- it is possible that the entity does not have location component or the component does not handle the query
 	if wasAnswered == 0 then
@@ -63,7 +63,13 @@ function OnUpdate(ticksPassed)
 	if acceleration_component.x_acceleration ~= 0 or 
 	   acceleration_component.y_acceleration ~=0 or 
 	   acceleration_component.rotation_acceleration ~= 0 then
-	   acceleration_component:SendAccelerationChangeMessage(ticksPassed)
+	   
+	   messaging:SendVelocityChangeMessage(
+			acceleration_component.x_acceleration*ticksPassed, 
+			acceleration_component.y_acceleration*ticksPassed,
+			acceleration_component.rotation_acceleration*ticksPassed
+			)
+			
 	end
 end
 

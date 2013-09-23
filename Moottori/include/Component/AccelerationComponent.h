@@ -20,8 +20,7 @@ protected:
 	void OnAttachingScript() override;
 
 private:
-	void SendDirectionQueryMessage();
-	void SendAccelerationChangeMessage(double ticksPassed);
+
 
 	double mCurrentXAcceleration;
 	double mCurrentYAcceleration;

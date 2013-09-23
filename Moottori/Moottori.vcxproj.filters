@@ -198,6 +198,12 @@
     <ClInclude Include="include\Event\EventScriptCaller.h">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
+    <ClInclude Include="include\Event\EventSender.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Event\EventFactory.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -273,6 +279,12 @@
       <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Event\EventScriptCaller.cpp">
+      <Filter>Source Files\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Event\EventFactory.cpp">
+      <Filter>Source Files\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Event\EventSender.cpp">
       <Filter>Source Files\Event</Filter>
     </ClCompile>
   </ItemGroup>
