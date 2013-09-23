@@ -7,11 +7,15 @@ function AddSprites()
 end
 
 function CreatePlayer()
+	local playerX = 250
+	local playerY = 250
+	local collisionAreaSize = 25
+
 	AddInputComponent("data/scripts/ship_input.lua")
-	AddLocationComponent(250, 250, "data/scripts/location.lua")
+	AddLocationComponent(playerX, playerY, "data/scripts/location.lua")
 	AddVelocityComponent("data/scripts/ship_velocity.lua")
 	AddAccelerationComponent("data/scripts/ship_acceleration.lua")
-	AddGraphicsComponent("")
-	AddCollisionComponent("", 25)	
+	AddGraphicsComponent("data/scripts/graphics.lua")
+	AddCollisionComponent("", collisionAreaSize)	
 	AddSprites()
 end

@@ -42,8 +42,13 @@ public:
 		}
 
 		lua_pushcfunction(mState, f);
-		lua_pushstring(mState, LUA_IOLIBNAME);
+		lua_pushstring(mState, libraryName.c_str());
 		lua_call(mState, 1, 0);
+	}
+
+	void OpenAllLuaLibraries()
+	{
+		luaL_openlibs(mState);
 	}
 
 

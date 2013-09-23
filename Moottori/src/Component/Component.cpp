@@ -14,18 +14,15 @@ void Component::AttachScript(std::string scriptFile)
 {
 	mLuaState.Open();
 	mLuaState.LoadScriptFile(scriptFile);
-	mLuaState.OpenLuaLibrary(luaopen_io, LUA_IOLIBNAME);
-	mLuaState.OpenLuaLibrary(luaopen_math, LUA_MATHLIBNAME);  
-	
+	mLuaState.OpenAllLuaLibraries();
 
-	
 	luabind::module(mLuaState.State()) [
 		luabind::class_<Component>("Component")
 			.def("RegisterForEvents", &Component::RegisterForEvents)
 	];
 
+	
 	luabind::globals(mLuaState.State())["component"] = this;	
-
 	OnAttachingScript();
 }
 
