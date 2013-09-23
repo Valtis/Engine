@@ -1,5 +1,5 @@
 #pragma once
-class IEventHandler;
+class EventHandler;
 class LuaState;
 
 #include "Utility/Enumerations.h"
@@ -20,10 +20,10 @@ private:
 public:
 #endif
 
-	void Init(IEventHandler *handler, LuaState *luaState);
+	void Init(EventHandler *handler, LuaState *luaState);
 
 private:
-	IEventHandler *mEventHandler;
+	EventHandler *mEventHandler;
 	LuaState *mLuaState;
 	void RegisterFunctions();
 

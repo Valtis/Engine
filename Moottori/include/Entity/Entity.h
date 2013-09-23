@@ -6,14 +6,14 @@
 #include <memory>
 #include <functional>
 
-#include "Event/IEventHandler.h"
+#include "Event/EventHandler.h"
 #include "Utility/UniqueID.h"
 #include "Utility/Enumerations.h"
 
 class Component;
 class Event;
 
-class Entity : public IEventHandler
+class Entity : public EventHandler
 {
 public:
 	Entity();

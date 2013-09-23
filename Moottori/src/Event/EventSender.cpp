@@ -1,10 +1,10 @@
 #include "Event/EventSender.h"
-#include "Event/IEventHandler.h"
+#include "Event/EventHandler.h"
 #include "Event/EventFactory.h"
 #include "Utility/LuaState.h"
 
 
-void EventSender::Init(IEventHandler *handler, LuaState *luaState)
+void EventSender::Init(EventHandler *handler, LuaState *luaState)
 {
 	mEventHandler = handler;
 	mLuaState = luaState;

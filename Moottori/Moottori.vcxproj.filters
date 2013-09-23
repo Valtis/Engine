@@ -90,9 +90,6 @@
     <ClInclude Include="include\Event\Event.h">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
-    <ClInclude Include="include\Event\IEventHandler.h">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
     <ClInclude Include="include\Graphics\Renderer\Renderer.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
@@ -202,6 +199,9 @@
       <Filter>Header Files\Event</Filter>
     </ClInclude>
     <ClInclude Include="include\Event\EventFactory.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Event\EventHandler.h">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,8 +2,8 @@
 #include "Utility/LuaState.h"
 #include "Event/EventSender.h"
 #include "Utility/Enumerations.h"
-#include "Event/IEventHandler.h"
-class IEventHandler;
+
+class EventHandler;
 class Event;
 class Component
 {
@@ -24,7 +24,7 @@ public:
 
 	void AttachScript(std::string scriptFile);
 
-	void RegisterEventHandler(IEventHandler *handler);
+	void RegisterEventHandler(EventHandler *handler);
 
 	void Update(double ticksPassed);
 
@@ -37,7 +37,7 @@ protected:
 
 	
 private:
-	IEventHandler *mEventHandler;
+	EventHandler *mEventHandler;
 	void HandleEvent(Event *event);
 	void RegisterForEvents(EventType type);
 	EventSender mEventSender;

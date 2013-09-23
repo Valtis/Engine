@@ -6,10 +6,10 @@
 #include "Utility/Enumerations.h"
 class Event;
 
-class IEventHandler
+class EventHandler
 {
     public:
-        virtual ~IEventHandler() {}
+        virtual ~EventHandler() {}
 
         virtual void AddEvent(std::unique_ptr<Event> event) = 0;
         virtual void ProcessEvent(std::unique_ptr<Event> event) = 0;

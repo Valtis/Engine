@@ -35,7 +35,7 @@
     <ClInclude Include="include\Event\EventScriptCaller.h" />
     <ClInclude Include="include\Event\EventSender.h" />
     <ClInclude Include="include\Event\EventVisitor.h" />
-    <ClInclude Include="include\Event\IEventHandler.h" />
+    <ClInclude Include="include\Event\EventHandler.h" />
     <ClInclude Include="include\Event\QueryDirectionEvent.h" />
     <ClInclude Include="include\Event\RequestTerminationEvent.h" />
     <ClInclude Include="include\Event\UIEvent.h" />
@@ -138,6 +138,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <EnablePREfast>true</EnablePREfast>
+      <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -153,6 +155,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
