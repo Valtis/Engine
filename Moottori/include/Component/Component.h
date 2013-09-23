@@ -2,7 +2,8 @@
 
 #include "Event/Event.h"
 #include "Event/IEventHandler.h"
-#include "Event/EventScriptCaller.h"
+
+//#include "Event/EventSender.h"
 #include "Utility/LuaState.h"
 #include <memory>
 
@@ -42,10 +43,7 @@ public:
 protected:
 	IEventHandler &GetEventHandler() { return *mEventHandler; }
 
-	void RegisterForEvents(EventType type)
-	{
-		mEventHandler->RegisterCallback(type, [&](Event *event) { this->HandleEvent(event); });
-	}
+
 
 
 	virtual void OnAttachingScript()
@@ -56,14 +54,10 @@ protected:
 
 	
 private:
-
+		void RegisterForEvents(EventType type);
+//	EventSender mEventSender;
 	
-	void HandleEvent(Event *event)
-	{
-		std::unique_ptr<EventScriptCaller> caller(new EventScriptCaller(mLuaState));
-		event->AcceptVisitor(caller.get());
-	}
-
+	void HandleEvent(Event *event);
 	IEventHandler *mEventHandler;
 
 };

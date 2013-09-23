@@ -1,5 +1,5 @@
 #include "Component/Component.h"
-
+#include "Event/EventScriptCaller.h"
 Component::Component() : mEventHandler(nullptr)
 {
 
@@ -21,7 +21,7 @@ void Component::AttachScript(std::string scriptFile)
 			.def("RegisterForEvents", &Component::RegisterForEvents)
 	];
 
-	
+
 	luabind::globals(mLuaState.State())["component"] = this;	
 	OnAttachingScript();
 }
@@ -33,4 +33,15 @@ void Component::Update(double ticksPassed)
 	{
 		luabind::call_function<void>(mLuaState.State(), "OnUpdate", ticksPassed);
 	}
+}
+
+void Component::HandleEvent(Event *event)
+{
+	EventScriptCaller caller(mLuaState);
+	event->AcceptVisitor(&caller);
+}
+
+void Component::RegisterForEvents(EventType type)
+{
+	mEventHandler->RegisterCallback(type, [&](Event *event) { this->HandleEvent(event); });
 }
