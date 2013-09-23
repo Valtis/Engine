@@ -31,7 +31,7 @@ void EventScriptCaller::Visit(const ChangeLocationEvent *event) const
 
 void EventScriptCaller::Visit(const ChangeAnimationStateEvent *event) const 
 {
-	mState.CallFunction("w", event->GetAnimationID(), event->GetNewAnimationState());
+	mState.CallFunction("OnAnimationStateChangeEvent", event->GetAnimationID(), event->GetNewAnimationState());
 }
 
 

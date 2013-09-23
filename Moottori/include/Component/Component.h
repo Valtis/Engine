@@ -37,7 +37,7 @@ public:
 
 	}
 
-	virtual void Update(double ticksPassed);
+	void Update(double ticksPassed);
 
 protected:
 	IEventHandler &GetEventHandler() { return *mEventHandler; }

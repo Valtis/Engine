@@ -15,19 +15,34 @@ GraphicsComponent::~GraphicsComponent()
 
 }
 
-void GraphicsComponent::Update(double ticksPassed)
+void GraphicsComponent::OnAttachingScript()
 {
-	if (mIsAnimating)
+	luabind::module(mLuaState.State()) [
+		luabind::class_<GraphicsComponent>("GraphicsComponent")
+			.def_readwrite("currentAnimationID", &GraphicsComponent::mCurrentAnimationID)
+			.def_readwrite("is_animating", &GraphicsComponent::mIsAnimating)
+			.def("ResetSprite", &GraphicsComponent::ResetSprite)
+			.def("NextSprite", &GraphicsComponent::NextSprite)
+			.def("NextSprite", &GraphicsComponent::PreviousSprite)
+			.def("AddSprite", &GraphicsComponent::AddSprite)
+			.def("UpdateAnimationState", &GraphicsComponent::UpdateAnimationState)
+
+	];
+
+	luabind::globals(mLuaState.State())["graphics_component"] = this;
+}
+
+void GraphicsComponent::UpdateAnimationState(double ticksPassed)
+{
+	FrameData &data = mGraphicsData[mCurrentAnimationID][mCurrentSprite];
+	data.mCurrentTickCount += ticksPassed;
+	if (data.mCurrentTickCount > data.mTicksToNextFrame)
 	{
-		FrameData &data = mGraphicsData[mCurrentAnimationID][mCurrentSprite];
-		data.mCurrentTickCount += ticksPassed;
-		if (data.mCurrentTickCount > data.mTicksToNextFrame)
-		{
-			data.mCurrentTickCount = 0;
-			NextSprite();
-		}
+		data.mCurrentTickCount = 0;
+		NextSprite();
 	}
 }
+
 
 void GraphicsComponent::AddSprite(int animationID, int spriteID, int ticksToNextFrame)
 {
@@ -71,18 +86,3 @@ void GraphicsComponent::ResetSprite()
 {
 	mCurrentSprite = 0;
 }
-
-/*
-void GraphicsComponent::HandleAnimationStateChangeEvent(Event *event)
-{
-	auto animationEvent = dynamic_cast<ChangeAnimationStateEvent *>(event);
-	SDL_assert(animationEvent != nullptr);
-
-	mCurrentAnimationID = animationEvent->GetAnimationID();
-	mIsAnimating = animationEvent->GetNewAnimationState();
-	if (!mIsAnimating)
-	{
-		ResetSprite();
-	}
-
-}*/
