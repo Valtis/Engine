@@ -1,13 +1,13 @@
 #include "Collision/CollisionManager.h"
 #include "Entity/Entity.h"
 #include "Entity/EntityManager.h"
-#include "Graphics/SpriteManager.h"
+#include "Event/EventFactory.h"
 
+#include "Graphics/SpriteManager.h"
 #include "Component/LocationComponent.h"
 #include "Component/GraphicsComponent.h"
 #include "Component/CollisionAreaComponent.h"
 
-#include "Event/BoundaryCollisionEvent.h"
 
 #include <SDL_assert.h>
 
@@ -111,7 +111,7 @@ void CollisionManager::CheckLevelBoundaryCollisions(Entity *e)
 
 		int maxX = mLevelWidth - collision->GetCollisionRadius();
 		int maxY = mLevelHeight - collision->GetCollisionRadius();
-		e->ProcessEvent(std::unique_ptr<BoundaryCollisionEvent>(new BoundaryCollisionEvent(direction, minX, minY, maxX, maxY)));
+		e->ProcessEvent(EventFactory::CreateBoundaryCollisionEvent(direction, minX, minY, maxX, maxY));
 	}
 		
 

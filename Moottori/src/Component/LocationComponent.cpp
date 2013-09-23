@@ -1,8 +1,4 @@
 #include "Component/LocationComponent.h"
-#include "Event/ChangeLocationEvent.h"
-#include "Event/QueryDirectionEvent.h"
-#include "Event/BoundaryCollisionEvent.h"
-
 #include <SDL_assert.h>
 #include <cmath>
 

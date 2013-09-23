@@ -1,7 +1,4 @@
 #include "Component/AccelerationComponent.h"
-#include "Event/ChangeAccelerationEvent.h"
-#include "Event/ChangeVelocityEvent.h"
-#include "Event/QueryDirectionEvent.h"
 #include <cmath>
 #include "SDL_assert.h"
 

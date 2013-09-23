@@ -2,8 +2,6 @@
 #include "UI/UI.h"
 #include "Utility/Defines.h"
 #include "Event/UIEvent.h"
-#include "Event/ChangeAccelerationEvent.h"
-#include "Event/ChangeAnimationStateEvent.h"
 #include <memory>
 
 InputComponent::InputComponent(UI &ui)

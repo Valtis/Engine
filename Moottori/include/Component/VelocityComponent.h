@@ -21,11 +21,6 @@ public:
 protected:
 	virtual void OnAttachingScript() override;
 private:
-	
-	void SendVelocityChangeMessage(double ticksPassed);
-	void SendAnimationStateMessage(int animationID, bool animationState);
-	
-
 	double mCurrentXVelocity;
 	double mCurrentYVelocity;
 	double mCurrentRotationSpeed;

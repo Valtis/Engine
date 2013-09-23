@@ -3,7 +3,6 @@
 #include "Event/EventSender.h"
 #include "Utility/Enumerations.h"
 #include "Event/IEventHandler.h"
-#include "Event/Event.h"
 class IEventHandler;
 class Event;
 class Component
@@ -30,7 +29,6 @@ public:
 	void Update(double ticksPassed);
 
 protected:
-	IEventHandler &GetEventHandler() { return *mEventHandler; }
 	virtual void OnAttachingScript()
 	{
 	

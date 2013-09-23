@@ -1,7 +1,6 @@
 #include "Component/Component.h"
 #include "Event/EventScriptCaller.h"
-
-
+#include "Event/Event.h"
 
 
 Component::Component() : mEventSender()

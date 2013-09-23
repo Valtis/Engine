@@ -2,7 +2,7 @@
 #include "Graphics/Renderer/Renderer.h"
 #include "Graphics/SpriteManager.h"
 #include "Utility/Defines.h"
-#include "Event/UIEvent.h"
+#include "Event/EventFactory.h"
 
 #include "UI/Controller/ControllerFactory.h"
 
@@ -97,7 +97,7 @@ void UI::SortHandlers()
 
 void UI::NotifyInputHandlers(UIEventType event, UIEventState state)
 {
-	std::unique_ptr<UIEvent> uiEvent(new UIEvent(event, state));
+	std::unique_ptr<Event> uiEvent(EventFactory::CreateUIEvent(event, state));
 	for (auto &handler : mInputHandlers)
 	{
 		if (handler.second(uiEvent.get())) // returns true if event was handled

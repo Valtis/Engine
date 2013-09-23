@@ -1,8 +1,7 @@
 #include "Event/EventSender.h"
-#include "Event/Event.h"
-#include "Utility/LuaState.h"
 #include "Event/IEventHandler.h"
 #include "Event/EventFactory.h"
+#include "Utility/LuaState.h"
 
 
 void EventSender::Init(IEventHandler *handler, LuaState *luaState)
@@ -20,6 +19,7 @@ void EventSender::RegisterFunctions()
 			.def("SendVelocityChangeMessage", &EventSender::SendVelocityChangeMessage)
 			.def("SendAnimationStateMessage", &EventSender::SendAnimationStateMessage)
 			.def("SendAccelerationChangeMessage", &EventSender::SendAccelerationChangeMessage)
+			.def("SendLocationChangeMessage", &EventSender::SendLocationChangeMessage)
 
 	];
 
@@ -52,4 +52,10 @@ void EventSender::SendAnimationStateMessage(int animationID, bool animationState
 void EventSender::SendAccelerationChangeMessage(Direction accelerationDirection, Direction rotationDirection, UIEventState eventState)
 {
 	mEventHandler->ProcessEvent(EventFactory::CreateChangeAccelerationEvent(accelerationDirection, rotationDirection, eventState));
+}
+
+
+void EventSender::SendLocationChangeMessage(double xPositionChange, double yPositionChange, double rotationChange)
+{
+	mEventHandler->ProcessEvent(EventFactory::CreateChangeLocationEvent(xPositionChange, yPositionChange, rotationChange));
 }

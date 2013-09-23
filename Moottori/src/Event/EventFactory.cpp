@@ -3,11 +3,13 @@
 #include "Event/ChangeAccelerationEvent.h"
 #include "Event/QueryDirectionEvent.h"
 #include "Event/ChangeAnimationStateEvent.h"
-
+#include "Event/ChangeLocationEvent.h"
+#include "Event/BoundaryCollisionEvent.h"
+#include "Event/UIEvent.h"
 
 namespace EventFactory
 {
-	std::unique_ptr<Event> CreateChangeVelocityEvent(int xVelocityChange, int yVelocityChange, int rotationVelocityChange)
+	std::unique_ptr<Event> CreateChangeVelocityEvent(double xVelocityChange, double yVelocityChange, double rotationVelocityChange)
 	{
 
 		return std::unique_ptr<Event>(new ChangeVelocityEvent(xVelocityChange, 
@@ -29,4 +31,20 @@ namespace EventFactory
 	{
 		return std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(accelerationDirection, rotationDirection, state));
 	}
+
+	std::unique_ptr<Event> CreateChangeLocationEvent(double xPositionChange, double yPositionChange, double rotationChange)
+	{
+		return std::unique_ptr<ChangeLocationEvent>(new ChangeLocationEvent(xPositionChange,yPositionChange, rotationChange));
+	}
+
+	std::unique_ptr<Event> CreateBoundaryCollisionEvent(Direction direction, int minX, int minY, int maxX, int maxY)
+	{
+		return std::unique_ptr<BoundaryCollisionEvent>(new BoundaryCollisionEvent(direction, minX, minY, maxX, maxY));
+	}
+
+	std::unique_ptr<Event> CreateUIEvent(UIEventType eventType, UIEventState eventState)
+	{
+		return std::unique_ptr<UIEvent>(new UIEvent(eventType, eventState));
+	}
+	
 }
