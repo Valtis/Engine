@@ -22,9 +22,9 @@ function OnInputEvent(ui_event_type, ui_event_state)
 		direction = Direction_Backward
 	end		
 	
-	--input_component:SendAnimationStateMessage(animation_id, animation_state)
+	--messaging:SendAnimationStateMessage(animation_id, animation_state)
 	if direction ~=Direction_None or turn_direction ~= Direction_None then
-		input_component:SendAccelerationChangeMessage(direction, turn_direction, ui_event_state)
+		messaging:SendAccelerationChangeMessage(direction, turn_direction, ui_event_state)
 		return true
 	end
 		

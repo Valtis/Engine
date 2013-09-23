@@ -18,6 +18,8 @@ void EventSender::RegisterFunctions()
 		luabind::class_<EventSender>("EventSender")
 			.def("SendDirectionQueryMessage", &EventSender::SendDirectionQueryMessage)
 			.def("SendVelocityChangeMessage", &EventSender::SendVelocityChangeMessage)
+			.def("SendAnimationStateMessage", &EventSender::SendAnimationStateMessage)
+			.def("SendAccelerationChangeMessage", &EventSender::SendAccelerationChangeMessage)
 
 	];
 
@@ -38,4 +40,16 @@ void EventSender::SendDirectionQueryMessage()
 void EventSender::SendVelocityChangeMessage(double xVelocityChange, double yVelocityChange, double rotationVelocityChange)
 {
 	mEventHandler->ProcessEvent(EventFactory::CreateChangeVelocityEvent(xVelocityChange, yVelocityChange, rotationVelocityChange));
+}
+
+
+void EventSender::SendAnimationStateMessage(int animationID, bool animationState)
+{
+	mEventHandler->AddEvent(EventFactory::CreateAnimationStateChangeEvent(animationID, animationState));
+}
+
+
+void EventSender::SendAccelerationChangeMessage(Direction accelerationDirection, Direction rotationDirection, UIEventState eventState)
+{
+	mEventHandler->ProcessEvent(EventFactory::CreateChangeAccelerationEvent(accelerationDirection, rotationDirection, eventState));
 }

@@ -1,5 +1,4 @@
 #include "Component/GraphicsComponent.h"
-#include "Event/ChangeAnimationStateEvent.h"
 #include <SDL_assert.h>
 
 

@@ -57,7 +57,7 @@ function OnUpdate(ticks_passed)
 		animation_state = true
 		animation_id = 1 -- ship go wroom
 	end
-	velocity_component:SendAnimationStateMessage(animation_id, animation_state)
+	messaging:SendAnimationStateMessage(animation_id, animation_state)
 end
 
 function OnVelocityChangeEvent(x_velocity_change, y_velocity_change, rotation_velocity_change)

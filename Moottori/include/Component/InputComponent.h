@@ -16,11 +16,7 @@ private:
 public:
 #endif
 
-protected:
-	void OnAttachingScript() override;
 
 private:
 	bool InputHandler(Event *event);
-	void SendAccelerationChangeMessage(Direction accelerationDirection, Direction rotationDirection, UIEventState eventState);
-	void SendAnimationStateMessage(int animationID, bool animationState);
 };

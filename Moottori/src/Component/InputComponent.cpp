@@ -17,29 +17,6 @@ InputComponent::~InputComponent()
 
 }
 
-void InputComponent::OnAttachingScript()
-{
-	luabind::module(mLuaState.State()) [
-		luabind::class_<InputComponent>("InputComponent")
-			.def("SendAccelerationChangeMessage", &InputComponent::SendAccelerationChangeMessage)
-			.def("SendAnimationStateMessage", &InputComponent::SendAnimationStateMessage)
-	];
-
-	luabind::globals(mLuaState.State())["input_component"] = this;
-}
-
-void InputComponent::SendAnimationStateMessage(int animationID, bool animationState)
-{
-	GetEventHandler().AddEvent(
-		std::unique_ptr<ChangeAnimationStateEvent>(
-		new ChangeAnimationStateEvent(animationID, animationState)));
-}
-
-
-void InputComponent::SendAccelerationChangeMessage(Direction accelerationDirection, Direction rotationDirection, UIEventState eventState)
-{
-	GetEventHandler().ProcessEvent(std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(accelerationDirection, rotationDirection, eventState)));
-}
 
 bool InputComponent::InputHandler(Event *event)
 {
