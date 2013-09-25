@@ -18,7 +18,7 @@ void GraphicsComponent::OnAttachingScript()
 {
 	luabind::module(mLuaState.State()) [
 		luabind::class_<GraphicsComponent>("GraphicsComponent")
-			.def_readwrite("currentAnimationID", &GraphicsComponent::mCurrentAnimationID)
+			.def_readwrite("current_animation_ID", &GraphicsComponent::mCurrentAnimationID)
 			.def_readwrite("is_animating", &GraphicsComponent::mIsAnimating)
 			.def("ResetSprite", &GraphicsComponent::ResetSprite)
 			.def("NextSprite", &GraphicsComponent::NextSprite)
