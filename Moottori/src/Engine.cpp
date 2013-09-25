@@ -136,14 +136,23 @@ void Engine::Initialize()
 	EntityFactory::RegisterCreationScript("data/scripts/entity_creation.lua");
 	
 	e = EntityFactory::CreateEntity("CreatePlayer", &mUI);
+
+
 	mLevel->AddEntity(e->GetID());
 	Renderer::Instance().AddEntity(e->GetID());
 
 	// create camera for ui
 	std::unique_ptr<Camera> c(new EntityTrackingCamera(e->GetID(), mLevel->GetWidth(), mLevel->GetHeight()));
 	mUI.AttachCamera(std::move(c));
-
 	EntityManager::Instance().AddEntity(std::move(e));
+
+
+	// create asteroid thingy
+	e = EntityFactory::CreateEntity("CreateDebugAsteroid");
+	mLevel->AddEntity(e->GetID());
+	Renderer::Instance().AddEntity(e->GetID());
+	EntityManager::Instance().AddEntity(std::move(e));
+
 
 	mCollisionManager.SetCollidabeEntities(mLevel->GetEntities());
 	mCollisionManager.SetLevelWidth(mLevel->GetWidth());

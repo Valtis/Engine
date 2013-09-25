@@ -24,7 +24,7 @@ public:
 
 
 	static std::unique_ptr<Entity> CreateEntity(std::string functionName, UI *ui); // todo: hide UI behind interface; needed here so that input component can register itself for input
-	static std::unique_ptr<Entity> CreateEntity(std::string functionName) { /* todo: implement */ }
+	static std::unique_ptr<Entity> CreateEntity(std::string functionName) { return CreateEntity(functionName, nullptr); }
 
 private:
 

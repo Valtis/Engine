@@ -28,5 +28,6 @@ function CreateDebugAsteroid()
 	AddLocationComponent(asteroidX, asteroidY, "")
 	AddGraphicsComponent("data/scripts/graphics.lua")
 	AddCollisionComponent(collisionRadius, "data/scripts/asteroid_collision.lua")
+	AddSprite(0, 200006, 5)
 end
 
