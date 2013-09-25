@@ -35,18 +35,28 @@ void CollisionManager::SetCollidabeEntities(std::vector<int> entitites)
 
 void CollisionManager::Update(double ticksPassed)
 {
-	for (int i : mCollidables)
+	for (auto iter = std::begin(mCollidables); iter != std::end(mCollidables); ++iter)
 	{
-		Entity * e = EntityManager::Instance().GetEntity(i);
+		Entity * e = EntityManager::Instance().GetEntity(*iter);
+		
+		if (e == nullptr)
+		{
+			iter = mCollidables.erase(iter);
+		}
+		
 		CheckLevelBoundaryCollisions(e);
-		// CheckEntityCollisions(e);
+		CheckEntityCollisions(e);
 	}
 }
 
 
-int CollisionManager::GetCenterX(Entity *e, LocationComponent *location, GraphicsComponent *graphics)
+int CollisionManager::GetCenterX(Entity *e)
 {
+	auto location = dynamic_cast<LocationComponent *>(e->GetComponent(ComponentType::Location));
+	auto graphics = dynamic_cast<GraphicsComponent *>(e->GetComponent(ComponentType::Graphics));
+	SDL_assert(location != nullptr);
 	int x = location->GetX();
+
 	if (graphics != nullptr)
 	{
 		x += SpriteManager::Instance().GetSprite(graphics->GetCurrentSpriteID())->GetLocation().w/2;
@@ -55,8 +65,12 @@ int CollisionManager::GetCenterX(Entity *e, LocationComponent *location, Graphic
 	return x;
 }
 
-int CollisionManager::GetCenterY(Entity *e, LocationComponent *location, GraphicsComponent *graphics)
+int CollisionManager::GetCenterY(Entity *e)
 {
+	auto location = dynamic_cast<LocationComponent *>(e->GetComponent(ComponentType::Location));
+	auto graphics = dynamic_cast<GraphicsComponent *>(e->GetComponent(ComponentType::Graphics));
+	SDL_assert(location != nullptr);
+
 	int y = location->GetY();
 	if (graphics != nullptr)
 	{
@@ -66,20 +80,15 @@ int CollisionManager::GetCenterY(Entity *e, LocationComponent *location, Graphic
 	return y;
 }
 
-
-void CollisionManager::CheckLevelBoundaryCollisions(Entity *e)
+Direction CollisionManager::FindCollisionEdge(Entity *e)
 {
-	auto location = dynamic_cast<LocationComponent *>(e->GetComponent(ComponentType::Location));
-	auto collision = dynamic_cast<CollisionAreaComponent *>(e->GetComponent(ComponentType::Collision));
-	auto graphics = dynamic_cast<GraphicsComponent *>(e->GetComponent(ComponentType::Graphics));
-
-	SDL_assert(location != nullptr);
-	SDL_assert(collision != nullptr);
-	// graphicsComponent is optional, no assert required
-
-	int centerX = GetCenterX(e, location, graphics);
-	int centerY = GetCenterY(e, location, graphics);
 	Direction direction = Direction::None;
+	int centerX = GetCenterX(e);
+	int centerY = GetCenterY(e);
+
+	auto collision = dynamic_cast<CollisionAreaComponent *>(e->GetComponent(ComponentType::Collision));
+	
+	SDL_assert(collision != nullptr);
 
 	if (centerX - collision->GetCollisionRadius() < 0)
 	{
@@ -97,23 +106,91 @@ void CollisionManager::CheckLevelBoundaryCollisions(Entity *e)
 	{
 		direction = Direction::Bottom;
 	}
-	
+
+	return direction;
+}
+
+void CollisionManager::SendBoundaryCollisionEventToEntity(Entity * e, Direction direction )
+{
+	auto collision = dynamic_cast<CollisionAreaComponent *>(e->GetComponent(ComponentType::Collision));
+	SDL_assert(collision != nullptr);
+
+	auto graphics = dynamic_cast<GraphicsComponent *>(e->GetComponent((ComponentType::Graphics)));
+	int minX = collision->GetCollisionRadius(); 
+	int minY = collision->GetCollisionRadius();
+	if (graphics != nullptr)
+	{
+		minX -= SpriteManager::Instance().GetSprite(graphics->GetCurrentSpriteID())->GetLocation().w/2;
+		minY -= SpriteManager::Instance().GetSprite(graphics->GetCurrentSpriteID())->GetLocation().h/2; 
+	}
+
+	int maxX = mLevelWidth - collision->GetCollisionRadius();
+	int maxY = mLevelHeight - collision->GetCollisionRadius();
+	e->ProcessEvent(EventFactory::CreateBoundaryCollisionEvent(direction, minX, minY, maxX, maxY));
+}
+
+
+void CollisionManager::CheckLevelBoundaryCollisions(Entity *e)
+{
+	Direction direction = FindCollisionEdge(e);
+
 	if (direction != Direction::None)
 	{
+		SendBoundaryCollisionEventToEntity(e, direction);
+	}
+}
 
-		int minX = collision->GetCollisionRadius(); 
-		int minY = collision->GetCollisionRadius();
-		if (graphics != nullptr)
+// todo - implement quad tree or similar structure to improve performance - right now checks collisions to each entity 
+// --> slow ( O(n^2) )
+void CollisionManager::CheckEntityCollisions(Entity *first)
+{
+	for (auto id : mCollidables)
+	{
+		if (first->GetID() == id)
 		{
-			minX -= SpriteManager::Instance().GetSprite(graphics->GetCurrentSpriteID())->GetLocation().w/2;
-			minY -= SpriteManager::Instance().GetSprite(graphics->GetCurrentSpriteID())->GetLocation().h/2; 
+			continue;
 		}
 
-		int maxX = mLevelWidth - collision->GetCollisionRadius();
-		int maxY = mLevelHeight - collision->GetCollisionRadius();
-		e->ProcessEvent(EventFactory::CreateBoundaryCollisionEvent(direction, minX, minY, maxX, maxY));
-	}
+		Entity *second = EntityManager::Instance().GetEntity(id);
+		if (second == nullptr)
+		{
+			continue; // the same list is being iterated elsewhere, removing entity here would invalidate the iterator and cause a crash
+		}
 		
+		HandleEntityCollision(first, second);
 
+	}
+}
 
+void CollisionManager::HandleEntityCollision( Entity * first, Entity * second )
+{
+	auto firstCollisionComponent = dynamic_cast<CollisionAreaComponent *>(first->GetComponent(ComponentType::Collision));
+	auto secondCollisionComponent = dynamic_cast<CollisionAreaComponent *>(second->GetComponent(ComponentType::Collision));
+
+	SDL_assert(firstCollisionComponent != nullptr);
+	SDL_assert(secondCollisionComponent != nullptr);
+	
+	int distance = CalculateDistance(first, second);
+
+	int collidesIfCloser = firstCollisionComponent->GetCollisionRadius() + secondCollisionComponent->GetCollisionRadius();
+	collidesIfCloser *= collidesIfCloser;
+
+	if (distance < collidesIfCloser)
+	{
+		first->ProcessEvent(EventFactory::CreateEntityCollisionEvent(first->GetID(), second->GetID()));
+	}
+}
+
+int CollisionManager::CalculateDistance( Entity * first, Entity * second )
+{
+	int firstCenterX = GetCenterX(first);
+	int firstCenterY = GetCenterY(first);
+
+	int secondCenterX = GetCenterX(second);
+	int secondCenterY = GetCenterY(second);
+
+	int xDistance = firstCenterX - secondCenterX;
+	int yDistance = firstCenterY - secondCenterY;
+
+	return xDistance*xDistance + yDistance*yDistance;
 }

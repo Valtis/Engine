@@ -5,6 +5,7 @@
 #include "Event/ChangeAnimationStateEvent.h"
 #include "Event/ChangeLocationEvent.h"
 #include "Event/BoundaryCollisionEvent.h"
+#include "Event/EntityCollisionEvent.h"
 #include "Event/UIEvent.h"
 
 namespace EventFactory
@@ -42,9 +43,16 @@ namespace EventFactory
 		return std::unique_ptr<BoundaryCollisionEvent>(new BoundaryCollisionEvent(direction, minX, minY, maxX, maxY));
 	}
 
+	std::unique_ptr<Event> CreateEntityCollisionEvent(int firstID, int secondID)
+	{
+		return std::unique_ptr<EntityCollisionEvent>(new EntityCollisionEvent(firstID, secondID));
+	}
+
 	std::unique_ptr<Event> CreateUIEvent(UIEventType eventType, UIEventState eventState)
 	{
 		return std::unique_ptr<UIEvent>(new UIEvent(eventType, eventState));
 	}
-	
+
+
+
 }

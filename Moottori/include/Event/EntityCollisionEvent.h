@@ -4,7 +4,7 @@
 class EntityCollisionEvent : public Event
 {
 public:
-	EntityCollisionEvent(int id) : mEntityThatCollidedID(id) { }
+	EntityCollisionEvent(int firstID, int secondID) : mFirstEntityID(firstID), mSecondEntityID(secondID) { }
 	~EntityCollisionEvent() { }
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
@@ -17,8 +17,17 @@ private:
 public:
 #endif
 
-	int GetCollidedEntityID() const { return mEntityThatCollidedID; }
+
+	void AcceptVisitor(EventVisitor *visitor) const override 
+	{
+		visitor->Visit(this);
+	}
+
+	int GetFirstEntityID() const { return mFirstEntityID; }
+	int GetSecondEntityID() const { return mSecondEntityID; }
+
 	EventType GetType() const override { return EventType::EntityCollision; }
 private:
-	const int mEntityThatCollidedID;
+	const int mFirstEntityID;
+	const int mSecondEntityID;
 }; 

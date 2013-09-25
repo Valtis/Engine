@@ -81,7 +81,7 @@ void EntityFactory::AddGraphicsComponent(std::string scriptFile)
 	mEntityBeingCreated->AddComponent(ComponentType::Graphics, std::move(c));
 }
 
-void EntityFactory::AddCollisionComponent(std::string scriptFile, int collisionRadius)
+void EntityFactory::AddCollisionComponent(int collisionRadius, std::string scriptFile)
 {
 	std::unique_ptr<Component> c(new CollisionAreaComponent(collisionRadius));
 	c->AttachScript(scriptFile);

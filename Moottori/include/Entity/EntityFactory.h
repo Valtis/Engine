@@ -37,7 +37,7 @@ private:
 	static void AddSprite(int animationID, int spriteID, int ticksToNextFrame);
 	static void AddVelocityComponent(std::string scriptFile);
 	static void AddAccelerationComponent(std::string scriptFile);
-	static void AddCollisionComponent(std::string scriptFile, int collisionRadius);
+	static void AddCollisionComponent(int collisionRadius, std::string scriptFile);
 
 
 	static void InitializeLuaState();

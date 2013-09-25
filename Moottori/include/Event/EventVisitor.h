@@ -7,6 +7,7 @@ class ChangeLocationEvent;
 class ChangeVelocityEvent;
 class QueryDirectionEvent;
 class RequestTerminationEvent;
+class EntityCollisionEvent;
 
 class EventVisitor
 {
@@ -18,5 +19,5 @@ public:
 	virtual void Visit(const ChangeAnimationStateEvent *event) const = 0;
 	virtual void Visit(const QueryDirectionEvent *event, double &rotation) const = 0;
 	virtual void Visit(const RequestTerminationEvent *event) const = 0;
-
+	virtual void Visit(const EntityCollisionEvent*event) const = 0;
 };
