@@ -1,6 +1,6 @@
 #include "Graphics/Sprite.h"
 
-Sprite::Sprite()
+Sprite::Sprite() : mID(), mLocation(), mSpriteSheetID(0), mDrawPriority(0)
 {
 
 }
@@ -34,4 +34,6 @@ void Sprite::SetDrawPriority(int priority)
 	{
 		priority = 9;
 	}
+
+	mDrawPriority = priority;
 }

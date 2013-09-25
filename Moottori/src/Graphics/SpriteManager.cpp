@@ -1,7 +1,7 @@
 #include "Graphics/SpriteManager.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Utility/StringUtility.h"
-
+#include "Utility/Defines.h"
 #include <fstream>
 SpriteManager *SpriteManager::mInstance = nullptr;
 
@@ -139,7 +139,15 @@ SpriteManager::SpriteHelper SpriteManager::ParseSpriteLine(std::string line, std
 	helper.height = std::stoi(tokens[3]);
 	helper.spriteSheetID = std::stoi(tokens[4]);
 	helper.spriteID = std::stoi(tokens[5]);
+	if (tokens.size() >= 7)
+	{
 
+		helper.drawPriority = std::stoi(tokens[6]);
+	}
+	else
+	{
+		helper.drawPriority = 5;
+	}
 	return helper;
 }
 
@@ -148,6 +156,7 @@ void SpriteManager::CreateSprite(SpriteManager::SpriteHelper helper)
 	std::unique_ptr<Sprite> sprite(new Sprite(helper.spriteID));
 	sprite->SetSpriteSheetID(helper.spriteSheetID);
 	sprite->SetLocation(helper.x, helper.y, helper.width, helper.height);
+	sprite->SetDrawPriority(helper.drawPriority);
 	mSprites[sprite->GetID()] = std::move(sprite);
 }
 

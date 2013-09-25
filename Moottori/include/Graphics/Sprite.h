@@ -12,7 +12,11 @@ public:
 	void SetLocation(SDL_Rect location) { mLocation = location; }
 	void SetLocation(int x, int y, int width, int height);
 
-	int GetDrawPriority() { return mDrawPriority; }
+	int GetDrawPriority() 
+	{ 
+		SDL_assert(mDrawPriority >= 0 && mDrawPriority <=9 ) ;
+		return mDrawPriority; 
+	}
 	void SetDrawPriority(int priority);
 
 	int GetSpriteSheetID() { return mSpriteSheetID; }

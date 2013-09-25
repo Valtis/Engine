@@ -41,6 +41,7 @@ private:
 		int height;
 		int spriteSheetID;
 		int spriteID;
+		int drawPriority;
 	};
 
 	SpriteManager();

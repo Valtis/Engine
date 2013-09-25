@@ -5,7 +5,9 @@
 #include "UI/UI.h"
 #include "Collision/CollisionManager.h"
 #include "Utility/Enumerations.h"
+#include "Utility/LuaState.h"
 class Event;
+class Entity;
 class Level;
 class Engine
 {
@@ -23,9 +25,16 @@ private:
 public:
 #endif
 	void Run();
-
 private:
 	void Initialize();
+	void InitializeLua();
+
+
+	void AddEntity(const char *scriptName, bool attachCamera);
+
+	void CreateAndAttachCamera( Entity *e );
+
+
 	void InitializeInputTypes();
 	void CleanUp();
 	void HandleInput();
@@ -50,4 +59,6 @@ private:
 
 	std::unique_ptr<Level> mLevel; // TODO - extract to (and create a) level manager 
 	CollisionManager mCollisionManager;
+
+	LuaState mLuaState;
 };

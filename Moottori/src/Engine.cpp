@@ -6,9 +6,10 @@
 #include "Event/UIEvent.h"
 #include "Utility/Defines.h"
 #include "Level/Level.h"
+#include "Entity/Entity.h"
 
 // feel free to delete following headers once refactored, only for testing
-#include "Entity/Entity.h"
+
 #include "Entity/EntityFactory.h"
 #include "Component/LocationComponent.h"
 #include "Component/GraphicsComponent.h"
@@ -84,23 +85,21 @@ void Engine::Draw()
 void Engine::Initialize()
 {
 	SDL_Init(SDL_INIT_VIDEO);
+	mLevel.reset(new Level(1920, 1080));
 
-
-	// todo: read from datafile or something
-	mDrawTickLength = 30;
-	mGameLogicTickLength = 30;
-
+	InitializeLua();
 
 	mUI.Initialize("Generic title - move to settings file!", "data/spritesheets/", 640, 480);
 	mUI.RegisterInputHandler([&](Event *event) { return this->InputHandler(event); }, INPUT_PRIORITY_HIGH);
 
 	InitializeInputTypes();
-
+	EntityFactory::RegisterCreationScript("data/scripts/entity_creation.lua");
+	mLuaState.CallFunction("OnGameInit");
 
 	// --------------- TEST CODE ----------------------
 	// --------------- UGLY UGLY UGLY -----------------
 
-	mLevel.reset(new Level(1920, 1080));
+	
 	
 	std::unique_ptr<Entity> e(new Entity);
 	std::unique_ptr<LocationComponent> l(new LocationComponent);
@@ -133,18 +132,6 @@ void Engine::Initialize()
 	Renderer::Instance().AddEntity(e->GetID());
 	EntityManager::Instance().AddEntity(std::move(e));
 
-	EntityFactory::RegisterCreationScript("data/scripts/entity_creation.lua");
-	
-	e = EntityFactory::CreateEntity("CreatePlayer", &mUI);
-
-
-	mLevel->AddEntity(e->GetID());
-	Renderer::Instance().AddEntity(e->GetID());
-
-	// create camera for ui
-	std::unique_ptr<Camera> c(new EntityTrackingCamera(e->GetID(), mLevel->GetWidth(), mLevel->GetHeight()));
-	mUI.AttachCamera(std::move(c));
-	EntityManager::Instance().AddEntity(std::move(e));
 
 
 	// create asteroid thingy
@@ -163,6 +150,24 @@ void Engine::Initialize()
 	mLastDrawTick = SDL_GetTicks();
 	mLastGameLogicTick = SDL_GetTicks();
 }
+
+
+void Engine::InitializeLua()
+{
+	mLuaState.Open();
+	mLuaState.OpenAllLuaLibraries();
+	mLuaState.LoadScriptFile("data/scripts/game_init.lua");
+
+	luabind::module(mLuaState.State()) [
+		luabind::class_<Engine>("Engine")
+			.def_readwrite("draw_tick_length", &Engine::mDrawTickLength)
+			.def_readwrite("game_logic_tick_length", &Engine::mGameLogicTickLength)
+			.def("AddEntity", &Engine::AddEntity)
+	];
+
+	luabind::globals(mLuaState.State())["engine"] = this;
+}
+
 
 void Engine::InitializeInputTypes()
 {
@@ -194,3 +199,23 @@ void Engine::CleanUp()
 
 	SDL_Quit();
 }
+
+void Engine::AddEntity( const char *scriptName, bool attachCamera )
+{
+	auto e = EntityFactory::CreateEntity(scriptName , &mUI);
+	mLevel->AddEntity(e->GetID());
+	Renderer::Instance().AddEntity(e->GetID());
+
+	if (attachCamera)
+	{
+		CreateAndAttachCamera(e.get());
+	}
+	EntityManager::Instance().AddEntity(std::move(e));
+}
+
+void Engine::CreateAndAttachCamera( Entity *e )
+{
+	std::unique_ptr<Camera> c(new EntityTrackingCamera(e->GetID(), mLevel->GetWidth(), mLevel->GetHeight()));
+	mUI.AttachCamera(std::move(c));
+}
+
