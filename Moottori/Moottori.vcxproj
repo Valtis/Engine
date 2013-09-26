@@ -51,6 +51,7 @@
     <ClInclude Include="include\UI\UI.h" />
     <ClInclude Include="include\Utility\Defines.h" />
     <ClInclude Include="include\Utility\Enumerations.h" />
+    <ClInclude Include="include\Utility\Logger.h" />
     <ClInclude Include="include\Utility\LuaState.h" />
     <ClInclude Include="include\Utility\StringUtility.h" />
     <ClInclude Include="include\Utility\UniqueID.h" />
@@ -81,6 +82,7 @@
     <ClCompile Include="src\UI\Controller\ControllerFactory.cpp" />
     <ClCompile Include="src\UI\Controller\KeyboardController.cpp" />
     <ClCompile Include="src\UI\UI.cpp" />
+    <ClCompile Include="src\Utility\Logger.cpp" />
     <ClCompile Include="src\Utility\StringUtility.cpp" />
     <ClCompile Include="src\Utility\UniqueID.cpp" />
   </ItemGroup>
