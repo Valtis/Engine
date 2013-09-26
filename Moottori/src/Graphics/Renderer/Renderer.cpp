@@ -96,7 +96,7 @@ std::vector<Entity *> Renderer::GetEntitiesForDrawing(Camera *camera)
 		if (e == nullptr)
 		{
 			it = mDrawables.erase(it);
-			if (it = std::end(mDrawables))
+			if (it == std::end(mDrawables))
 			{
 				break;
 			}

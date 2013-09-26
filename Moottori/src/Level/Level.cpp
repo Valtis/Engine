@@ -15,6 +15,10 @@ void Level::UpdateEntities(double ticksPassed)
 		if (e == nullptr)
 		{
 			iter = mLevelEntities.erase(iter);
+			if (iter == std::end(mLevelEntities))
+			{
+				break;
+			}
 			continue;
 		}
 
