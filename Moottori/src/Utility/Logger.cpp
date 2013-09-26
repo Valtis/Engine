@@ -1,3 +1,4 @@
+
 #include <ctime>
 #include "Utility\Logger.h"
 
@@ -39,6 +40,9 @@ void Logger::AddTimeStamps(bool stamp) throw()
 
 std::string Logger::CreateStamp(bool initializeStamp) throw()
 {
+#pragma warning(push)
+#pragma warning(disable: 4996)
+	 
     time_t currentTime;
     time(&currentTime);
     tm *timeInfo = localtime(&currentTime);
@@ -51,7 +55,9 @@ std::string Logger::CreateStamp(bool initializeStamp) throw()
     }
     stamp << (timeInfo->tm_hour < 10 ? "0" : "") <<  timeInfo->tm_hour << ":" << (timeInfo->tm_min < 10 ? "0" : "") <<  timeInfo->tm_min << ":" << (timeInfo->tm_sec < 10 ? "0" : "")  << timeInfo->tm_sec << "]";
     stamp << " ";
-    return stamp.str();
+#pragma warning(pop)
+
+	return stamp.str();
 }
 
 void Logger::AddLine( LogLevel level, std::string text )

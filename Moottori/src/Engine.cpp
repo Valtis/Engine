@@ -86,9 +86,14 @@ void Engine::Draw()
 
 void Engine::Initialize()
 {
+	LoggerManager::SetLogFolder("logs");
+	LoggerManager::Instance().GetLog("test.txt").SetLoggingLevel(LogLevel::All);
+	LoggerManager::Instance().GetLog("test.txt").AddTimeStamps(true);
+
+	LoggerManager::Instance().GetLog("test.txt").AddLine(LogLevel::Debug, "Test line");
+
 	SDL_Init(SDL_INIT_VIDEO);
 	mLevel.reset(new Level(1920, 1080));
-	LoggerManager::SetLogFolder("logs");
 	InitializeLua();
 
 	mUI.Initialize("Generic title - move to settings file!", "data/spritesheets/", 640, 480);

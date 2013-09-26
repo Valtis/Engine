@@ -7,45 +7,22 @@ class LoggerManager
 {
 public:
 
-	~LoggerManager() { mLogs.clear(); }
+	~LoggerManager();
 	
-	static LoggerManager &Instance()
-	{
-		if (mInstance == nullptr)
-		{
-			mInstance = new LoggerManager();
-		}
-		return *mInstance;
-	}
+	static LoggerManager &Instance();
 
-	static void SetLogFolder(std::String folder)
-	{
-		mLogFolder = folder;
-	}
+	static void SetLogFolder(std::string folder);
 
-	static void Release()  
-	{
-		delete mInstance;
-		mInstance = nullptr;
-	}
+	static void Release();
 
-	Logger &GetLog(std::string name, LogLevel level)
-	{
-		name = mLogFolder + "/" + name;
-		if (mLogs.count(name) == 0)
-		{
-			mLogs[name].Open(name);
-			mLogs[name].SetLoggingLevel(level);
-			mLogs[name].AddTimeStamps(true);
-		}
+	Logger &GetLog(std::string name);
 
-		return mLogs[name];
-	}
 
 private:
-	LoggerManager() { }
-	
+	LoggerManager();
+
+	std::string GetFullName( const std::string &name );
 	static LoggerManager *mInstance;
 	static std::string mLogFolder;
-	std::unordered_map<std::string, Logger> mLogs;
+	std::unordered_map<std::string, std::unique_ptr<Logger>> mLogs;
 };
