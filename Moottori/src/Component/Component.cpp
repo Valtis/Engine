@@ -4,7 +4,7 @@
 #include "Event/EventHandler.h"
 
 
-Component::Component() : mEventSender()
+Component::Component() : mEventHandler(nullptr), mEventSender()
 {
 
 }
@@ -25,8 +25,10 @@ void Component::AttachScript(std::string scriptFile)
 			.def("RegisterForEvents", &Component::RegisterForEvents)
 	];
 
+	
 
 	luabind::globals(mLuaState.State())["component"] = this;	
+
 	OnAttachingScript();
 }
 
@@ -53,8 +55,16 @@ void Component::RegisterForEvents(EventType type)
 void Component::RegisterEventHandler(EventHandler *handler)
 {
 	mEventHandler = handler;
+
+	
+
 	if (mLuaState.ScriptLoaded())
 	{
+		luabind::module(mLuaState.State()) [
+			luabind::class_<EventHandler>("EventHandler")
+				.def("GetID", &EventHandler::GetID)
+		];
+		luabind::globals(mLuaState.State())["entity"] = mEventHandler;	
 		mEventSender.Init(mEventHandler, &mLuaState);
 	}
 

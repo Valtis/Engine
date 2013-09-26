@@ -20,6 +20,7 @@ void EventSender::RegisterFunctions()
 			.def("SendAnimationStateMessage", &EventSender::SendAnimationStateMessage)
 			.def("SendAccelerationChangeMessage", &EventSender::SendAccelerationChangeMessage)
 			.def("SendLocationChangeMessage", &EventSender::SendLocationChangeMessage)
+			.def("SendEntityTerminationRequestMessage", &EventSender::SendEntityTerminationRequestMessage)
 
 	];
 
@@ -58,4 +59,9 @@ void EventSender::SendAccelerationChangeMessage(Direction accelerationDirection,
 void EventSender::SendLocationChangeMessage(double xPositionChange, double yPositionChange, double rotationChange)
 {
 	mEventHandler->ProcessEvent(EventFactory::CreateChangeLocationEvent(xPositionChange, yPositionChange, rotationChange));
+}
+
+void EventSender::SendEntityTerminationRequestMessage(int id)
+{
+	mEventHandler->ProcessEvent(EventFactory::CreateEntityTerminationRequestEvent(id));
 }

@@ -42,6 +42,12 @@ void CollisionManager::Update(double ticksPassed)
 		if (e == nullptr)
 		{
 			iter = mCollidables.erase(iter);
+			if (iter == std::end(mCollidables))
+			{
+				break;
+			}
+
+			continue;
 		}
 		
 		CheckLevelBoundaryCollisions(e);

@@ -6,6 +6,7 @@
 #include "Event/ChangeLocationEvent.h"
 #include "Event/BoundaryCollisionEvent.h"
 #include "Event/EntityCollisionEvent.h"
+#include "Event/RequestTerminationEvent.h"
 #include "Event/UIEvent.h"
 
 namespace EventFactory
@@ -51,6 +52,11 @@ namespace EventFactory
 	std::unique_ptr<Event> CreateUIEvent(UIEventType eventType, UIEventState eventState)
 	{
 		return std::unique_ptr<UIEvent>(new UIEvent(eventType, eventState));
+	}
+
+	std::unique_ptr<Event> CreateEntityTerminationRequestEvent(int id)
+	{
+		return std::unique_ptr<RequestTerminationEvent>(new RequestTerminationEvent(id));
 	}
 
 

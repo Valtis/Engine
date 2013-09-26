@@ -40,7 +40,7 @@ public:
 
 	void Update(double ticksPassed);
 
-	int GetID() { return mID.AsInt(); }
+	int GetID() override { return mID.AsInt(); }
 	void SetID(int id) { mID = UniqueID(id); }
 
 protected:

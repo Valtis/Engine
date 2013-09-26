@@ -64,6 +64,7 @@ void Engine::UpdateGameState()
 	{
 		double ticksPassed = (double)(currentTick - mLastGameLogicTick)/(double)mGameLogicTickLength;
 		mLevel->Update(ticksPassed); // todo: replace with level manager code
+		EntityManager::Instance().Update(ticksPassed); 
 		mCollisionManager.Update(ticksPassed);
 		mLastGameLogicTick = SDL_GetTicks();
 	}

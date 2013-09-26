@@ -32,4 +32,5 @@ private:
 	void SendAnimationStateMessage(int animationID, bool animationState);
 	void SendAccelerationChangeMessage(Direction accelerationDirection, Direction rotationDirection, UIEventState eventState);
 	void SendLocationChangeMessage(double xPositionChange, double yPositionChange, double rotationChange);
+	void SendEntityTerminationRequestMessage(int id);
 };

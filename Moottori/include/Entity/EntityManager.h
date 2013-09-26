@@ -1,9 +1,9 @@
 #pragma once
 #include <unordered_map>
 #include <memory>
-#include "Utility/UniqueID.h"
 
 class Entity;
+class Event;
 class EntityManager
 {
 public:
@@ -16,6 +16,10 @@ public:
 	Entity *GetEntity(int id);
 
 	void Update(double ticksPassed);
+
+	void UpdateEntityStates( double doubleTicks );
+
+	void DeleteQueuedEntities();
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
 	EntityManager(const EntityManager &) = delete;
@@ -32,4 +36,6 @@ private:
 	static EntityManager *mInstance;
 	
 	std::unordered_map<int, std::unique_ptr<Entity>> mEntities;
+	void HandleTerminationEvent(Event *event);
+	std::vector<int> mDeleteQueue;
 };
