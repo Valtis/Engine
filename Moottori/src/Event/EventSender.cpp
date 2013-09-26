@@ -3,6 +3,7 @@
 #include "Event/EventFactory.h"
 #include "Utility/LuaState.h"
 #include "Utility/LoggerManager.h"
+#include "Entity/Entity.h"
 #include "Entity/EntityManager.h"
 
 void EventSender::Init(EventHandler *handler, LuaState *luaState)
@@ -23,6 +24,7 @@ void EventSender::RegisterFunctions()
 			.def("SendLocationChangeMessage", &EventSender::SendLocationChangeMessage)
 			.def("SendEntityTerminationRequestMessage", &EventSender::SendEntityTerminationRequestMessage)
 			.def("SendFactionQueryMessage", &EventSender::SendFactionQueryMessage)
+			.def("SendFactionQueryMessageToEntity", &EventSender::SendFactionQueryMessageToEntity)
 	];
 
 	luabind::globals(mLuaState->State())["messaging"] = this;	
@@ -60,7 +62,7 @@ void EventSender::SendFactionQueryMessageToEntity(int id)
 	if (e != nullptr)
 	{
 
-		mEventHandler->ProcessEvent(EventFactory::CreateFactionQueryEvent(faction, wasHandled));
+		e->ProcessEvent(EventFactory::CreateFactionQueryEvent(faction, wasHandled));
 	}
 	else
 	{
