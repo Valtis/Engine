@@ -1,10 +1,11 @@
 #include "Component/Component.h"
 #include "Event/EventScriptCaller.h"
+#include "Event/EventSender.h"
 #include "Event/Event.h"
 #include "Event/EventHandler.h"
 
 
-Component::Component() : mEventHandler(nullptr), mEventSender()
+Component::Component() : mEventHandler(nullptr), mEventSender(new EventSender)
 {
 
 }
@@ -55,9 +56,6 @@ void Component::RegisterForEvents(EventType type)
 void Component::RegisterEventHandler(EventHandler *handler)
 {
 	mEventHandler = handler;
-
-	
-
 	if (mLuaState.ScriptLoaded())
 	{
 		luabind::module(mLuaState.State()) [
@@ -65,7 +63,7 @@ void Component::RegisterEventHandler(EventHandler *handler)
 				.def("GetID", &EventHandler::GetID)
 		];
 		luabind::globals(mLuaState.State())["entity"] = mEventHandler;	
-		mEventSender.Init(mEventHandler, &mLuaState);
+		mEventSender->Init(mEventHandler, &mLuaState);
 	}
 
 	if (mLuaState.FunctionExists("OnRegisterForEvents"))

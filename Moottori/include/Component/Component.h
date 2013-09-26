@@ -1,6 +1,6 @@
 #pragma once
 #include "Event/Event.h"
-#include "Event/EventSender.h"
+
 #include "Utility/Enumerations.h"
 #include "Utility/LuaState.h"
 
@@ -8,6 +8,7 @@
 enum class ComponentType : int { None, Input, Acceleration, Velocity, Location, Graphics, Collision, Hitpoints, Faction };
 
 class EventHandler;
+class EventSender;
 class Component
 {
 public:
@@ -43,5 +44,5 @@ private:
 	EventHandler *mEventHandler;
 	void HandleEvent(Event *event);
 	void RegisterForEvents(EventType type);
-	EventSender mEventSender;
+	std::unique_ptr<EventSender> mEventSender;
 };
