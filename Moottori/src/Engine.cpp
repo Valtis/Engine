@@ -3,6 +3,7 @@
 #include "Entity/EntityManager.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Graphics/SpriteManager.h"
+#include "Utility/LoggerManager.h"
 #include "Event/UIEvent.h"
 #include "Utility/Defines.h"
 #include "Level/Level.h"
@@ -87,7 +88,7 @@ void Engine::Initialize()
 {
 	SDL_Init(SDL_INIT_VIDEO);
 	mLevel.reset(new Level(1920, 1080));
-
+	LoggerManager::SetLogFolder("logs");
 	InitializeLua();
 
 	mUI.Initialize("Generic title - move to settings file!", "data/spritesheets/", 640, 480);
@@ -197,6 +198,7 @@ void Engine::CleanUp()
 	EntityManager::Release();
 	SpriteManager::Release();
 	Renderer::Release();
+	LoggerManager::Release();
 
 	SDL_Quit();
 }
