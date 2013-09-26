@@ -1,10 +1,13 @@
 #pragma once
-#include "Utility/LuaState.h"
+#include "Event/Event.h"
 #include "Event/EventSender.h"
 #include "Utility/Enumerations.h"
+#include "Utility/LuaState.h"
+
+
+enum class ComponentType : int { None, Input, Acceleration, Velocity, Location, Graphics, Collision, Hitpoints, Faction };
 
 class EventHandler;
-class Event;
 class Component
 {
 public:

@@ -30,10 +30,9 @@ private:
 	void InitializeLua();
 
 
-	void AddEntity(const char *scriptName, bool attachCamera);
+	int AddEntity(const char *scriptName);
 
-	void CreateAndAttachCamera( Entity *e );
-
+	void CreateAndAttachCamera( int entityID);
 
 	void InitializeInputTypes();
 	void CleanUp();

@@ -299,6 +299,9 @@
     <ClCompile Include="src\Utility\LoggerManager.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="src\Component\FactionComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\scripts\ship_velocity.lua">
@@ -336,5 +339,13 @@
     <Image Include="data\spritesheets\testimap.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="include\Component\FactionComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </Text>
+    <Text Include="include\Event\QueryFactionEvent.h">
+      <Filter>Header Files\Event</Filter>
+    </Text>
   </ItemGroup>
 </Project>

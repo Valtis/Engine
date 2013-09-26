@@ -87,10 +87,8 @@ void Engine::Draw()
 void Engine::Initialize()
 {
 	LoggerManager::SetLogFolder("logs");
-	LoggerManager::Instance().GetLog("test.txt").SetLoggingLevel(LogLevel::All);
-	LoggerManager::Instance().GetLog("test.txt").AddTimeStamps(true);
-
-	LoggerManager::Instance().GetLog("test.txt").AddLine(LogLevel::Debug, "Test line");
+	LoggerManager::Instance().GetLog(SCRIPT_LOG).SetLoggingLevel(LogLevel::All);
+	LoggerManager::Instance().GetLog(SCRIPT_LOG).AddTimeStamps(true);
 
 	SDL_Init(SDL_INIT_VIDEO);
 	mLevel.reset(new Level(1920, 1080));
@@ -140,14 +138,6 @@ void Engine::Initialize()
 	EntityManager::Instance().AddEntity(std::move(e));
 
 
-
-	// create asteroid thingy
-	e = EntityFactory::CreateEntity("CreateDebugAsteroid");
-	mLevel->AddEntity(e->GetID());
-	Renderer::Instance().AddEntity(e->GetID());
-	EntityManager::Instance().AddEntity(std::move(e));
-
-
 	mCollisionManager.SetCollidabeEntities(mLevel->GetEntities());
 	mCollisionManager.SetLevelWidth(mLevel->GetWidth());
 	mCollisionManager.SetLevelHeight(mLevel->GetHeight());
@@ -170,6 +160,7 @@ void Engine::InitializeLua()
 			.def_readwrite("draw_tick_length", &Engine::mDrawTickLength)
 			.def_readwrite("game_logic_tick_length", &Engine::mGameLogicTickLength)
 			.def("AddEntity", &Engine::AddEntity)
+			.def("AttachCamera", &Engine::CreateAndAttachCamera)
 	];
 
 	luabind::globals(mLuaState.State())["engine"] = this;
@@ -208,22 +199,37 @@ void Engine::CleanUp()
 	SDL_Quit();
 }
 
-void Engine::AddEntity( const char *scriptName, bool attachCamera )
+int Engine::AddEntity( const char *scriptName )
 {
 	auto e = EntityFactory::CreateEntity(scriptName , &mUI);
-	mLevel->AddEntity(e->GetID());
-	Renderer::Instance().AddEntity(e->GetID());
-
-	if (attachCamera)
-	{
-		CreateAndAttachCamera(e.get());
-	}
+	int id = e->GetID();
 	EntityManager::Instance().AddEntity(std::move(e));
+	mLevel->AddEntity(id);
+	Renderer::Instance().AddEntity(id);
+
+	return id;
 }
 
-void Engine::CreateAndAttachCamera( Entity *e )
+
+
+void Engine::CreateAndAttachCamera( int entityID )
 {
-	std::unique_ptr<Camera> c(new EntityTrackingCamera(e->GetID(), mLevel->GetWidth(), mLevel->GetHeight()));
+	Entity *e = EntityManager::Instance().GetEntity(entityID);
+	if (e == nullptr)
+	{
+		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning, 
+			"Could not find entity with id " + std::to_string(entityID) + " for a camera to attach to - aborting");
+		return;
+	}
+
+	if (e->GetComponent(ComponentType::Location) == nullptr)
+	{
+		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning, 
+			"Entity with id " + std::to_string(entityID) + " does not contain location - cannot attach camera - aborting");
+		return;
+	}
+
+	std::unique_ptr<Camera> c(new EntityTrackingCamera(entityID, mLevel->GetWidth(), mLevel->GetHeight()));
 	mUI.AttachCamera(std::move(c));
 }
 

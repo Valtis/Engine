@@ -61,6 +61,7 @@
     <ClCompile Include="src\Collision\CollisionManager.cpp" />
     <ClCompile Include="src\Component\AccelerationComponent.cpp" />
     <ClCompile Include="src\Component\Component.cpp" />
+    <ClCompile Include="src\Component\FactionComponent.cpp" />
     <ClCompile Include="src\Component\GraphicsComponent.cpp" />
     <ClCompile Include="src\Component\HealthComponent.cpp" />
     <ClCompile Include="src\Component\InputComponent.cpp" />
@@ -102,6 +103,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\spritesheets\testimap.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="include\Component\FactionComponent.h" />
+    <Text Include="include\Event\QueryFactionEvent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{39514168-5CDD-4896-80D5-F8A83C882418}</ProjectGuid>

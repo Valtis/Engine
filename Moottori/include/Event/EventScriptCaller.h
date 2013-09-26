@@ -27,6 +27,7 @@ public:
 	virtual void Visit(const QueryDirectionEvent *event, double &rotation) const override;
 	virtual void Visit(const RequestTerminationEvent *event) const override;
 	virtual void Visit(const EntityCollisionEvent*event) const override;
+	virtual void Visit(const QueryFactionEvent *event, int &faction) const override;
 
 private:
 	LuaState &mState;

@@ -28,7 +28,6 @@ public:
 	void SetRotation(double r) { mRotation = r; }
 
 protected:
-	
 	void OnAttachingScript() override;
 private:
 	double mX;

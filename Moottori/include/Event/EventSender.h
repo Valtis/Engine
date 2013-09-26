@@ -28,6 +28,8 @@ private:
 	void RegisterFunctions();
 
 	void SendDirectionQueryMessage();
+	void SendFactionQueryMessage();
+	void SendFactionQueryMessageToEntity(int id);
 	void SendVelocityChangeMessage(double xVelocityChange, double yVelocityChange, double rotationVelocityChange);
 	void SendAnimationStateMessage(int animationID, bool animationState);
 	void SendAccelerationChangeMessage(Direction accelerationDirection, Direction rotationDirection, UIEventState eventState);

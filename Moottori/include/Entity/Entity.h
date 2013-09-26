@@ -5,13 +5,13 @@
 
 #include <memory>
 #include <functional>
-
+#include "Event/Event.h"
 #include "Event/EventHandler.h"
 #include "Utility/UniqueID.h"
 #include "Utility/Enumerations.h"
 
-class Component;
-class Event;
+#include "Component/Component.h"
+
 
 class Entity : public EventHandler
 {

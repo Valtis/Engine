@@ -2,6 +2,7 @@
 #include "Event/ChangeVelocityEvent.h"
 #include "Event/ChangeAccelerationEvent.h"
 #include "Event/QueryDirectionEvent.h"
+#include "Event/QueryFactionEvent.h"
 #include "Event/ChangeAnimationStateEvent.h"
 #include "Event/ChangeLocationEvent.h"
 #include "Event/BoundaryCollisionEvent.h"
@@ -13,15 +14,18 @@ namespace EventFactory
 {
 	std::unique_ptr<Event> CreateChangeVelocityEvent(double xVelocityChange, double yVelocityChange, double rotationVelocityChange)
 	{
-
 		return std::unique_ptr<Event>(new ChangeVelocityEvent(xVelocityChange, 
 			yVelocityChange, rotationVelocityChange));
-
 	}
 
 	std::unique_ptr<Event> CreateDirectionQueryEvent(double &rotation, bool &wasHandled)
 	{
 		return std::unique_ptr<QueryDirectionEvent>(new QueryDirectionEvent(rotation, wasHandled));
+	}
+
+	std::unique_ptr<Event> CreateFactionQueryEvent(int &faction, bool &wasHandled)
+	{
+		return std::unique_ptr<QueryFactionEvent>(new QueryFactionEvent(faction, wasHandled));
 	}
 
 	std::unique_ptr<Event> CreateAnimationStateChangeEvent(int animationID, bool animationState)

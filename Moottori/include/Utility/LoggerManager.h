@@ -2,6 +2,7 @@
 #include "Logger.h"
 #include <unordered_map>
 #include <memory>
+#include "Utility/Defines.h"
 
 class LoggerManager
 {
@@ -16,6 +17,16 @@ public:
 	static void Release();
 
 	Logger &GetLog(std::string name);
+
+#if !defined _MSC_VER || _MSC_VER >= 1800 
+	LoggerManager(const LoggerManager &) = delete;
+	LoggerManager &operator=(const LoggerManager &) = delete;
+#else
+private:
+	LoggerManager(const LoggerManager &);
+	LoggerManager &operator=(const LoggerManager &);
+public:
+#endif
 
 
 private:

@@ -3,6 +3,10 @@
 #include "Utility/Enumerations.h"
 #include "EventVisitor.h"
 #include <stdexcept>
+
+enum class EventType : int { None, UIEvent, QueryDirection, QueryFaction, ChangeAcceleration, ChangeVelocity, ChangeLocation, ChangeAnimationState, RequestTermination, BoundaryCollision, EntityCollision };
+
+
 class Event
 {
     public:
