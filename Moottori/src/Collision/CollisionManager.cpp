@@ -58,8 +58,8 @@ void CollisionManager::Update(double ticksPassed)
 
 int CollisionManager::GetCenterX(Entity *e)
 {
-	auto location = dynamic_cast<LocationComponent *>(e->GetComponent(ComponentType::Location));
-	auto graphics = dynamic_cast<GraphicsComponent *>(e->GetComponent(ComponentType::Graphics));
+	auto location = static_cast<LocationComponent *>(e->GetComponent(ComponentType::Location));
+	auto graphics = static_cast<GraphicsComponent *>(e->GetComponent(ComponentType::Graphics));
 	SDL_assert(location != nullptr);
 	int x = location->GetX();
 
@@ -73,8 +73,8 @@ int CollisionManager::GetCenterX(Entity *e)
 
 int CollisionManager::GetCenterY(Entity *e)
 {
-	auto location = dynamic_cast<LocationComponent *>(e->GetComponent(ComponentType::Location));
-	auto graphics = dynamic_cast<GraphicsComponent *>(e->GetComponent(ComponentType::Graphics));
+	auto location = static_cast<LocationComponent *>(e->GetComponent(ComponentType::Location));
+	auto graphics = static_cast<GraphicsComponent *>(e->GetComponent(ComponentType::Graphics));
 	SDL_assert(location != nullptr);
 
 	int y = location->GetY();
@@ -92,7 +92,7 @@ Direction CollisionManager::FindCollisionEdge(Entity *e)
 	int centerX = GetCenterX(e);
 	int centerY = GetCenterY(e);
 
-	auto collision = dynamic_cast<CollisionAreaComponent *>(e->GetComponent(ComponentType::Collision));
+	auto collision = static_cast<CollisionAreaComponent *>(e->GetComponent(ComponentType::Collision));
 	
 	SDL_assert(collision != nullptr);
 
@@ -118,10 +118,10 @@ Direction CollisionManager::FindCollisionEdge(Entity *e)
 
 void CollisionManager::SendBoundaryCollisionEventToEntity(Entity * e, Direction direction )
 {
-	auto collision = dynamic_cast<CollisionAreaComponent *>(e->GetComponent(ComponentType::Collision));
+	auto collision = static_cast<CollisionAreaComponent *>(e->GetComponent(ComponentType::Collision));
 	SDL_assert(collision != nullptr);
 
-	auto graphics = dynamic_cast<GraphicsComponent *>(e->GetComponent((ComponentType::Graphics)));
+	auto graphics = static_cast<GraphicsComponent *>(e->GetComponent((ComponentType::Graphics)));
 	int minX = collision->GetCollisionRadius(); 
 	int minY = collision->GetCollisionRadius();
 	if (graphics != nullptr)
@@ -170,8 +170,8 @@ void CollisionManager::CheckEntityCollisions(Entity *first)
 
 void CollisionManager::HandleEntityCollision( Entity * first, Entity * second )
 {
-	auto firstCollisionComponent = dynamic_cast<CollisionAreaComponent *>(first->GetComponent(ComponentType::Collision));
-	auto secondCollisionComponent = dynamic_cast<CollisionAreaComponent *>(second->GetComponent(ComponentType::Collision));
+	auto firstCollisionComponent = static_cast<CollisionAreaComponent *>(first->GetComponent(ComponentType::Collision));
+	auto secondCollisionComponent = static_cast<CollisionAreaComponent *>(second->GetComponent(ComponentType::Collision));
 
 	SDL_assert(firstCollisionComponent != nullptr);
 	SDL_assert(secondCollisionComponent != nullptr);

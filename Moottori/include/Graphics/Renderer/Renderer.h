@@ -31,11 +31,12 @@ public:
 
 	void CreateWindow(std::string title, int width, int height);
 	
-	void AddEntity(int id) { mDrawables.push_back(id); }
+	void AddEntity(int id);
 	void Draw(Camera *camera);
 
 protected:
 private:
+
 	static Renderer *mInstance;
 	Renderer();
 	void ClearScreen();
@@ -46,8 +47,6 @@ private:
 	void DrawEntity(Entity *e, Camera *c);
 
 	std::vector<int> mDrawables;
-
 	SDL_Window *mWindow;
 	SDL_Renderer *mRenderer;
-
 };

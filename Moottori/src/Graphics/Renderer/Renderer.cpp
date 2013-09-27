@@ -210,3 +210,8 @@ void Renderer::DrawEntity(Entity *e, Camera *camera)
 	SDL_RenderCopyEx(mRenderer, texture, &spriteLocation, &drawDst, l->GetRotation(), NULL, SDL_FLIP_NONE);
 }
 
+void Renderer::AddEntity( int id )
+{
+	mDrawables.push_back(id);
+}
+

@@ -22,8 +22,10 @@ function CreatePlayer()
 end
 
 function CreateDebugAsteroid()
-	local asteroidX = 500
-	local asteroidY = 500
+--	math.randomseed( os.time() )
+
+	local asteroidX = math.random(500)
+	local asteroidY = math.random(500)
 	local collisionRadius = 25
 	
 	AddLocationComponent(asteroidX, asteroidY, "")
