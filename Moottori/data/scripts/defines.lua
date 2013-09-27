@@ -1,3 +1,8 @@
+-- level size
+level_width = 1920
+level_height = 1080
+
+
 -- key values
 Key_w = 52
 Key_a = 30

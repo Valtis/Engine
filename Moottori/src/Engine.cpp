@@ -68,9 +68,19 @@ void Engine::UpdateGameState()
 		EntityManager::Instance().Update(ticksPassed); 
 		mCollisionManager.Update(ticksPassed);
 		mLastGameLogicTick = SDL_GetTicks();
+	
+		UpdateScriptState(ticksPassed);
 	}
-	//
 }
+
+void Engine::UpdateScriptState( double ticksPassed )
+{
+	if (mLuaState.FunctionExists("OnUpdate"))
+	{
+		mLuaState.CallFunction("OnUpdate", ticksPassed);
+	}
+}
+
 
 void Engine::Draw()
 {
@@ -148,12 +158,16 @@ void Engine::Initialize()
 	mLastGameLogicTick = SDL_GetTicks();
 }
 
+int Engine::GetNumberOfActiveEntities()
+{
+	return mLevel->GetEntities().size();
+}
 
 void Engine::InitializeLua()
 {
 	mLuaState.Open();
 	mLuaState.OpenAllLuaLibraries();
-	mLuaState.LoadScriptFile("data/scripts/game_init.lua");
+	mLuaState.LoadScriptFile("data/scripts/game.lua");
 
 	luabind::module(mLuaState.State()) [
 		luabind::class_<Engine>("Engine")
@@ -161,6 +175,7 @@ void Engine::InitializeLua()
 			.def_readwrite("game_logic_tick_length", &Engine::mGameLogicTickLength)
 			.def("AddEntity", &Engine::AddEntity)
 			.def("AttachCamera", &Engine::CreateAndAttachCamera)
+			.def("GetNumberOfActiveEntities", &Engine::GetNumberOfActiveEntities)
 	];
 
 	luabind::globals(mLuaState.State())["engine"] = this;

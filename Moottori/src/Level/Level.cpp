@@ -2,6 +2,17 @@
 #include "Entity/Entity.h"
 #include "Entity/EntityManager.h"
 
+Level::Level() : Level(0, 0)
+{
+}
+
+Level::Level( int width, int height ) : mWidth(width), mHeight(height)
+{
+
+}
+
+
+
 void Level::Update(double ticksPassed)
 {
 	UpdateEntities(ticksPassed);
@@ -25,3 +36,4 @@ void Level::UpdateEntities(double ticksPassed)
 		e->Update(ticksPassed);
 	}
 }
+

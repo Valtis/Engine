@@ -5,8 +5,8 @@
 class Level
 {
 public:
-	Level() : mWidth(0), mHeight(0) { }
-	Level(int width, int height) : mWidth(width), mHeight(height) { }
+	Level();
+	Level(int width, int height);
 
 	void AddEntity(int id) { mLevelEntities.push_back(id); }
 	void Update(double ticksPassed);
@@ -16,10 +16,12 @@ public:
 
 	std::vector<int> GetEntities() { return mLevelEntities; }
 
+	void InitializeLuaState();
+	
 
 private:
 	void UpdateEntities(double ticksPassed);
-
+	
 	int mWidth;
 	int mHeight;
 	std::vector<int> mLevelEntities;

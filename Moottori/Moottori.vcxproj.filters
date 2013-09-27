@@ -61,9 +61,6 @@
     <Filter Include="Source Files\UI\Controller">
       <UniqueIdentifier>{4f032beb-2b4f-426a-ac6e-d5c8c1542f0e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Level">
-      <UniqueIdentifier>{e33de579-2ba1-4dbf-9a36-6e873592c626}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Level">
       <UniqueIdentifier>{3a86329a-a2ea-4243-9caa-4ab515640a67}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,9 @@
     </Filter>
     <Filter Include="Source Files\Collision">
       <UniqueIdentifier>{5cc5ea91-a7eb-4eb5-ab65-ae2f0432a50e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Level">
+      <UniqueIdentifier>{e33de579-2ba1-4dbf-9a36-6e873592c626}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
