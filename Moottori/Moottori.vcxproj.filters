@@ -334,6 +334,15 @@
     <None Include="data\scripts\graphics.lua">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="data\scripts\asteroid_collision.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\faction.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\game.lua">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\spritesheets\testimap.bmp">
