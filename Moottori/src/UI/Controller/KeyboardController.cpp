@@ -62,7 +62,6 @@ std::vector<std::pair<int, UIEventState>> KeyboardController::HandleInput()
 				events.push_back(std::make_pair(keyBind.second, UIEventState::Stop));
 			}
 		}
-
 	}
 
 

@@ -364,6 +364,9 @@
     <None Include="data\scripts\ship\ship_location.lua">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="data\input\keybindings.dat">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\spritesheets\testimap.bmp">
@@ -380,5 +383,13 @@
     <Text Include="include\Event\QueryLocationEvent.h">
       <Filter>Header Files\Event</Filter>
     </Text>
+    <Text Include="data\music\music.dat">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="data\music\Purple Motion - Charts overdrive.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>
