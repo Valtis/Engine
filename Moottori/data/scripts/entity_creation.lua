@@ -23,13 +23,10 @@ end
 
 
 function CreateAsteroid()
-
-	local asteroidX = math.random(500)
-	local asteroidY = math.random(500)
 	local collisionRadius = 25
 
+	AddLocationComponent(20, 20, "data/scripts/asteroid/asteroid_location.lua")
 	AddVelocityComponent("data/scripts/asteroid/asteroid_velocity.lua")
-	AddLocationComponent(asteroidX, asteroidY, "data/scripts/asteroid/location.lua")
 	AddGraphicsComponent("data/scripts/generic_entity/graphics.lua")
 	AddCollisionComponent(collisionRadius, "data/scripts/asteroid/asteroid_collision.lua")
 	AddFactionComponent(1, "data/scripts/generic_entity/faction.lua")

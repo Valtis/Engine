@@ -13,7 +13,6 @@ end
 
 function OnRegisterForEvents()
 	dofile('data/scripts/defines.lua')
-	component:RegisterForEvents(EventType_ChangeLocation)
 	component:RegisterForEvents(EventType_BoundaryCollision)
-	component:RegisterForEvents(EventType_QueryDirection)
+	component:RegisterForEvents(EventType_ChangeLocation)
 end

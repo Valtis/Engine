@@ -19,17 +19,42 @@ end
 function OnRegisterForEvents()
 	dofile('data/scripts/defines.lua')
 
+	CalculateRotation()
+	CalculateSpeed()
+end
 
-	velocity_component.rotation_velocity = math.random(8) + 1
+function CalculateRotation()
+
+	velocity_component.rotation_velocity = math.random(8)
 
 	if math.random(2) == 1 then
 		velocity_component.rotation_velocity = -1*velocity_component.rotation_velocity
 	end
+end
+
+
+function CalculateSpeed()
+	angle = CalculateAngle()
+
+	speed = math.random(10)
+	velocity_component.x_velocity = speed * math.cos(angle)
+	velocity_component.y_velocity = speed * math.sin(angle)
+
+	io.write("XVel : " .. velocity_component.x_velocity .. "  YVel  " .. velocity_component.y_velocity .. "\n")
+
+end
+
+
+function CalculateAngle()
 
 	x, y, wasHandled = messaging:SendLocationQueryMessage()
-	io.write("X: " .. x .. "\n")
-	io.write("Y: " .. y .. "\n")
+
+	targetX = math.random(level_width)
+	targetY = math.random(level_height)
 
 
+	xDiff = x - targetX
+	yDiff = targetY - y
 
+	return math.atan2(yDiff, xDiff)
 end

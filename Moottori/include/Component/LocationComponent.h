@@ -29,7 +29,7 @@ public:
 
 protected:
 	void OnAttachingScript() override;
-	void OnRegisteringEventHandler() override;
+	void OnRegisteringEventHandler(EventHandler *handler) override;
 private:
 
 	void HandleLocationQuery(Event *e);

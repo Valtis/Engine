@@ -10,7 +10,7 @@ namespace Utility
 		}
 
 		char *retVal;
-		const int textbufferSize = text.length() + 1;
+		const unsigned int textbufferSize = text.length() + 1;
 		char *textBuffer = new char[textbufferSize];
 		for (unsigned int i = 0; i < textbufferSize; ++i)
 		{

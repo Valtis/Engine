@@ -3,6 +3,7 @@
 #include "Event/Event.h"
 
 #include <SDL_assert.h>
+#include <SDL_messagebox.h>
 
 Entity::Entity() : mComponents(), mEventCallbacks(), mEvents()
 {

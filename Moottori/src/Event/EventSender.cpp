@@ -46,7 +46,7 @@ void EventSender::SendLocationQueryMessage()
 {
 	double x = 0;
 	double y = 0;
-	bool wasHandled;
+	bool wasHandled = false;
 	mEventHandler->ProcessEvent(EventFactory::CreateLocationQueryEvent(x, y, wasHandled));
 
 	lua_pushnumber(mLuaState->State(), x);

@@ -38,13 +38,11 @@ protected:
 	
 	}	
 
-	virtual void OnRegisteringEventHandler()
+	virtual void OnRegisteringEventHandler(EventHandler *handler)
 	{
 
 	}
 	LuaState mLuaState;
-	EventHandler &GetEventHandler();
-
 	
 private:
 	EventHandler *mEventHandler;

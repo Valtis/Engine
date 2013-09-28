@@ -19,14 +19,19 @@ void LocationComponent::OnAttachingScript()
 	luabind::globals(mLuaState.State())["location_component"] = this;
 }
 
-void LocationComponent::OnRegisteringEventHandler()
+void LocationComponent::OnRegisteringEventHandler(EventHandler *handler)
 {
-	GetEventHandler().RegisterCallback(EventType::QueryLocation, [&](Event *e) { this->HandleLocationQuery(e); } );
-	GetEventHandler().RegisterCallback(EventType::QueryDirection, [&](Event *e) { this->HandleDirectionQuery(e); } );
+	handler->RegisterCallback(EventType::QueryLocation, [&](Event *event) 
+	{ 
+		this->HandleLocationQuery(event); 
+	} );
+
+	handler->RegisterCallback(EventType::QueryDirection, [&](Event *event) { this->HandleDirectionQuery(event); } );
 }
 
 void LocationComponent::HandleLocationQuery(Event *e)
 {
+	
 	auto locationQuery = dynamic_cast<QueryLocationEvent *>(e);
 	SDL_assert(locationQuery != nullptr);
 

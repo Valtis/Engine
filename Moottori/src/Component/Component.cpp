@@ -42,16 +42,18 @@ void Component::Update(double ticksPassed)
 	}
 }
 
+
+void Component::RegisterForEvents(EventType type)
+{
+	mEventHandler->RegisterCallback(type, [&](Event *event) { this->HandleEvent(event); });
+}
+
 void Component::HandleEvent(Event *event)
 {
 	EventScriptCaller caller(mLuaState);
 	event->AcceptVisitor(&caller);
 }
 
-void Component::RegisterForEvents(EventType type)
-{
-	mEventHandler->RegisterCallback(type, [&](Event *event) { this->HandleEvent(event); });
-}
 
 void Component::RegisterEventHandler(EventHandler *handler)
 {
@@ -66,7 +68,7 @@ void Component::RegisterEventHandler(EventHandler *handler)
 		mEventSender->Init(mEventHandler, &mLuaState);
 	}
 
-	OnRegisteringEventHandler();
+	OnRegisteringEventHandler(handler);
 
 	if (mLuaState.FunctionExists("OnRegisterForEvents"))
 	{
@@ -76,8 +78,3 @@ void Component::RegisterEventHandler(EventHandler *handler)
 
 }
 
-
-EventHandler &Component::GetEventHandler() 
-{
-	return *mEventHandler;
-}
