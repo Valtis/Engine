@@ -20,9 +20,9 @@ public:
 	virtual void Visit(const ChangeVelocityEvent *event) const = 0;
 	virtual void Visit(const ChangeLocationEvent *event) const = 0;
 	virtual void Visit(const ChangeAnimationStateEvent *event) const = 0;
-	virtual void Visit(const QueryLocationEvent *event) const = 0;
+	virtual void Visit(const QueryLocationEvent *event, double &x, double &y) const = 0;
 	virtual void Visit(const QueryDirectionEvent *event, double &rotation) const = 0;
 	virtual void Visit(const QueryFactionEvent *event, int &faction) const = 0;
 	virtual void Visit(const RequestTerminationEvent *event) const = 0;
-	virtual void Visit(const EntityCollisionEvent *event, double &x, double &y) const = 0;
+	virtual void Visit(const EntityCollisionEvent *event) const = 0;
 };

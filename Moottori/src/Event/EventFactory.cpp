@@ -20,7 +20,7 @@ namespace EventFactory
 	}
 
 
-	std::unique_ptr<Event> CreateLocationQueryEvent(double &x, double &y, bool &wasHandled);
+	std::unique_ptr<Event> CreateLocationQueryEvent(double &x, double &y, bool &wasHandled)
 	{
 		return std::unique_ptr<Event>(new QueryLocationEvent(x, y, wasHandled));
 	}
