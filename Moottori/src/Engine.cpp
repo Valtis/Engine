@@ -24,7 +24,7 @@ Engine::Engine() : mDrawTickLength(0), mLastDrawTick(0), mGameLogicTickLength(0)
 
 Engine::~Engine()
 {
-
+	CleanUp();
 }
 
 void Engine::Run() 
@@ -36,7 +36,7 @@ void Engine::Run()
 		UpdateGameState();
 		Draw();
 	}
-	CleanUp();
+
 }
 
 void Engine::HandleInput()

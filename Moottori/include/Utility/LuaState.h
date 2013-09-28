@@ -43,7 +43,7 @@ public:
 		}
 		catch ( std::exception &e )
 		{
-			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name + "(error: " + e.what() + ")");
+			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name + " (error: " + e.what() + ")");
 			throw;
 		}
 
@@ -69,7 +69,7 @@ public:
 		}
 		catch ( std::exception &e )
 		{
-			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name + "(error: " + e.what() + ")");
+			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name + " (error: " + e.what() + ")");
 			throw;
 		}
 
@@ -94,7 +94,7 @@ public:
 		}
 		catch ( std::exception &e )
 		{
-			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name + "(error: " + e.what() + ")");
+			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name + " (error: " + e.what() + ")");
 			throw;
 		}
 
