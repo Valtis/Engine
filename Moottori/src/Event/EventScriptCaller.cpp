@@ -6,9 +6,12 @@
 #include "Event/ChangeLocationEvent.h"
 #include "Event/QueryDirectionEvent.h"
 #include "Event/RequestTerminationEvent.h"
+#include "Event/EntityCollisionEvent.h"
+
+
+#include "Event/QueryLocationEvent.h"
 #include "Event/QueryDirectionEvent.h"
 #include "Event/QueryFactionEvent.h"
-#include "Event/EntityCollisionEvent.h"
 
 
 void EventScriptCaller::Visit(const BoundaryCollisionEvent *event) const
@@ -37,6 +40,10 @@ void EventScriptCaller::Visit(const ChangeAnimationStateEvent *event) const
 	mState.CallFunction("OnAnimationStateChangeEvent", event->GetAnimationID(), event->GetNewAnimationState());
 }
 
+void EventScriptCaller::Visit(const QueryLocationEvent *event, double &x, double &y) const 
+{
+	mState.CallFunction("OnLocationQuery");	
+}
 
 void EventScriptCaller::Visit(const QueryDirectionEvent *event, double &rotation) const 
 {

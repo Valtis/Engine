@@ -28,6 +28,7 @@ private:
 	void RegisterFunctions();
 
 	void SendDirectionQueryMessage();
+	void SendLocationQueryMessage();
 	void SendFactionQueryMessage();
 	void SendFactionQueryMessageToEntity(int id);
 	void SendVelocityChangeMessage(double xVelocityChange, double yVelocityChange, double rotationVelocityChange);
@@ -35,4 +36,5 @@ private:
 	void SendAccelerationChangeMessage(Direction accelerationDirection, Direction rotationDirection, UIEventState eventState);
 	void SendLocationChangeMessage(double xPositionChange, double yPositionChange, double rotationChange);
 	void SendEntityTerminationRequestMessage(int id);
+	
 };

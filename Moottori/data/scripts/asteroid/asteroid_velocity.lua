@@ -26,7 +26,9 @@ function OnRegisterForEvents()
 		velocity_component.rotation_velocity = -1*velocity_component.rotation_velocity
 	end
 
-
+	x, y = messaging:SendLocationQueryMessage()
+	io.write("X: " .. x .. "\n")
+	io.write("Y: " .. y .. "\n")
 
 
 
