@@ -58,7 +58,7 @@ namespace EventFactory
 	}
 
 	std::unique_ptr<Event> CreateEntityCollisionEvent(int firstID, int secondID)
-	{ø
+	{
 		return std::unique_ptr<Event>(new EntityCollisionEvent(firstID, secondID));
 	}
 

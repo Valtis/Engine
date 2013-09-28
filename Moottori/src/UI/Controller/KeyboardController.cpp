@@ -1,32 +1,41 @@
 #include <fstream>
+
 #include "UI/Controller/KeyboardController.h"
 #include "Utility/StringUtility.h"
 
 void KeyboardController::LoadKeyBindings()
 {
 	std::ifstream datafile("data/input/keybindings.dat");
-	
+	if (!datafile.is_open())
+	{
+		return;
+	}
+
 	std::string line;
 
 	while (std::getline(datafile, line))
 	{
-		std::vector<std::string> tokens = Utility::Tokenize(line, " ");
-		if (tokens.size() < 2)
-		{
-			continue;
-		}
-
-		SDL_Scancode code = SDL_GetKeyFromName(tokens[0].c_str());
-		
-		if (code == SDLK_UNKNOWN)
-		{
-			continue;
-		}
-
-		mKeyBindings[code] == std::stoi(tokens[1]);
+		ParseLine(line);
 	}
 }
 
+void KeyboardController::ParseLine( std::string line )
+{
+	std::vector<std::string> tokens = Utility::Tokenize(line, " ");
+	if (tokens.size() < 2)
+	{
+		return;
+	}
+
+	SDL_Scancode code = SDL_GetScancodeFromName(tokens[0].c_str());
+
+	if (code == SDL_SCANCODE_UNKNOWN)
+	{
+		return; 
+	}
+
+	mKeyBindings[code] = std::stoi(tokens[1]);
+}
 
 
 std::vector<std::pair<int, UIEventState>> KeyboardController::HandleInput()
@@ -61,3 +70,4 @@ std::vector<std::pair<int, UIEventState>> KeyboardController::HandleInput()
 	return events;
 
 }
+

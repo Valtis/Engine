@@ -5,11 +5,11 @@
 class UIEvent : public Event
 {
 public:
-	UIEvent(UIEventType type, UIEventState state) : mUIEventType(type), mUIEventState(state) { }
+	UIEvent(int type, UIEventState state) : mUIEventType(type), mUIEventState(state) { }
 	virtual ~UIEvent() { }
 
 	EventType GetType() const override{ return EventType::UIEvent; }
-	UIEventType GetUIEventType() const { return mUIEventType; }
+	int GetUIEventType() const { return mUIEventType; }
 	UIEventState GetUIEventState() const { return mUIEventState; }
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 

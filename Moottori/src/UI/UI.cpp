@@ -54,7 +54,7 @@ void UI::Update()
 		HandleEvent(event);
 	}
 
-	std::vector<std::pair<UIEventType, UIEventState>> inputEvents = mController->HandleInput();
+	std::vector<std::pair<int, UIEventState>> inputEvents = mController->HandleInput();
 
 	for (auto &inputEvent : inputEvents)
 	{
@@ -67,7 +67,7 @@ void UI::HandleEvent(const SDL_Event &event)
 	switch (event.type)
 	{
 	case SDL_QUIT:
-		NotifyInputHandlers(UIEventType::Quit, UIEventState::None);
+		NotifyInputHandlers(UI_EVENT_QUIT, UIEventState::None);
 		break;
 	default:
 		break;
@@ -97,7 +97,7 @@ void UI::SortHandlers()
 
 void UI::NotifyInputHandlers( int type, UIEventState state )
 {
-	std::unique_ptr<Event> uiEvent(EventFactory::CreateUIEvent(event, state));
+	std::unique_ptr<Event> uiEvent(EventFactory::CreateUIEvent(type, state));
 	for (auto &handler : mInputHandlers)
 	{
 		if (handler.second(uiEvent.get())) // returns true if event was handled

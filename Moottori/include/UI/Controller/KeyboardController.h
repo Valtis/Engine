@@ -24,6 +24,8 @@ private:
 
 	void LoadKeyBindings();
 
+	void ParseLine( std::string line );
+
 	std::unordered_map<SDL_Scancode, bool> mKeyIsPressed;
 	std::unordered_map<SDL_Scancode, int> mKeyBindings;
 

@@ -44,12 +44,12 @@ void Engine::HandleInput()
 	mUI.Update();
 	while (!mEvents.empty())
 	{
-		UIEventType event = mEvents.front();
+		int eventType = mEvents.front();
 		mEvents.pop();
-		switch (event)
+		switch (eventType)
 		{
-		case UIEventType::Quit:
-			mIsRunning = false;
+			case UI_EVENT_QUIT:
+				mIsRunning = false;
 			break;
 
 		default:
@@ -189,7 +189,7 @@ void Engine::CreateLevel(int width, int height)
 
 void Engine::InitializeInputTypes()
 {
-	mInterestedInInputs.insert(UIEventType::Quit);
+	mInterestedInInputs.insert(UI_EVENT_QUIT);
 }
 
 bool Engine::InputHandler(Event *event)

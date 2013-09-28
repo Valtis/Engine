@@ -53,8 +53,8 @@ private:
 
 	bool mIsRunning;
 
-	std::queue<UIEventType> mEvents;
-	std::set<UIEventType> mInterestedInInputs;
+	std::queue<int> mEvents;
+	std::set<int> mInterestedInInputs;
 	UI mUI;
 
 	std::unique_ptr<Level> mLevel; // TODO - extract to (and create a) level manager 

@@ -29,7 +29,7 @@ bool InputComponent::InputHandler(Event *event)
 	{
 		return luabind::call_function<bool>(mLuaState.State(), 
 			"OnInputEvent", 
-			static_cast<int>(uiEvent->GetUIEventType()), 
+			uiEvent->GetUIEventType(), 
 			static_cast<int>(uiEvent->GetUIEventState())
 			);
 	}

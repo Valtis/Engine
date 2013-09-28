@@ -13,11 +13,11 @@ level_height = 800
 
 
 -- key values
-Key_w = 1
-Key_a = 2
-Key_s = 3
-Key_d = 4
-Key_space = 5
+Key_w = 1000
+Key_a = 1002
+Key_s = 1001
+Key_d = 1003
+Key_space = 1004
 
 -- event states
 Event_State_None = 0
