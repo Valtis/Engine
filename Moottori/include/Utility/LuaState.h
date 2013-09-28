@@ -43,7 +43,7 @@ public:
 		}
 		catch ( std::exception &e )
 		{
-			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage);
+			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage(name, e.what()));
 			throw;
 		}
 
@@ -69,7 +69,7 @@ public:
 		}
 		catch ( std::exception &e )
 		{
-			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage);
+			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage(name, e.what()));
 			throw;
 		}
 
@@ -94,7 +94,7 @@ public:
 		}
 		catch ( std::exception &e )
 		{
-			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage);
+			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage(name, e.what()));
 			throw;
 		}
 
@@ -112,6 +112,6 @@ private:
 	lua_State *mState;
 	bool mScriptLoaded;
 	std::vector<std::string> mAttachedScriptFiles;
-	std::string GetFunctionCallErrorMessage();
+	std::string GetFunctionCallErrorMessage(std::string name, std::string exceptionMessage);
 };
 

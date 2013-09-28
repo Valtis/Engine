@@ -96,7 +96,7 @@ void LuaState::CallFunction( std::string name )
 	}
 	catch ( std::exception &e )
 	{
-		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage());
+		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage(name, e.what()));
 		throw;
 	}
 
@@ -113,9 +113,9 @@ lua_State * LuaState::State()
 	return mState;
 }
 
-std::string LuaState::GetFunctionCallErrorMessage()
+std::string LuaState::GetFunctionCallErrorMessage(std::string name, std::string exceptionMessage)
 {
-	std::string errorMsg = "Caught an exception when calling script function " + name + " (error: " + e.what() + ")";
+	std::string errorMsg = "Caught an exception when calling script function " + name + " (error: " + exceptionMessage + ")";
 	if (mAttachedScriptFiles.size() > 0)
 	{
 		errorMsg += "\nAttached script files:\n";
