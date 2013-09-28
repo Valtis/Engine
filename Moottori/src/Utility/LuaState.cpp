@@ -1,6 +1,57 @@
 #include "Utility/LuaState.h"
 
 
+LuaState::LuaState() : mState(nullptr), mScriptLoaded(false)
+{
+
+}
+
+LuaState::~LuaState()
+{
+	if (mState != nullptr)
+	{
+		lua_close(mState);
+	}
+}
+
+void LuaState::Open()
+{
+	mState = lua_open();
+	luabind::open(mState);
+}
+
+void LuaState::LoadScriptFile( std::string fileName )
+{
+	if (mState == nullptr)
+	{
+		throw std::logic_error("lua_State was not opened before attempting to use one!");
+	}
+	luaL_dofile(mState, fileName.c_str());
+
+	mAttachedScriptFiles.push_back(fileName);
+	mScriptLoaded = true;
+}
+
+
+
+
+void LuaState::OpenAllLuaLibraries()
+{
+	luaL_openlibs(mState);
+}
+
+void LuaState::OpenLuaLibrary( lua_CFunction f, std::string libraryName )
+{
+	if (mState == nullptr)
+	{
+		throw std::logic_error("lua_State was not opened before attempting to use one!");
+	}
+
+	lua_pushcfunction(mState, f);
+	lua_pushstring(mState, libraryName.c_str());
+	lua_call(mState, 1, 0);
+}
+
 
 bool LuaState::FunctionExists( std::string name )
 {
@@ -45,58 +96,13 @@ void LuaState::CallFunction( std::string name )
 	}
 	catch ( std::exception &e )
 	{
-		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name + " (error: " + e.what() + ")");
+		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage());
 		throw;
 	}
 
 
 }
 
-void LuaState::OpenAllLuaLibraries()
-{
-	luaL_openlibs(mState);
-}
-
-void LuaState::OpenLuaLibrary( lua_CFunction f, std::string libraryName )
-{
-	if (mState == nullptr)
-	{
-		throw std::logic_error("lua_State was not opened before attempting to use one!");
-	}
-
-	lua_pushcfunction(mState, f);
-	lua_pushstring(mState, libraryName.c_str());
-	lua_call(mState, 1, 0);
-}
-
-void LuaState::LoadScriptFile( std::string fileName )
-{
-	if (mState == nullptr)
-	{
-		throw std::logic_error("lua_State was not opened before attempting to use one!");
-	}
-	luaL_dofile(mState, fileName.c_str());
-	mScriptLoaded = true;
-}
-
-LuaState::~LuaState()
-{
-	if (mState != nullptr)
-	{
-		lua_close(mState);
-	}
-}
-
-void LuaState::Open()
-{
-	mState = lua_open();
-	luabind::open(mState);
-}
-
-LuaState::LuaState() : mState(nullptr), mScriptLoaded(false)
-{
-
-}
 
 lua_State * LuaState::State()
 {
@@ -105,4 +111,20 @@ lua_State * LuaState::State()
 		throw std::logic_error("lua_State was not opened before attempting to use one!");
 	}
 	return mState;
+}
+
+std::string LuaState::GetFunctionCallErrorMessage()
+{
+	std::string errorMsg = "Caught an exception when calling script function " + name + " (error: " + e.what() + ")";
+	if (mAttachedScriptFiles.size() > 0)
+	{
+		errorMsg += "\nAttached script files:\n";
+	}
+
+	for (auto file : mAttachedScriptFiles)
+	{
+		errorMsg += "\n" + file;
+	}
+
+	return errorMsg;
 }
