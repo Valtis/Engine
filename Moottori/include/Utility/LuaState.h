@@ -41,9 +41,9 @@ public:
 		{
 			return luabind::call_function<T>(mState, name.c_str());
 		}
-		catch (...)
+		catch ( std::exception &e )
 		{
-			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name);
+			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name + "(error: " + e.what() + ")");
 			throw;
 		}
 
@@ -67,9 +67,9 @@ public:
 		try {
 			luabind::call_function<void>(mState, name.c_str(),  std::forward<Args>(args)...);
 		}
-		catch (...)
+		catch ( std::exception &e )
 		{
-			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name);
+			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name + "(error: " + e.what() + ")");
 			throw;
 		}
 
@@ -92,9 +92,9 @@ public:
 		{
 			return luabind::call_function<T>(mState, name.c_str(), std::forward<Args>(args)...);
 		}
-		catch (...)
+		catch ( std::exception &e )
 		{
-			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name);
+			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name + "(error: " + e.what() + ")");
 			throw;
 		}
 

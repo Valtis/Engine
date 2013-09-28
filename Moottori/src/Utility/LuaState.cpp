@@ -43,9 +43,9 @@ void LuaState::CallFunction( std::string name )
 	try {
 		luabind::call_function<void>(mState, name.c_str());
 	}
-	catch (...)
+	catch ( std::exception &e )
 	{
-		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name);
+		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name + "(error: " + e.what() + ")");
 		throw;
 	}
 
