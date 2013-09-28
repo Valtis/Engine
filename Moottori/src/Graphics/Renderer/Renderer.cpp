@@ -115,6 +115,8 @@ std::vector<Entity *> Renderer::GetEntitiesForDrawing(Camera *camera)
 
 bool Renderer::CullEntity(Entity *e, Camera *camera)
 {
+	SDL_assert(camera != nullptr);
+
 	SDL_assert(e != nullptr);
 	auto graphics = dynamic_cast<GraphicsComponent *>(e->GetComponent(ComponentType::Graphics));
 	auto location = dynamic_cast<LocationComponent *>(e->GetComponent(ComponentType::Location));

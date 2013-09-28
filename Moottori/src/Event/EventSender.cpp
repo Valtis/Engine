@@ -18,6 +18,7 @@ void EventSender::RegisterFunctions()
 	luabind::module(mLuaState->State()) [
 		luabind::class_<EventSender>("EventSender")
 			.def("SendDirectionQueryMessage", &EventSender::SendDirectionQueryMessage)
+			.def("SendDirectionQueryMessageToEntity", &EventSender::SendDirectionQueryMessageToEntity)
 			.def("SendVelocityChangeMessage", &EventSender::SendVelocityChangeMessage)
 			.def("SendAnimationStateMessage", &EventSender::SendAnimationStateMessage)
 			.def("SendAccelerationChangeMessage", &EventSender::SendAccelerationChangeMessage)
@@ -26,6 +27,8 @@ void EventSender::RegisterFunctions()
 			.def("SendFactionQueryMessage", &EventSender::SendFactionQueryMessage)
 			.def("SendFactionQueryMessageToEntity", &EventSender::SendFactionQueryMessageToEntity)
 			.def("SendLocationQueryMessage", &EventSender::SendLocationQueryMessage)
+			.def("SendLocationQueryMessageToEntity", &EventSender::SendLocationQueryMessageToEntity)
+			.def("SendSpawnEntityMessage", &EventSender::SendSpawnEntityMessage)
 	];
 
 	luabind::globals(mLuaState->State())["messaging"] = this;	
@@ -33,63 +36,110 @@ void EventSender::RegisterFunctions()
 
 void EventSender::SendDirectionQueryMessage()
 {
+	HandleDirectionQueryMessage(mEventHandler);
+}
+
+
+void EventSender::SendDirectionQueryMessageToEntity( int id )
+{
+	Entity *e = EntityManager::Instance().GetEntity(id);
+	if (e == nullptr)
+	{
+		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning,
+			"Could not find entity with id " + std::to_string(id) + " when querying for direction data"
+			);
+	}
+	HandleDirectionQueryMessage(e);
+}
+
+
+void EventSender::HandleDirectionQueryMessage( EventHandler *handler )
+{
 	double rotation = 0;
 	bool wasHandled = false;
-	mEventHandler->ProcessEvent(EventFactory::CreateDirectionQueryEvent(rotation, wasHandled));
-	
+	if (handler != nullptr)
+	{
+		handler->ProcessEvent(EventFactory::CreateDirectionQueryEvent(rotation, wasHandled));
+	}
+
 	lua_pushnumber(mLuaState->State(), rotation);
 	lua_pushinteger(mLuaState->State(), wasHandled);
 	lua_pushinteger(mLuaState->State(), 2); // number of parameters into stack
 }
 
+
+
 void EventSender::SendLocationQueryMessage()
+{
+	HandleLocationQueryMessage(mEventHandler);
+}
+
+
+
+void EventSender::SendLocationQueryMessageToEntity( int id )
+{
+	Entity *e = EntityManager::Instance().GetEntity(id);
+	if (e == nullptr)
+	{
+		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning,
+			"Could not find entity with id " + std::to_string(id) + " when querying for location data"
+			);
+	}
+	HandleLocationQueryMessage(e);
+}
+
+void EventSender::HandleLocationQueryMessage( EventHandler *handler )
 {
 	double x = 0;
 	double y = 0;
 	bool wasHandled = false;
-	mEventHandler->ProcessEvent(EventFactory::CreateLocationQueryEvent(x, y, wasHandled));
+	if (handler != nullptr)
+	{
+		handler->ProcessEvent(EventFactory::CreateLocationQueryEvent(x, y, wasHandled));
+	}
 
 	lua_pushnumber(mLuaState->State(), x);
 	lua_pushnumber(mLuaState->State(), y);
 	lua_pushinteger(mLuaState->State(), wasHandled);
 	lua_pushinteger(mLuaState->State(), 3); // number of parameters into stack
-
 }
 
-void EventSender::SendFactionQueryMessage()
-{
-	int faction = 0;
-	bool wasHandled = false;
-	mEventHandler->ProcessEvent(EventFactory::CreateFactionQueryEvent(faction, wasHandled));
 
-	lua_pushinteger(mLuaState->State(), faction);
-	lua_pushinteger(mLuaState->State(), wasHandled);
-	lua_pushinteger(mLuaState->State(), 2); // number of parameters into stack
-}
+
 
 void EventSender::SendFactionQueryMessageToEntity(int id)
 {
-	
-	int faction = 0;
-	bool wasHandled = false;
-
 	Entity *e = EntityManager::Instance().GetEntity(id);
-	if (e != nullptr)
-	{
-
-		e->ProcessEvent(EventFactory::CreateFactionQueryEvent(faction, wasHandled));
-	}
-	else
+	if (e == nullptr)
 	{
 		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning,
 			"Could not find entity with id " + std::to_string(id) + " when querying for faction data"
 			);
 	}
+	HandleFactionQueryMessage(e);
+}
+
+void EventSender::SendFactionQueryMessage()
+{
+	
+	HandleFactionQueryMessage(mEventHandler);
+}
+
+void EventSender::HandleFactionQueryMessage(EventHandler *handler)
+{
+	int faction = 0;
+	bool wasHandled = false;
+	if (handler != nullptr)
+	{
+		handler->ProcessEvent(EventFactory::CreateFactionQueryEvent(faction, wasHandled));
+	}
 
 	lua_pushinteger(mLuaState->State(), faction);
 	lua_pushinteger(mLuaState->State(), wasHandled);
 	lua_pushinteger(mLuaState->State(), 2); // number of parameters into stack
 }
+
+
 
 
 void EventSender::SendVelocityChangeMessage(double xVelocityChange, double yVelocityChange, double rotationVelocityChange)
@@ -118,4 +168,10 @@ void EventSender::SendLocationChangeMessage(double xPositionChange, double yPosi
 void EventSender::SendEntityTerminationRequestMessage(int id)
 {
 	mEventHandler->ProcessEvent(EventFactory::CreateEntityTerminationRequestEvent(id));
+}
+
+
+void EventSender::SendSpawnEntityMessage(const char *scriptName, int id)
+{
+	mEventHandler->ProcessEvent(EventFactory::CreateSpawnEntityEvent(scriptName, id));
 }

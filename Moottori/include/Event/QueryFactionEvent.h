@@ -8,10 +8,10 @@ public:
 
 	QueryFactionEvent(int &faction, bool &wasHandled) : mFaction(faction), mWasHandled(wasHandled) {}
 
-	bool WasHandled() { return mWasHandled; }
+	bool WasHandled() const { return mWasHandled; }
 	void WasHandled(bool val) { mWasHandled = val; }
 
-	double GetFaction() { return mFaction; }
+	double GetFaction() const { return mFaction; }
 	void SetFaction(int val) { mFaction= val; }
 
 	EventType GetType() const { return EventType::QueryFaction; }

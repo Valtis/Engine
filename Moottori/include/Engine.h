@@ -6,10 +6,13 @@
 #include "Collision/CollisionManager.h"
 #include "Utility/Enumerations.h"
 #include "Utility/LuaState.h"
+#include "Entity/EntityManagerListener.h"
+
 class Event;
 class Entity;
 class Level;
-class Engine
+
+class Engine : public EntityManagerListener
 {
 public:
 	Engine();
@@ -38,6 +41,7 @@ private:
 	void Draw();
 	bool InputHandler(Event *event);
 
+	void NotifyEventSpawn(int id) override;
 
 
 	Uint32 mDrawTickLength;

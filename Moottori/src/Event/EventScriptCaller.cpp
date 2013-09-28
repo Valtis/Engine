@@ -7,12 +7,7 @@
 #include "Event/QueryDirectionEvent.h"
 #include "Event/RequestTerminationEvent.h"
 #include "Event/EntityCollisionEvent.h"
-
-
-#include "Event/QueryLocationEvent.h"
-#include "Event/QueryDirectionEvent.h"
-#include "Event/QueryFactionEvent.h"
-
+#include "Event/ParentIDNotificationEvent.h"
 
 void EventScriptCaller::Visit(const BoundaryCollisionEvent *event) const
 {
@@ -51,3 +46,7 @@ void EventScriptCaller::Visit(const EntityCollisionEvent *event) const
 	mState.CallFunction("OnEntityCollisionEvent", event->GetFirstEntityID(), event->GetSecondEntityID());
 }
 
+void EventScriptCaller::Visit(const ParentIDNotificationEvent *event) const
+{
+	mState.CallFunction("OnParentIdNotificationEvent", event->GetParentID());
+}

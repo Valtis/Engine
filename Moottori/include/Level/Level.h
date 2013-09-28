@@ -17,7 +17,6 @@ public:
 	std::vector<int> GetEntities() { return mLevelEntities; }
 
 	void InitializeLuaState();
-	
 
 private:
 	void UpdateEntities(double ticksPassed);

@@ -24,6 +24,7 @@
     <ClInclude Include="include\Entity\Entity.h" />
     <ClInclude Include="include\Entity\EntityFactory.h" />
     <ClInclude Include="include\Entity\EntityManager.h" />
+    <ClInclude Include="include\Entity\EntityManagerListener.h" />
     <ClInclude Include="include\Event\BoundaryCollisionEvent.h" />
     <ClInclude Include="include\Event\ChangeAccelerationEvent.h" />
     <ClInclude Include="include\Event\ChangeAnimationStateEvent.h" />
@@ -36,8 +37,10 @@
     <ClInclude Include="include\Event\EventSender.h" />
     <ClInclude Include="include\Event\EventVisitor.h" />
     <ClInclude Include="include\Event\EventHandler.h" />
+    <ClInclude Include="include\Event\ParentIDNotificationEvent.h" />
     <ClInclude Include="include\Event\QueryDirectionEvent.h" />
     <ClInclude Include="include\Event\RequestTerminationEvent.h" />
+    <ClInclude Include="include\Event\SpawnEntityEvent.h" />
     <ClInclude Include="include\Event\UIEvent.h" />
     <ClInclude Include="include\Graphics\Camera\EntityTrackingCamera.h" />
     <ClInclude Include="include\Graphics\Camera\Camera.h" />

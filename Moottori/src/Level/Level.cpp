@@ -8,7 +8,6 @@ Level::Level() : Level(0, 0)
 
 Level::Level( int width, int height ) : mWidth(width), mHeight(height)
 {
-
 }
 
 

@@ -26,6 +26,7 @@ public:
 	virtual void Visit(const ChangeAnimationStateEvent *event) const override;
 	virtual void Visit(const RequestTerminationEvent *event) const override;
 	virtual void Visit(const EntityCollisionEvent *event) const override;
+	virtual void Visit(const ParentIDNotificationEvent *event) const override;
 
 private:
 	LuaState &mState;

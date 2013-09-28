@@ -6,6 +6,7 @@ function AddPlayerSprites()
 	AddSprite(1, 200005, 5)
 end
 
+
 function CreatePlayer()
 	local playerX = 250
 	local playerY = 250
@@ -17,7 +18,8 @@ function CreatePlayer()
 	AddAccelerationComponent("data/scripts/ship/ship_acceleration.lua")
 	AddGraphicsComponent("data/scripts/generic_entity/graphics.lua")
 	AddCollisionComponent(collisionRadius, "")
-	AddFactionComponent(0, "")
+	AddFactionComponent(player_faction, "")
+
 	AddPlayerSprites()
 end
 
@@ -25,17 +27,35 @@ end
 function CreateAsteroid()
 	local collisionRadius = 25
 
-	AddLocationComponent(20, 20, "data/scripts/asteroid/asteroid_location.lua")
+	AddLocationComponent(0, 0, "data/scripts/asteroid/asteroid_location.lua")
 	AddVelocityComponent("data/scripts/asteroid/asteroid_velocity.lua")
 	AddGraphicsComponent("data/scripts/generic_entity/graphics.lua")
 	AddCollisionComponent(collisionRadius, "data/scripts/asteroid/asteroid_collision.lua")
-	AddFactionComponent(1, "")
+	AddFactionComponent(asteroid_faction, "")
 	AddHealthComponent("data/scripts/asteroid/asteroid_health.lua")
+
 	AddSprite(0, 200006, 5)
+end
+
+function CreateMissile()
+
+	local collisionRadius = 8
+
+	AddLocationComponent(40, 40, "data/scripts/missile/missile_location.lua")
+	AddVelocityComponent("data/scripts/missile/missile_velocity.lua")
+	AddGraphicsComponent("data/scripts/generic_entity/graphics.lua")
+	AddCollisionComponent(collisionRadius, "data/scripts/missile/missile_collision.lua")
+	AddFactionComponent(player_faction, "")
+	AddHealthComponent("data/scripts/missile/missile_health.lua")
+
+
+	AddSprite(0, 200007, 5)
+	AddSprite(0, 200008, 5)
+	AddSprite(0, 200009, 5)
 end
 
 
 function Initialize()
-	io.write("Initializing random seed...\n")
+	dofile("data/scripts/defines.lua")
 	math.randomseed( os.time() )
 end

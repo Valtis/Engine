@@ -155,6 +155,7 @@ void Engine::Initialize()
 
 	mLastDrawTick = SDL_GetTicks();
 	mLastGameLogicTick = SDL_GetTicks();
+	EntityManager::Instance().AddListener(this);
 }
 
 int Engine::GetNumberOfActiveEntities()
@@ -250,5 +251,12 @@ void Engine::CreateAndAttachCamera( int entityID )
 
 	std::unique_ptr<Camera> c(new EntityTrackingCamera(entityID, mLevel->GetWidth(), mLevel->GetHeight()));
 	mUI.AttachCamera(std::move(c));
+}
+
+void Engine::NotifyEventSpawn( int id )
+{
+	mCollisionManager.AddEntity(id);
+	mLevel->AddEntity(id);
+	Renderer::Instance().AddEntity(id);
 }
 

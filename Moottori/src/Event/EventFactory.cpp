@@ -9,6 +9,8 @@
 #include "Event/BoundaryCollisionEvent.h"
 #include "Event/EntityCollisionEvent.h"
 #include "Event/RequestTerminationEvent.h"
+#include "Event/SpawnEntityEvent.h"
+#include "Event/ParentIDNotificationEvent.h"
 #include "Event/UIEvent.h"
 
 namespace EventFactory
@@ -18,8 +20,7 @@ namespace EventFactory
 		return std::unique_ptr<Event>(new ChangeVelocityEvent(xVelocityChange, 
 			yVelocityChange, rotationVelocityChange));
 	}
-
-
+	
 	std::unique_ptr<Event> CreateLocationQueryEvent(double &x, double &y, bool &wasHandled)
 	{
 		return std::unique_ptr<Event>(new QueryLocationEvent(x, y, wasHandled));
@@ -69,5 +70,15 @@ namespace EventFactory
 	std::unique_ptr<Event> CreateEntityTerminationRequestEvent(int id)
 	{
 		return std::unique_ptr<Event>(new RequestTerminationEvent(id));
+	}
+
+	std::unique_ptr<Event> CreateSpawnEntityEvent(std::string scriptName, int parentID)
+	{
+		return std::unique_ptr<Event>(new SpawnEntityEvent(scriptName, parentID));
+	}
+
+	std::unique_ptr<Event> CreateParentIDNotificationEvent(int parentID)
+	{
+		return std::unique_ptr<Event>(new ParentIDNotificationEvent(parentID));
 	}
 }

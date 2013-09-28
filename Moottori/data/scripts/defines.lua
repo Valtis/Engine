@@ -3,9 +3,13 @@
 game_logic_tick = 30
 game_draw_tick = 30
 
+
+player_faction = 0
+asteroid_faction = 1
+
 -- level size
-level_width = 1200
-level_height = 1200
+level_width = 800
+level_height = 800
 
 
 -- key values
@@ -13,6 +17,7 @@ Key_w = 52
 Key_a = 30
 Key_s = 48
 Key_d = 33
+Key_space = 88
 
 -- event states
 Event_State_None = 0
@@ -48,3 +53,5 @@ EventType_ChangeAnimationState = 8
 EventType_RequestTermination = 9
 EventType_BoundaryCollision = 10
 EventType_EntityCollision = 11
+EventType_SpawnEntity = 12
+EventType_ParentIDNotification = 13

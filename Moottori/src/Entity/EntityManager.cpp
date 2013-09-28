@@ -1,8 +1,12 @@
 #include "Entity/EntityManager.h"
+#include "Entity/EntityFactory.h"
 #include "Entity/Entity.h"
+#include "Event/EventFactory.h"
 #include "Event/RequestTerminationEvent.h"
+#include "Event/SpawnEntityEvent.h"
 #include "Utility/Enumerations.h"
 #include <SDL_assert.h>
+
 EntityManager *EntityManager::mInstance = nullptr;
 
 EntityManager::EntityManager()
@@ -35,9 +39,17 @@ void EntityManager::Release()
 void EntityManager::AddEntity(std::unique_ptr<Entity> entity)
 {
 	SDL_assert(entity != nullptr);
-	entity->RegisterCallback(EventType::RequestTermination, [&](Event *event) { this->HandleTerminationEvent(event); });
+	RegisterEvents(entity.get());
+
 	mEntities[entity->GetID()] = std::move(entity);
 }
+
+void EntityManager::RegisterEvents( Entity *entity )
+{
+	entity->RegisterCallback(EventType::RequestTermination, [&](Event *event) { this->HandleTerminationEvent(event); });
+	entity->RegisterCallback(EventType::SpawnEntity, [&](Event *event) { this->HandleSpawnEvent(event); } );
+}
+
 
 Entity *EntityManager::GetEntity(int id)
 {
@@ -53,13 +65,6 @@ Entity *EntityManager::GetEntity(int id)
 void EntityManager::Update(double doubleTicks)
 {
 	DeleteQueuedEntities();
-}
-
-void EntityManager::HandleTerminationEvent(Event *event)
-{
-	auto termination = dynamic_cast<RequestTerminationEvent *>(event);
-	SDL_assert(termination != nullptr);
-	mDeleteQueue.push_back(termination->GetID());
 }
 
 void EntityManager::DeleteQueuedEntities()
@@ -79,3 +84,39 @@ void EntityManager::UpdateEntityStates( double doubleTicks )
 		entityNode.second->Update(doubleTicks);
 	}
 }
+
+
+
+void EntityManager::HandleTerminationEvent(Event *event)
+{
+	auto termination = dynamic_cast<RequestTerminationEvent *>(event);
+	SDL_assert(termination != nullptr);
+	mDeleteQueue.push_back(termination->GetID());
+}
+
+
+void EntityManager::HandleSpawnEvent(Event *event)
+{
+	auto spawn = dynamic_cast<SpawnEntityEvent *>(event);
+	SDL_assert(spawn != nullptr);
+
+
+	auto entity = EntityFactory::CreateEntity(spawn->GetScriptName());
+
+	int id = entity->GetID();
+	AddEntity(std::move(entity));
+
+	for (auto listener : mListeners)
+	{
+		listener->NotifyEventSpawn(id);
+	}
+
+	GetEntity(id)->ProcessEvent(EventFactory::CreateParentIDNotificationEvent(spawn->GetParentID()));
+
+}
+
+void EntityManager::AddListener( EntityManagerListener *listener )
+{
+	mListeners.push_back(listener);
+}
+

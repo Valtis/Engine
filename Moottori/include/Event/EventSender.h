@@ -20,6 +20,8 @@ private:
 public:
 #endif
 
+
+
 	void Init(EventHandler *handler, LuaState *luaState);
 
 private:
@@ -28,13 +30,25 @@ private:
 	void RegisterFunctions();
 
 	void SendDirectionQueryMessage();
+	void SendDirectionQueryMessageToEntity(int id);
+
+	void HandleDirectionQueryMessage(EventHandler *handler);
+
+
 	void SendLocationQueryMessage();
+	void SendLocationQueryMessageToEntity(int id);
+	void HandleLocationQueryMessage(EventHandler *handler);
+
 	void SendFactionQueryMessage();
 	void SendFactionQueryMessageToEntity(int id);
+	void HandleFactionQueryMessage(EventHandler *handler);
+
 	void SendVelocityChangeMessage(double xVelocityChange, double yVelocityChange, double rotationVelocityChange);
 	void SendAnimationStateMessage(int animationID, bool animationState);
 	void SendAccelerationChangeMessage(Direction accelerationDirection, Direction rotationDirection, UIEventState eventState);
 	void SendLocationChangeMessage(double xPositionChange, double yPositionChange, double rotationChange);
 	void SendEntityTerminationRequestMessage(int id);
-	
+	void SendSpawnEntityMessage(const char *scriptName, int id);
+
+
 };

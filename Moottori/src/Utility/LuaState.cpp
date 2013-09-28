@@ -93,7 +93,7 @@ void LuaState::CallFunction( std::string name )
 
 	try {
 		luabind::call_function<void>(mState, name.c_str());
-	}
+	} 
 	catch ( std::exception &e )
 	{
 		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage(name, e.what()));
@@ -115,7 +115,10 @@ lua_State * LuaState::State()
 
 std::string LuaState::GetFunctionCallErrorMessage(std::string name, std::string exceptionMessage)
 {
-	std::string errorMsg = "Caught an exception when calling script function " + name + " (error: " + exceptionMessage + ")";
+
+	std::string topStack = lua_tostring(mState, -1);
+	std::string errorMsg = "Caught an exception when calling script function " + name + " (error: " + topStack + ")";
+
 	if (mAttachedScriptFiles.size() > 0)
 	{
 		errorMsg += "\n\tAttached script files:";

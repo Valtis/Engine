@@ -6,10 +6,10 @@ class QueryDirectionEvent : public Event
 public:
 	QueryDirectionEvent(double &direction, bool &wasHandled) : mDirection(direction), mWasHandled(wasHandled) {}
 
-	bool WasHandled() { return mWasHandled; }
+	bool WasHandled() const { return mWasHandled; }
 	void WasHandled(bool val) { mWasHandled = val; }
 
-	double GetDirection() { return mDirection; }
+	double GetDirection() const { return mDirection; }
 	void SetDirection(double val) { mDirection = val; }
 
 	EventType GetType() const { return EventType::QueryDirection; }

@@ -7,7 +7,7 @@ class ChangeLocationEvent;
 class ChangeVelocityEvent;
 class RequestTerminationEvent;
 class EntityCollisionEvent;
-
+class ParentIDNotificationEvent;
 class QueryLocationEvent; 
 class QueryDirectionEvent;
 class QueryFactionEvent;
@@ -22,4 +22,5 @@ public:
 	virtual void Visit(const ChangeAnimationStateEvent *event) const = 0;
 	virtual void Visit(const RequestTerminationEvent *event) const = 0;
 	virtual void Visit(const EntityCollisionEvent *event) const = 0;
+	virtual void Visit(const ParentIDNotificationEvent *event) const = 0;
 };

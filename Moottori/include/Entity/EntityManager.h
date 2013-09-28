@@ -1,6 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include <memory>
+#include "EntityManagerListener.h"
 
 class Entity;
 class Event;
@@ -16,10 +17,7 @@ public:
 	Entity *GetEntity(int id);
 
 	void Update(double ticksPassed);
-
-	void UpdateEntityStates( double doubleTicks );
-
-	void DeleteQueuedEntities();
+	void AddListener(EntityManagerListener *listener);
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
 	EntityManager(const EntityManager &) = delete;
@@ -32,10 +30,18 @@ public:
 #endif
 
 private:
+	void UpdateEntityStates( double doubleTicks );
+	void DeleteQueuedEntities();
+	void RegisterEvents( Entity *entity );
+
 	EntityManager();
 	static EntityManager *mInstance;
 	
 	std::unordered_map<int, std::unique_ptr<Entity>> mEntities;
+
 	void HandleTerminationEvent(Event *event);
+	void HandleSpawnEvent(Event *event);
+
 	std::vector<int> mDeleteQueue;
+	std::vector<EntityManagerListener *> mListeners;
 };

@@ -39,18 +39,12 @@ function CalculateSpeed()
 	speed = math.random(10)
 	velocity_component.x_velocity = speed * math.cos(angle)
 	velocity_component.y_velocity = speed * math.sin(angle)
-
-
-	io.write("XVel : " .. velocity_component.x_velocity .. "  YVel  " .. velocity_component.y_velocity .. "\n")
-
 end
 
 
 function CalculateAngle()
 
 	x, y, wasHandled = messaging:SendLocationQueryMessage()
-
-	io.write("X: " .. x .. " Y: " .. y .. "\n")
 	targetX = math.random(level_width)
 	targetY = math.random(level_height)
 

@@ -10,17 +10,17 @@ public:
 
 
 
-	bool WasHandled() { return mWasHandled; }
+	bool WasHandled() const { return mWasHandled; }
 	void WasHandled(bool val) { mWasHandled = val; }
 
-	double GetX() { return mX; }
+	double GetX() const { return mX; }
 	void SetX(double x) { mX = x; }
 
-	double GetY() { return mY; }
+	double GetY() const { return mY; }
 	void SetY(double y) { mY = y; }
 
 
-	EventType GetType() const { return EventType::QueryLocation; }
+	EventType GetType() const override { return EventType::QueryLocation; }
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
 	QueryLocationEvent(const QueryLocationEvent &) = delete;
