@@ -114,6 +114,7 @@
   <ItemGroup>
     <Text Include="include\Component\FactionComponent.h" />
     <Text Include="include\Event\QueryFactionEvent.h" />
+    <Text Include="include\Event\QueryLocationEvent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{39514168-5CDD-4896-80D5-F8A83C882418}</ProjectGuid>

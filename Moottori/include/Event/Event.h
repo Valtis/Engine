@@ -4,7 +4,7 @@
 #include "EventVisitor.h"
 #include <stdexcept>
 
-enum class EventType : int { None, UIEvent, QueryDirection, QueryFaction, ChangeAcceleration, ChangeVelocity, ChangeLocation, ChangeAnimationState, RequestTermination, BoundaryCollision, EntityCollision };
+enum class EventType : int { None, UIEvent, QueryLocation, QueryDirection, QueryFaction, ChangeAcceleration, ChangeVelocity, ChangeLocation, ChangeAnimationState, RequestTermination, BoundaryCollision, EntityCollision };
 
 
 class Event

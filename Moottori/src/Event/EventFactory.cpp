@@ -1,6 +1,7 @@
 #include "Event/EventFactory.h"
 #include "Event/ChangeVelocityEvent.h"
 #include "Event/ChangeAccelerationEvent.h"
+#include "Event/QueryLocationEvent.h"
 #include "Event/QueryDirectionEvent.h"
 #include "Event/QueryFactionEvent.h"
 #include "Event/ChangeAnimationStateEvent.h"
@@ -18,51 +19,55 @@ namespace EventFactory
 			yVelocityChange, rotationVelocityChange));
 	}
 
+
+	std::unique_ptr<Event> CreateLocationQueryEvent(double &x, double &y, bool &wasHandled);
+	{
+		return std::unique_ptr<Event>(new QueryLocationEvent(x, y, wasHandled));
+	}
+
+
 	std::unique_ptr<Event> CreateDirectionQueryEvent(double &rotation, bool &wasHandled)
 	{
-		return std::unique_ptr<QueryDirectionEvent>(new QueryDirectionEvent(rotation, wasHandled));
+		return std::unique_ptr<Event>(new QueryDirectionEvent(rotation, wasHandled));
 	}
 
 	std::unique_ptr<Event> CreateFactionQueryEvent(int &faction, bool &wasHandled)
 	{
-		return std::unique_ptr<QueryFactionEvent>(new QueryFactionEvent(faction, wasHandled));
+		return std::unique_ptr<Event>(new QueryFactionEvent(faction, wasHandled));
 	}
 
 	std::unique_ptr<Event> CreateAnimationStateChangeEvent(int animationID, bool animationState)
 	{
-		return std::unique_ptr<ChangeAnimationStateEvent>(new ChangeAnimationStateEvent(animationID, animationState));
+		return std::unique_ptr<Event>(new ChangeAnimationStateEvent(animationID, animationState));
 	}
 
 	std::unique_ptr<Event> CreateChangeAccelerationEvent(Direction accelerationDirection, Direction rotationDirection, UIEventState state) 
 	{
-		return std::unique_ptr<ChangeAccelerationEvent>(new ChangeAccelerationEvent(accelerationDirection, rotationDirection, state));
+		return std::unique_ptr<Event>(new ChangeAccelerationEvent(accelerationDirection, rotationDirection, state));
 	}
 
 	std::unique_ptr<Event> CreateChangeLocationEvent(double xPositionChange, double yPositionChange, double rotationChange)
 	{
-		return std::unique_ptr<ChangeLocationEvent>(new ChangeLocationEvent(xPositionChange,yPositionChange, rotationChange));
+		return std::unique_ptr<Event>(new ChangeLocationEvent(xPositionChange,yPositionChange, rotationChange));
 	}
 
 	std::unique_ptr<Event> CreateBoundaryCollisionEvent(Direction direction, int minX, int minY, int maxX, int maxY)
 	{
-		return std::unique_ptr<BoundaryCollisionEvent>(new BoundaryCollisionEvent(direction, minX, minY, maxX, maxY));
+		return std::unique_ptr<Event>(new BoundaryCollisionEvent(direction, minX, minY, maxX, maxY));
 	}
 
 	std::unique_ptr<Event> CreateEntityCollisionEvent(int firstID, int secondID)
 	{
-		return std::unique_ptr<EntityCollisionEvent>(new EntityCollisionEvent(firstID, secondID));
+		return std::unique_ptr<Event>(new EntityCollisionEvent(firstID, secondID));
 	}
 
 	std::unique_ptr<Event> CreateUIEvent(UIEventType eventType, UIEventState eventState)
 	{
-		return std::unique_ptr<UIEvent>(new UIEvent(eventType, eventState));
+		return std::unique_ptr<Event>(new UIEvent(eventType, eventState));
 	}
 
 	std::unique_ptr<Event> CreateEntityTerminationRequestEvent(int id)
 	{
-		return std::unique_ptr<RequestTerminationEvent>(new RequestTerminationEvent(id));
+		return std::unique_ptr<Event>(new RequestTerminationEvent(id));
 	}
-
-
-
 }

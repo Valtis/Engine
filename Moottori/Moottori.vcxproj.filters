@@ -368,5 +368,8 @@
     <Text Include="include\Event\QueryFactionEvent.h">
       <Filter>Header Files\Event</Filter>
     </Text>
+    <Text Include="include\Event\QueryLocationEvent.h">
+      <Filter>Header Files\Event</Filter>
+    </Text>
   </ItemGroup>
 </Project>

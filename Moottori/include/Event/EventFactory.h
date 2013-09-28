@@ -15,5 +15,6 @@ namespace EventFactory
 	std::unique_ptr<Event> CreateUIEvent(UIEventType eventType, UIEventState eventState);
 	std::unique_ptr<Event> CreateEntityCollisionEvent(int firstID, int secondID);
 	std::unique_ptr<Event> CreateEntityTerminationRequestEvent(int id);
-	
+	std::unique_ptr<Event> CreateLocationQueryEvent(double &x, double &y, bool &wasHandled);
+
 }

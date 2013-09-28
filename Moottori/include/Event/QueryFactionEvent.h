@@ -16,7 +16,12 @@ public:
 
 	EventType GetType() const { return EventType::QueryFaction; }
 
-
+	void AcceptVisitor(EventVisitor *visitor) const override 
+	{
+		visitor->Visit(this, mFaction);
+		mWasHandled = true;
+	}
+	
 #if !defined _MSC_VER || _MSC_VER >= 1800 
 	QueryFactionEvent(const QueryFactionEvent &) = delete;
 	QueryFactionEvent &operator=(const QueryFactionEvent &) = delete;
@@ -27,11 +32,7 @@ private:
 public:
 #endif
 
-	void AcceptVisitor(EventVisitor *visitor) const override 
-	{
-		visitor->Visit(this, mFaction);
-		mWasHandled = true;
-	}
+
 private:
 
 	bool &mWasHandled;
