@@ -8,7 +8,8 @@
 #include "Component/VelocityComponent.h"
 #include "Component/AccelerationComponent.h"
 #include "Component/CollisionAreaComponent.h"
-#include "Component//FactionComponent.h"
+#include "Component/FactionComponent.h"
+#include "Component/HealthComponent.h"
 
 LuaState EntityFactory::mLuaState;
 bool EntityFactory::mLuaStateIsInitialized = false;
@@ -36,7 +37,8 @@ void EntityFactory::RegisterMethods()
 			luabind::def("AddVelocityComponent", &AddVelocityComponent),
 			luabind::def("AddAccelerationComponent", &AddAccelerationComponent),
 			luabind::def("AddCollisionComponent", &AddCollisionComponent),
-			luabind::def("AddFactionComponent", &AddFactionComponent)
+			luabind::def("AddFactionComponent", &AddFactionComponent),
+			luabind::def("AddHealthComponent", &AddHealthComponent)
 	];
 }
 
@@ -119,3 +121,11 @@ void EntityFactory::AddFactionComponent( int faction, std::string scriptFile )
 	c->AttachScript(scriptFile);
 	mEntityBeingCreated->AddComponent(ComponentType::Faction, std::move(c));
 }
+
+void EntityFactory::AddHealthComponent(std::string scriptFile )
+{
+	std::unique_ptr<Component> c(new HealthComponent());
+	c->AttachScript(scriptFile);
+	mEntityBeingCreated->AddComponent(ComponentType::Health, std::move(c));
+}
+

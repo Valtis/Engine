@@ -11,10 +11,6 @@
 
 #include <SDL_assert.h>
 
-bool CollisionManager::HasRightComponents(Entity *e)
-{
-	return (e != nullptr && e->GetComponent(ComponentType::Collision) != nullptr && e->GetComponent(ComponentType::Location) != nullptr);
-}
 
 void CollisionManager::SetCollidabeEntities(std::vector<int> entitites)
 {
@@ -22,16 +18,28 @@ void CollisionManager::SetCollidabeEntities(std::vector<int> entitites)
 
 	for (int i : entitites)
 	{
-		Entity *e = EntityManager::Instance().GetEntity(i);
-		
-		if (!HasRightComponents(e))
-		{
-			continue;
-		}
-
-		mCollidables.push_back(i);
+		AddEntity(i);
 	}
 }
+
+void CollisionManager::AddEntity( int i )
+{
+	
+
+	if (!HasRightComponents(i))
+	{
+		return;
+	}
+
+	mCollidables.push_back(i);
+}
+
+bool CollisionManager::HasRightComponents( int entityID )
+{
+	Entity *e = EntityManager::Instance().GetEntity(entityID);
+	return (e != nullptr && e->GetComponent(ComponentType::Collision) != nullptr && e->GetComponent(ComponentType::Location) != nullptr);
+}
+
 
 void CollisionManager::Update(double ticksPassed)
 {

@@ -16,11 +16,13 @@ public:
 	void Update(double ticksPassed);
 	void SetCollidabeEntities(std::vector<int> entities);
 
+	void AddEntity( int i );
+
 private:
 	int GetCenterX(Entity *e);
 	int GetCenterY(Entity *e);
 
-	bool HasRightComponents(Entity *e);
+	bool HasRightComponents(int entityID);
 
 	void CheckLevelBoundaryCollisions(Entity *e);
 

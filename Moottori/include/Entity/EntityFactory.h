@@ -39,6 +39,7 @@ private:
 	static void AddAccelerationComponent(std::string scriptFile);
 	static void AddCollisionComponent(int collisionRadius, std::string scriptFile);
 	static void AddFactionComponent(int faction, std::string scriptFile);
+	static void AddHealthComponent(std::string scriptFile);
 
 	static void InitializeLuaState();
 	static void RegisterMethods();

@@ -221,7 +221,7 @@ int Engine::AddEntity( const char *scriptName )
 	EntityManager::Instance().AddEntity(std::move(e));
 	mLevel->AddEntity(id);
 	Renderer::Instance().AddEntity(id);
-
+	mCollisionManager.AddEntity(id);
 	return id;
 }
 
