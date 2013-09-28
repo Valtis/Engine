@@ -29,7 +29,11 @@ public:
 
 protected:
 	void OnAttachingScript() override;
+	void OnRegisteringEventHandler() override;
 private:
+
+	void HandleLocationQuery(Event *e);
+	void HandleDirectionQuery(Event *e);
 	double mX;
 	double mY;
 	double mRotation;

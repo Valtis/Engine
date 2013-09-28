@@ -6,6 +6,7 @@ function OnLocationChangeEvent(x_change, y_change, rotation_change)
 end
 
 function OnLocationQuery()
+	io.write("Hurhurhur\n\n\n\nhur")
 	return location_component.x, location_component.y
 end
 
@@ -17,5 +18,7 @@ end
 function OnRegisterForEvents()
 	dofile('data/scripts/defines.lua')
 	component:RegisterForEvents(EventType_ChangeLocation)
+	component:RegisterForEvents(EventType_QueryLocation)
 	component:RegisterForEvents(EventType_QueryDirection)
+
 end

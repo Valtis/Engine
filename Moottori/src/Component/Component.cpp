@@ -66,9 +66,18 @@ void Component::RegisterEventHandler(EventHandler *handler)
 		mEventSender->Init(mEventHandler, &mLuaState);
 	}
 
+	OnRegisteringEventHandler();
+
 	if (mLuaState.FunctionExists("OnRegisterForEvents"))
 	{
 		
 		mLuaState.CallFunction("OnRegisterForEvents");
 	}	
+
+}
+
+
+EventHandler &Component::GetEventHandler() 
+{
+	return *mEventHandler;
 }

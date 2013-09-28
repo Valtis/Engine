@@ -14,21 +14,13 @@ public:
 	void WasHandled(bool val) { mWasHandled = val; }
 
 	double GetX() { return mX; }
-	void SetX(int x) { mX = x; }
+	void SetX(double x) { mX = x; }
 
 	double GetY() { return mY; }
-	void SetY(int y) { mY = y; }
+	void SetY(double y) { mY = y; }
 
 
 	EventType GetType() const { return EventType::QueryLocation; }
-
-	void AcceptVisitor(EventVisitor *visitor) const override 
-	{
-		visitor->Visit(this, mX, mY);
-		mWasHandled = true;
-	}
-
-
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
 	QueryLocationEvent(const QueryLocationEvent &) = delete;

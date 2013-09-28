@@ -12,7 +12,7 @@ function CreatePlayer()
 	local collisionRadius = 25
 
 	AddInputComponent("data/scripts/ship/ship_input.lua")
-	AddLocationComponent(playerX, playerY, "data/scripts/ship/location.lua")
+	AddLocationComponent(playerX, playerY, "data/scripts/ship/ship_location.lua")
 	AddVelocityComponent("data/scripts/ship/ship_velocity.lua")
 	AddAccelerationComponent("data/scripts/ship/ship_acceleration.lua")
 	AddGraphicsComponent("data/scripts/generic_entity/graphics.lua")

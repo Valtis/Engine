@@ -23,12 +23,6 @@ private:
 	QueryDirectionEvent &operator=(const QueryDirectionEvent &);
 public:
 #endif
-	
-	void AcceptVisitor(EventVisitor *visitor) const override 
-	{
-		visitor->Visit(this, mDirection);
-		mWasHandled = true;
-	}
 
 private:
 	double &mDirection;

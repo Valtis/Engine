@@ -10,9 +10,6 @@ function OnBoundaryCollisionEvent(direction, minX, minY, maxX, maxY)
 	location_component.y = math.min(math.max(location_component.y, minY), maxY)
 end
 
-function OnDirectionQuery()
-	return location_component.rotation
-end
 
 function OnRegisterForEvents()
 	dofile('data/scripts/defines.lua')

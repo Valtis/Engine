@@ -25,7 +25,7 @@ void EventSender::RegisterFunctions()
 			.def("SendEntityTerminationRequestMessage", &EventSender::SendEntityTerminationRequestMessage)
 			.def("SendFactionQueryMessage", &EventSender::SendFactionQueryMessage)
 			.def("SendFactionQueryMessageToEntity", &EventSender::SendFactionQueryMessageToEntity)
-			.def("SendLocationQueryMessage", &EventSender::SendLocationChangeMessage)
+			.def("SendLocationQueryMessage", &EventSender::SendLocationQueryMessage)
 	];
 
 	luabind::globals(mLuaState->State())["messaging"] = this;	
@@ -44,9 +44,16 @@ void EventSender::SendDirectionQueryMessage()
 
 void EventSender::SendLocationQueryMessage()
 {
-	double x, y;
+	double x = 0;
+	double y = 0;
 	bool wasHandled;
 	mEventHandler->ProcessEvent(EventFactory::CreateLocationQueryEvent(x, y, wasHandled));
+
+	lua_pushnumber(mLuaState->State(), x);
+	lua_pushnumber(mLuaState->State(), y);
+	lua_pushinteger(mLuaState->State(), wasHandled);
+	lua_pushinteger(mLuaState->State(), 3); // number of parameters into stack
+
 }
 
 void EventSender::SendFactionQueryMessage()

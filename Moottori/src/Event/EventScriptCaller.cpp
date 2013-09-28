@@ -40,16 +40,6 @@ void EventScriptCaller::Visit(const ChangeAnimationStateEvent *event) const
 	mState.CallFunction("OnAnimationStateChangeEvent", event->GetAnimationID(), event->GetNewAnimationState());
 }
 
-void EventScriptCaller::Visit(const QueryLocationEvent *event, double &x, double &y) const 
-{
-	mState.CallFunction("OnLocationQuery");	
-}
-
-void EventScriptCaller::Visit(const QueryDirectionEvent *event, double &rotation) const 
-{
-	rotation = mState.CallFunction<double>("OnDirectionQuery");	
-}
-
 void EventScriptCaller::Visit(const QueryFactionEvent *event, int &faction) const 
 {
 	faction= mState.CallFunction<int>("OnFactionQuery");	
