@@ -340,9 +340,6 @@
     <None Include="data\scripts\generic_entity\graphics.lua">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="data\scripts\generic_entity\location.lua">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="data\scripts\ship\ship_acceleration.lua">
       <Filter>Resource Files</Filter>
     </None>
@@ -350,6 +347,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="data\scripts\ship\ship_velocity.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\asteroid\asteroid_location.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\ship\ship_location.lua">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -12,7 +12,7 @@ function CreatePlayer()
 	local collisionRadius = 25
 
 	AddInputComponent("data/scripts/ship/ship_input.lua")
-	AddLocationComponent(playerX, playerY, "data/scripts/generic_entity/location.lua")
+	AddLocationComponent(playerX, playerY, "data/scripts/ship/location.lua")
 	AddVelocityComponent("data/scripts/ship/ship_velocity.lua")
 	AddAccelerationComponent("data/scripts/ship/ship_acceleration.lua")
 	AddGraphicsComponent("data/scripts/generic_entity/graphics.lua")
@@ -29,7 +29,7 @@ function CreateAsteroid()
 	local collisionRadius = 25
 
 	AddVelocityComponent("data/scripts/asteroid/asteroid_velocity.lua")
-	AddLocationComponent(asteroidX, asteroidY, "data/scripts/generic_entity/location.lua")
+	AddLocationComponent(asteroidX, asteroidY, "data/scripts/asteroid/location.lua")
 	AddGraphicsComponent("data/scripts/generic_entity/graphics.lua")
 	AddCollisionComponent(collisionRadius, "data/scripts/asteroid/asteroid_collision.lua")
 	AddFactionComponent(1, "data/scripts/generic_entity/faction.lua")
