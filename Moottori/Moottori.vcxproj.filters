@@ -304,21 +304,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\scripts\ship_velocity.lua">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="data\scripts\location.lua">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="data\scripts\ship_acceleration.lua">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="data\scripts\entity_creation.lua">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="data\scripts\ship_input.lua">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="data\spritesheets\sprites.dat">
       <Filter>Resource Files</Filter>
     </None>
@@ -331,16 +316,37 @@
     <None Include="data\scripts\defines.lua">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="data\scripts\graphics.lua">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="data\scripts\asteroid_collision.lua">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="data\scripts\faction.lua">
+    <None Include="data\scripts\entity_creation.lua">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="data\scripts\game.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\asteroid\asteroid_collision.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\asteroid\asteroid_health.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\asteroid\asteroid_velocity.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\generic_entity\faction.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\generic_entity\graphics.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\generic_entity\location.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\ship\ship_acceleration.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\ship\ship_input.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\ship\ship_velocity.lua">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
