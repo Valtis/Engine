@@ -39,8 +39,17 @@ void LuaState::CallFunction( std::string name )
 		throw std::runtime_error("Attempting to call script function \"" + name + "\" that does not exist!");
 	}
 
-	luabind::call_function<void>(mState, 
-		name.c_str());
+
+	try {
+		luabind::call_function<void>(mState, name.c_str());
+	}
+	catch (...)
+	{
+		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name);
+		throw;
+	}
+
+
 }
 
 void LuaState::OpenAllLuaLibraries()

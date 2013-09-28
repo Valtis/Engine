@@ -4,6 +4,8 @@
 #include <luabind/luabind.hpp>
 #include <stdexcept>
 
+#include "Utility/LoggerManager.h"
+
 // a lightweight wrapper around lua_State; mostly meant to handle releasing the resources once not needed anymore
 class LuaState
 {
@@ -35,8 +37,16 @@ public:
 			throw std::runtime_error("Attempting to call script function \"" + name + "\" that does not exist!");
 		}
 
-		return luabind::call_function<T>(mState, 
-			name.c_str());
+		try
+		{
+			return luabind::call_function<T>(mState, name.c_str());
+		}
+		catch (...)
+		{
+			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name);
+			throw;
+		}
+
 	}
 
 	void CallFunction(std::string name);
@@ -54,10 +64,15 @@ public:
 			throw std::runtime_error("Attempting to call script function \"" + name + "\" that does not exist!");
 		}
 
-		luabind::call_function<void>(mState, 
-			name.c_str(), 
-			std::forward<Args>(args)...
-			);
+		try {
+			luabind::call_function<void>(mState, name.c_str(),  std::forward<Args>(args)...);
+		}
+		catch (...)
+		{
+			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name);
+			throw;
+		}
+
 	}
 
 	template<typename T, typename ...Args>
@@ -72,11 +87,17 @@ public:
 		{
 			throw std::runtime_error("Attempting to call script function \"" + name + "\" that does not exist!");
 		}
+		
+		try
+		{
+			return luabind::call_function<T>(mState, name.c_str(), std::forward<Args>(args)...);
+		}
+		catch (...)
+		{
+			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, "Caught an exception when calling script function " + name);
+			throw;
+		}
 
-		return luabind::call_function<T>(mState, 
-			name.c_str(), 
-			std::forward<Args>(args)...
-			);
 	}
 
 
