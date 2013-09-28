@@ -8,48 +8,17 @@
 class LuaState
 {
 public:
-	LuaState() : mState(nullptr), mScriptLoaded(false) { }
+	LuaState();
 
-	~LuaState() 
-	{
-		if (mState != nullptr)
-		{
-			lua_close(mState);
-		}
-	}
+	~LuaState();
 
-	void Open()
-	{
-		mState = lua_open();
-		luabind::open(mState);
-	}
+	void Open();
 
-	void LoadScriptFile(std::string fileName)
-	{
-		if (mState == nullptr)
-		{
-			throw std::logic_error("lua_State was not opened before attempting to use one!");
-		}
-		luaL_dofile(mState, fileName.c_str());
-		mScriptLoaded = true;
-	}
+	void LoadScriptFile(std::string fileName);
 
-	void OpenLuaLibrary(lua_CFunction f, std::string libraryName)
-	{
-		if (mState == nullptr)
-		{
-			throw std::logic_error("lua_State was not opened before attempting to use one!");
-		}
+	void OpenLuaLibrary(lua_CFunction f, std::string libraryName);
 
-		lua_pushcfunction(mState, f);
-		lua_pushstring(mState, libraryName.c_str());
-		lua_call(mState, 1, 0);
-	}
-
-	void OpenAllLuaLibraries()
-	{
-		luaL_openlibs(mState);
-	}
+	void OpenAllLuaLibraries();
 
 
 	// calling the template version without parameters causes internal compiler error on vs 2012
@@ -70,21 +39,7 @@ public:
 			name.c_str());
 	}
 
-	void CallFunction(std::string name)
-	{
-		if (mState == nullptr)
-		{
-			throw std::logic_error("lua_State was not opened before attempting to use one!");
-		}
-
-		if (!FunctionExists(name))
-		{
-			throw std::runtime_error("Attempting to call script function \"" + name + "\" that does not exist!");
-		}
-
-		luabind::call_function<void>(mState, 
-			name.c_str());
-	}
+	void CallFunction(std::string name);
 
 	template<typename ...Args>
 	void CallFunction(std::string name, Args&& ...args)
@@ -126,38 +81,11 @@ public:
 
 
 
-	lua_State *State() { 
-		if (mState == nullptr)
-		{
-			throw std::logic_error("lua_State was not opened before attempting to use one!");
-		}
-		return mState; 
-	}
+	lua_State *State();
 
-	bool ScriptLoaded() 
-	{
-		return mScriptLoaded;
-	}
+	bool ScriptLoaded();
 
-	bool FunctionExists(std::string name)
-	{
-		if (!ScriptLoaded())
-		{		
-			return false;
-		}
-
-		if (mState == nullptr)
-		{
-			throw std::logic_error("lua_State was not opened before attempting to use one!");
-		}
-
-		luabind::object g = luabind::globals(mState);
-		luabind::object fun = g[name.c_str()];
-		if (fun.is_valid()) {
-			return luabind::type(fun)== LUA_TFUNCTION;
-		}
-		return false;
-	}
+	bool FunctionExists(std::string name);
 
 private:
 	lua_State *mState;

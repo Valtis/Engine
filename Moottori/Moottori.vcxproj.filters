@@ -302,6 +302,9 @@
     <ClCompile Include="src\Component\FactionComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utility\LuaState.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\spritesheets\sprites.dat">
