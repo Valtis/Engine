@@ -19,7 +19,10 @@ public:
 
 protected:
 	void OnAttachingScript() override;
+	void OnRegisteringEventHandler(EventHandler *handler);
 
 private:
+
+	void HandleFactionQuery(Event *event);
 	int mFaction;
 };

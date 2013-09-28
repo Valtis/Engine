@@ -17,7 +17,7 @@ function CreatePlayer()
 	AddAccelerationComponent("data/scripts/ship/ship_acceleration.lua")
 	AddGraphicsComponent("data/scripts/generic_entity/graphics.lua")
 	AddCollisionComponent(collisionRadius, "")
-	AddFactionComponent(0, "data/scripts/generic_entity/faction.lua")
+	AddFactionComponent(0, "")
 	AddPlayerSprites()
 end
 
@@ -29,7 +29,7 @@ function CreateAsteroid()
 	AddVelocityComponent("data/scripts/asteroid/asteroid_velocity.lua")
 	AddGraphicsComponent("data/scripts/generic_entity/graphics.lua")
 	AddCollisionComponent(collisionRadius, "data/scripts/asteroid/asteroid_collision.lua")
-	AddFactionComponent(1, "data/scripts/generic_entity/faction.lua")
+	AddFactionComponent(1, "")
 	AddHealthComponent("data/scripts/asteroid/asteroid_health.lua")
 	AddSprite(0, 200006, 5)
 end
