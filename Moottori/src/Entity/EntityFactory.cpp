@@ -19,8 +19,7 @@ UI *EntityFactory::mUI = nullptr;
 void EntityFactory::InitializeLuaState()
 {
 	mLuaState.Open();
-	mLuaState.OpenLuaLibrary(luaopen_io, LUA_IOLIBNAME);
-	mLuaState.OpenLuaLibrary(luaopen_math, LUA_MATHLIBNAME);  
+	mLuaState.OpenAllLuaLibraries();
 
 	RegisterMethods();
 

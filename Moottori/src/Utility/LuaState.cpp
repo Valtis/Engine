@@ -118,12 +118,12 @@ std::string LuaState::GetFunctionCallErrorMessage(std::string name, std::string 
 	std::string errorMsg = "Caught an exception when calling script function " + name + " (error: " + exceptionMessage + ")";
 	if (mAttachedScriptFiles.size() > 0)
 	{
-		errorMsg += "\nAttached script files:\n";
+		errorMsg += "\n\tAttached script files:";
 	}
 
 	for (auto file : mAttachedScriptFiles)
 	{
-		errorMsg += "\n" + file;
+		errorMsg += "\n\t" + file;
 	}
 
 	return errorMsg;

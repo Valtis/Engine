@@ -21,11 +21,8 @@ function CreatePlayer()
 	AddPlayerSprites()
 end
 
+
 function CreateAsteroid()
-
-	math.randomseed( os.time())
-
---	io.write(level_width)
 
 	local asteroidX = math.random(500)
 	local asteroidY = math.random(500)
@@ -40,3 +37,8 @@ function CreateAsteroid()
 	AddSprite(0, 200006, 5)
 end
 
+
+function Initialize()
+	io.write("Initializing random seed...\n")
+	math.randomseed( os.time() )
+end

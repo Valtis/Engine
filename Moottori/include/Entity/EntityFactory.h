@@ -19,6 +19,11 @@ public:
 		}
 
 		mLuaState.LoadScriptFile(scriptName);
+
+		if (mLuaState.FunctionExists("Initialize"))
+		{
+			mLuaState.CallFunction("Initialize");
+		}
 		
 	}
 
