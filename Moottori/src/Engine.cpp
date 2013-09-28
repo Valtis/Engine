@@ -101,7 +101,6 @@ void Engine::Initialize()
 	LoggerManager::Instance().GetLog(SCRIPT_LOG).AddTimeStamps(true);
 
 	SDL_Init(SDL_INIT_VIDEO);
-	mLevel.reset(new Level(1920, 1080));
 	InitializeLua();
 
 	mUI.Initialize("Generic title - move to settings file!", "data/spritesheets/", 640, 480);
@@ -174,6 +173,7 @@ void Engine::InitializeLua()
 			.def_readwrite("draw_tick_length", &Engine::mDrawTickLength)
 			.def_readwrite("game_logic_tick_length", &Engine::mGameLogicTickLength)
 			.def("AddEntity", &Engine::AddEntity)
+			.def("CreateLevel", &Engine::CreateLevel)
 			.def("AttachCamera", &Engine::CreateAndAttachCamera)
 			.def("GetNumberOfActiveEntities", &Engine::GetNumberOfActiveEntities)
 	];
@@ -181,6 +181,10 @@ void Engine::InitializeLua()
 	luabind::globals(mLuaState.State())["engine"] = this;
 }
 
+void Engine::CreateLevel(int width, int height)
+{
+	mLevel.reset(new Level(width, height));
+}
 
 void Engine::InitializeInputTypes()
 {

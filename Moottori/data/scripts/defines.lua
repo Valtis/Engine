@@ -4,8 +4,8 @@ game_logic_tick = 30
 game_draw_tick = 30
 
 -- level size
-level_width = 900
-level_height = 900
+level_width = 1200
+level_height = 1200
 
 
 -- key values

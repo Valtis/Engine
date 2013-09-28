@@ -28,14 +28,7 @@ public:
 private:
 	void Initialize();
 	void InitializeLua();
-
-	// todo: refactor\split to multiple classes - here just so that I get something functional for now
-	int AddEntity(const char *scriptName);
-	void CreateAndAttachCamera( int entityID);
-	void InitializeInputTypes();
-	int GetNumberOfActiveEntities();
-
-
+	
 	void CleanUp();
 	void HandleInput();
 	void UpdateGameState();
@@ -64,4 +57,14 @@ private:
 	CollisionManager mCollisionManager;
 
 	LuaState mLuaState;
+
+
+
+	// todo: refactor\split to multiple classes - here just so that I get something functional for now
+	int AddEntity(const char *scriptName);
+	void CreateAndAttachCamera( int entityID);
+	void InitializeInputTypes();
+	int GetNumberOfActiveEntities();
+	void CreateLevel(int width, int height);
+
 };

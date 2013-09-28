@@ -14,6 +14,6 @@ end
 
 
 function OnRegisterForEvents()
-	asteroid_health_counter = 1000
+	asteroid_health_counter = 2000
 
 end
