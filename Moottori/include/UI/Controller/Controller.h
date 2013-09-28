@@ -7,7 +7,7 @@ class Controller
 public:
 	Controller() { }
 	virtual ~Controller() { }
-	virtual std::vector<std::pair<UIEventType, UIEventState>> HandleInput() = 0;
+	virtual std::vector<std::pair<int, UIEventState>> HandleInput() = 0;
 	
 #if !defined _MSC_VER || _MSC_VER >= 1800 
 	Controller(const Controller &) = delete;

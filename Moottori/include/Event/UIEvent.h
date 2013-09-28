@@ -23,6 +23,6 @@ public:
 #endif
 
 private:
-	const UIEventType mUIEventType;
+	const int mUIEventType;
 	const UIEventState mUIEventState;
 };

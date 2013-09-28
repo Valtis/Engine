@@ -95,7 +95,7 @@ void UI::SortHandlers()
 }
 
 
-void UI::NotifyInputHandlers(UIEventType event, UIEventState state)
+void UI::NotifyInputHandlers( int type, UIEventState state )
 {
 	std::unique_ptr<Event> uiEvent(EventFactory::CreateUIEvent(event, state));
 	for (auto &handler : mInputHandlers)

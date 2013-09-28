@@ -38,7 +38,7 @@ public:
 private:
 	void HandleEvent(const SDL_Event &event);
 
-	void NotifyInputHandlers(UIEventType type, UIEventState state);
+	void NotifyInputHandlers(int type, UIEventState state);
 	void SortHandlers();
 	bool EventHandler(Event *);
 
