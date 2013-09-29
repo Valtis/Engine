@@ -10,6 +10,7 @@
 #include "Component/CollisionAreaComponent.h"
 #include "Component/FactionComponent.h"
 #include "Component/HealthComponent.h"
+#include "Component/SoundEffectComponent.h"
 
 LuaState EntityFactory::mLuaState;
 bool EntityFactory::mLuaStateIsInitialized = false;
@@ -37,7 +38,8 @@ void EntityFactory::RegisterMethods()
 			luabind::def("AddAccelerationComponent", &AddAccelerationComponent),
 			luabind::def("AddCollisionComponent", &AddCollisionComponent),
 			luabind::def("AddFactionComponent", &AddFactionComponent),
-			luabind::def("AddHealthComponent", &AddHealthComponent)
+			luabind::def("AddHealthComponent", &AddHealthComponent),
+			luabind::def("AddSoundComponent", &AddSoundComponent)
 	];
 }
 
@@ -128,3 +130,10 @@ void EntityFactory::AddHealthComponent(std::string scriptFile )
 	mEntityBeingCreated->AddComponent(ComponentType::Health, std::move(c));
 }
 
+
+void EntityFactory::AddSoundComponent(std::string scriptFile)
+{
+	std::unique_ptr<Component> c(new SoundEffectComponent());
+	c->AttachScript(scriptFile);
+	mEntityBeingCreated->AddComponent(ComponentType::SoundEffect, std::move(c));
+}
