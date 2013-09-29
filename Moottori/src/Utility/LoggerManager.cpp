@@ -1,6 +1,7 @@
 #include "Utility/LoggerManager.h"
 
 std::string LoggerManager::mLogFolder = "";
+std::unordered_map<std::string, std::unique_ptr<Logger>> LoggerManager::mLogs;
 
 std::string LoggerManager::GetFullName( const std::string &name )
 {

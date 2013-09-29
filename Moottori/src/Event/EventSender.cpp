@@ -113,7 +113,7 @@ void EventSender::SendFactionQueryMessageToEntity(int id)
 	Entity *e = EntityManager::Instance().GetEntity(id);
 	if (e == nullptr)
 	{
-		LoggerManager::.GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning,
+		LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning,
 			"Could not find entity with id " + std::to_string(id) + " when querying for faction data"
 			);
 	}

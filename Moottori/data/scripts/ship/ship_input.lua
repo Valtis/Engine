@@ -48,6 +48,7 @@ function Fire()
 	if fire_counter == 0 then
 		messaging:SendSpawnEntityMessage("CreateMissile", entity:GetID())
 		fire_counter = 200/game_logic_tick
+		messaging:SendPlaySoundEffectMessage(0)
 		return
 	end
 end

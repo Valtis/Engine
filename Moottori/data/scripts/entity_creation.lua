@@ -33,6 +33,7 @@ function CreateAsteroid()
 	AddCollisionComponent(collisionRadius, "data/scripts/asteroid/asteroid_collision.lua")
 	AddFactionComponent(asteroid_faction, "")
 	AddHealthComponent("data/scripts/asteroid/asteroid_health.lua")
+	AddSoundComponent("data/scripts/generic_entity/sound.lua")
 
 	AddSprite(0, 200006, 5)
 end

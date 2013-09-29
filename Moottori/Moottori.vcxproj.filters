@@ -403,6 +403,15 @@
     <None Include="data\music\Purple Motion - Charts overdrive.ogg">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="data\sound\soundeffects.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\generic_entity\static_animation.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="data\scripts\generic_entity\sound.lua">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\spritesheets\testimap.bmp">
@@ -422,5 +431,10 @@
     <Text Include="data\music\music.dat">
       <Filter>Resource Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="data\sound\temp.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>

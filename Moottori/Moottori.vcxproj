@@ -115,10 +115,13 @@
     <None Include="data\scripts\game.lua" />
     <None Include="data\scripts\generic_entity\faction.lua" />
     <None Include="data\scripts\generic_entity\graphics.lua" />
+    <None Include="data\scripts\generic_entity\sound.lua" />
+    <None Include="data\scripts\generic_entity\static_animation.lua" />
     <None Include="data\scripts\ship\ship_acceleration.lua" />
     <None Include="data\scripts\ship\ship_input.lua" />
     <None Include="data\scripts\ship\ship_location.lua" />
     <None Include="data\scripts\ship\ship_velocity.lua" />
+    <None Include="data\sound\soundeffects.dat" />
     <None Include="data\spritesheets\sprites.dat" />
     <None Include="data\spritesheets\spritesheets.dat" />
   </ItemGroup>
@@ -130,6 +133,9 @@
     <Text Include="include\Component\FactionComponent.h" />
     <Text Include="include\Event\QueryFactionEvent.h" />
     <Text Include="include\Event\QueryLocationEvent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="data\sound\temp.wav" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{39514168-5CDD-4896-80D5-F8A83C882418}</ProjectGuid>
