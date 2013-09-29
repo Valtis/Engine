@@ -73,6 +73,12 @@
     <Filter Include="Header Files\Level">
       <UniqueIdentifier>{e33de579-2ba1-4dbf-9a36-6e873592c626}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Sound">
+      <UniqueIdentifier>{c7873fa7-db88-4c0e-9c4e-2e25c2e3ed54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sound">
+      <UniqueIdentifier>{34ca215f-c235-4d07-8ef1-cf2d0db8b497}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Component\Component.h">
@@ -219,6 +225,12 @@
     <ClInclude Include="include\Event\ParentIDNotificationEvent.h">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
+    <ClInclude Include="include\Sound\SoundManager.h">
+      <Filter>Header Files\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Sound\Music.h">
+      <Filter>Header Files\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -313,6 +325,12 @@
     </ClCompile>
     <ClCompile Include="src\Utility\LuaState.cpp">
       <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sound\SoundManager.cpp">
+      <Filter>Source Files\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sound\Music.cpp">
+      <Filter>Source Files\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

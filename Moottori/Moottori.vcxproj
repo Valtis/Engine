@@ -48,6 +48,8 @@
     <ClInclude Include="include\Graphics\Sprite.h" />
     <ClInclude Include="include\Graphics\SpriteManager.h" />
     <ClInclude Include="include\Level\Level.h" />
+    <ClInclude Include="include\Sound\Music.h" />
+    <ClInclude Include="include\Sound\SoundManager.h" />
     <ClInclude Include="include\UI\Controller\Controller.h" />
     <ClInclude Include="include\UI\Controller\ControllerFactory.h" />
     <ClInclude Include="include\UI\Controller\KeyboardController.h" />
@@ -84,6 +86,8 @@
     <ClCompile Include="src\Graphics\SpriteManager.cpp" />
     <ClCompile Include="src\Level\Level.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Sound\Music.cpp" />
+    <ClCompile Include="src\Sound\SoundManager.cpp" />
     <ClCompile Include="src\UI\Controller\ControllerFactory.cpp" />
     <ClCompile Include="src\UI\Controller\KeyboardController.cpp" />
     <ClCompile Include="src\UI\UI.cpp" />
@@ -154,10 +158,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <RunCodeAnalysis>true</RunCodeAnalysis>
-    <IncludePath>include\;SDL2-2.0.0\include;C:\Program Files %28x86%29\Lua\5.1\include;C:\Libs\Boost\boost_1_54_0;C:\Libs\LuaBind\luabind-0.9.1;$(IncludePath)</IncludePath>
+    <IncludePath>include\;SDL2-2.0.0\include;C:\Program Files %28x86%29\Lua\5.1\include;C:\Libs\Boost\boost_1_54_0;C:\Libs\LuaBind\luabind-0.9.1;C:\Libs\SDL\SDL2_mixer\SDL2_mixer-2.0.0\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>include\;SDL2-2.0.0\include;C:\Program Files %28x86%29\Lua\5.1\include;C:\Libs\Boost\boost_1_54_0;C:\Libs\LuaBind\luabind-0.9.1;$(IncludePath)</IncludePath>
+    <IncludePath>include\;SDL2-2.0.0\include;C:\Program Files %28x86%29\Lua\5.1\include;C:\Libs\Boost\boost_1_54_0;C:\Libs\LuaBind\luabind-0.9.1;C:\Libs\SDL\SDL2_mixer\SDL2_mixer-2.0.0\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -170,7 +174,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libs/SDL2main.lib;libs/SDL2.lib;libs/lua51.lib;libs\LuaBindLibrary_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libs/SDL2main.lib;libs/SDL2.lib;libs/lua51.lib;C:\Libs\SDL\SDL2_mixer\SDL2_mixer-2.0.0\lib\x86\SDL2_mixer.lib;libs\LuaBindLibrary_debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -188,7 +192,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>libs/SDL2main.lib;libs/SDL2.lib;libs/lua51.lib;libs\LuaBindLibrary_release.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libs/SDL2main.lib;libs/SDL2.lib;libs/lua51.lib;C:\Libs\SDL\SDL2_mixer\SDL2_mixer-2.0.0\lib\x86\SDL2_mixer.lib;libs\LuaBindLibrary_release.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
