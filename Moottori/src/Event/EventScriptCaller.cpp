@@ -54,6 +54,6 @@ void EventScriptCaller::Visit(const ParentIDNotificationEvent *event) const
 
 void EventScriptCaller::Visit(const PlaySoundEffectEvent *event) const
 {
-	mState.CallFunction("OnParentIdNotificationEvent", event->GetEffectID());
+	mState.CallFunction("OnPlaySoundEffect", event->GetEffectID());
 }
 
