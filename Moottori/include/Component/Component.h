@@ -5,7 +5,7 @@
 #include "Utility/LuaState.h"
 
 
-enum class ComponentType : int { None, Input, Acceleration, Velocity, Location, Graphics, Collision, Hitpoints, Faction, Health };
+enum class ComponentType : int { None, Input, Acceleration, Velocity, Location, Graphics, Collision, Hitpoints, Faction, Health, SoundEffects };
 
 class EventHandler;
 class EventSender;

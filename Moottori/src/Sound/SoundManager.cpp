@@ -141,3 +141,8 @@ void SoundManager::Update(double ticks_passed)
 		mMusic->Next();
 	}
 }
+
+void SoundManager::PlaySoundEffect(int id)
+{
+	mSoundEffects->Play(id);
+}

@@ -11,5 +11,5 @@ void HealthComponent::OnAttachingScript()
 	];
 
 
-	luabind::globals(mLuaState.State())["¨health_component"] = this;
+	luabind::globals(mLuaState.State())["health_component"] = this;
 }

@@ -41,6 +41,7 @@ public:
 	static SoundManager &Instance();
 
 	void Play();
+	void PlaySoundEffect(int id);
 	void Pause();
 	void Resume();
 	void Stop();

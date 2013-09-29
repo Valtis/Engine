@@ -19,6 +19,7 @@
     <ClInclude Include="include\Component\HealthComponent.h" />
     <ClInclude Include="include\Component\InputComponent.h" />
     <ClInclude Include="include\Component\LocationComponent.h" />
+    <ClInclude Include="include\Component\SoundEffectComponent.h" />
     <ClInclude Include="include\Component\VelocityComponent.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\Entity\Entity.h" />
@@ -73,6 +74,7 @@
     <ClCompile Include="src\Component\HealthComponent.cpp" />
     <ClCompile Include="src\Component\InputComponent.cpp" />
     <ClCompile Include="src\Component\LocationComponent.cpp" />
+    <ClCompile Include="src\Component\SoundEffectComponent.cpp" />
     <ClCompile Include="src\Component\VelocityComponent.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
