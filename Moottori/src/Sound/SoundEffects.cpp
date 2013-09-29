@@ -1,5 +1,6 @@
 #include "Sound/SoundEffects.h"
 #include "Utility/StringUtility.h"
+#include "Utility/LoggerManager.h"
 #include <fstream>
 #include <string>
 #include <stdexcept>
@@ -36,6 +37,7 @@ void SoundEffects::ParseLine( std::string &line )
 
 	if (mEffects.count(std::stoi(tokens[1]) != 0))
 	{
+		LoggerManager::GetLog(SOUND_LOG).AddLine(LogLevel::Warning, "Sound effect with id " + tokens[1] + " already exist - skipping");
 		return;
 	}
 
@@ -73,6 +75,7 @@ void SoundEffects::Play(int id)
 {
 	if (mEffects.count(id) == 0)
 	{
+		LoggerManager::GetLog(SOUND_LOG).AddLine(LogLevel::Warning, "Sound effect with id " + std::to_string(id) + " does not exist - skipping");
 		return;
 	}
     Mix_PlayChannel(-1, mEffects[id], 0);

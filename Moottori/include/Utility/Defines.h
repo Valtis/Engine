@@ -5,5 +5,6 @@
 #define INPUT_PRIORITY_MIN 1
 
 #define SCRIPT_LOG "script_log.txt"
+#define SOUND_LOG "sound_log.txt"
 
 #define UI_EVENT_QUIT 0
