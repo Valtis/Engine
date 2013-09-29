@@ -8,6 +8,7 @@
 #include "Event/RequestTerminationEvent.h"
 #include "Event/EntityCollisionEvent.h"
 #include "Event/ParentIDNotificationEvent.h"
+#include "Event/PlaySoundEffectEvent.h"
 
 void EventScriptCaller::Visit(const BoundaryCollisionEvent *event) const
 {
@@ -50,3 +51,9 @@ void EventScriptCaller::Visit(const ParentIDNotificationEvent *event) const
 {
 	mState.CallFunction("OnParentIdNotificationEvent", event->GetParentID());
 }
+
+void EventScriptCaller::Visit(const PlaySoundEffectEvent *event) const
+{
+	mState.CallFunction("OnParentIdNotificationEvent", event->GetEffectID());
+}
+

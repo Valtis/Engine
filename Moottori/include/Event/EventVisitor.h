@@ -8,9 +8,7 @@ class ChangeVelocityEvent;
 class RequestTerminationEvent;
 class EntityCollisionEvent;
 class ParentIDNotificationEvent;
-class QueryLocationEvent; 
-class QueryDirectionEvent;
-class QueryFactionEvent;
+class PlaySoundEffectEvent;
 
 class EventVisitor
 {
@@ -23,4 +21,5 @@ public:
 	virtual void Visit(const RequestTerminationEvent *event) const = 0;
 	virtual void Visit(const EntityCollisionEvent *event) const = 0;
 	virtual void Visit(const ParentIDNotificationEvent *event) const = 0;
+	virtual void Visit(const PlaySoundEffectEvent *event) const = 0;
 };

@@ -21,6 +21,11 @@ public:
 	EventType GetType() const override { return EventType::PlaySoundEffect; }
 	int GetEffectID() const { return mEffectID; }
 
+	void AcceptVisitor(EventVisitor *visitor) const override
+	{
+		visitor->Visit(this);
+	}
+
 
 private:
 	const int mEffectID;
