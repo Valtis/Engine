@@ -29,6 +29,7 @@ void EventSender::RegisterFunctions()
 			.def("SendLocationQueryMessage", &EventSender::SendLocationQueryMessage)
 			.def("SendLocationQueryMessageToEntity", &EventSender::SendLocationQueryMessageToEntity)
 			.def("SendSpawnEntityMessage", &EventSender::SendSpawnEntityMessage)
+			.def("SendPlaySoundEffectMessage", &EventSender::SendPlaySoundEffectEvent)
 	];
 
 	luabind::globals(mLuaState->State())["messaging"] = this;	
@@ -174,4 +175,10 @@ void EventSender::SendEntityTerminationRequestMessage(int id)
 void EventSender::SendSpawnEntityMessage(const char *scriptName, int id)
 {
 	mEventHandler->ProcessEvent(EventFactory::CreateSpawnEntityEvent(scriptName, id));
+}
+
+
+void EventSender::SendPlaySoundEffectEvent(int id)
+{
+	mEventHandler->ProcessEvent(EventFactory::CreatePlaySoundEffectEvent(id));
 }

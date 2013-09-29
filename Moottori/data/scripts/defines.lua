@@ -55,3 +55,4 @@ EventType_BoundaryCollision = 10
 EventType_EntityCollision = 11
 EventType_SpawnEntity = 12
 EventType_ParentIDNotification = 13
+EventType_PlaySoundEffect = 14

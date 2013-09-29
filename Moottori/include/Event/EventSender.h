@@ -49,6 +49,7 @@ private:
 	void SendLocationChangeMessage(double xPositionChange, double yPositionChange, double rotationChange);
 	void SendEntityTerminationRequestMessage(int id);
 	void SendSpawnEntityMessage(const char *scriptName, int id);
+	void SendPlaySoundEffectEvent(int id);
 
 
 };
