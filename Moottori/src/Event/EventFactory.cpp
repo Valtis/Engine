@@ -11,6 +11,7 @@
 #include "Event/RequestTerminationEvent.h"
 #include "Event/SpawnEntityEvent.h"
 #include "Event/ParentIDNotificationEvent.h"
+#include "Event/PlaySoundEffectEvent.h"
 #include "Event/UIEvent.h"
 
 namespace EventFactory
@@ -80,5 +81,10 @@ namespace EventFactory
 	std::unique_ptr<Event> CreateParentIDNotificationEvent(int parentID)
 	{
 		return std::unique_ptr<Event>(new ParentIDNotificationEvent(parentID));
+	}
+
+	std::unique_ptr<Event> CreatePlaySoundEffectEvent(int id)
+	{
+		return std::unique_ptr<Event>(new PlaySoundEffectEvent(id));
 	}
 }

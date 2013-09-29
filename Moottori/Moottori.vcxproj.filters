@@ -231,6 +231,12 @@
     <ClInclude Include="include\Sound\Music.h">
       <Filter>Header Files\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="include\Sound\SoundEffects.h">
+      <Filter>Header Files\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Event\PlaySoundEffectEvent.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -330,6 +336,9 @@
       <Filter>Source Files\Sound</Filter>
     </ClCompile>
     <ClCompile Include="src\Sound\Music.cpp">
+      <Filter>Source Files\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sound\SoundEffects.cpp">
       <Filter>Source Files\Sound</Filter>
     </ClCompile>
   </ItemGroup>

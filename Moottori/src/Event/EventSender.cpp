@@ -45,7 +45,7 @@ void EventSender::SendDirectionQueryMessageToEntity( int id )
 	Entity *e = EntityManager::Instance().GetEntity(id);
 	if (e == nullptr)
 	{
-		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning,
+		LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning,
 			"Could not find entity with id " + std::to_string(id) + " when querying for direction data"
 			);
 	}
@@ -81,7 +81,7 @@ void EventSender::SendLocationQueryMessageToEntity( int id )
 	Entity *e = EntityManager::Instance().GetEntity(id);
 	if (e == nullptr)
 	{
-		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning,
+		LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning,
 			"Could not find entity with id " + std::to_string(id) + " when querying for location data"
 			);
 	}
@@ -112,7 +112,7 @@ void EventSender::SendFactionQueryMessageToEntity(int id)
 	Entity *e = EntityManager::Instance().GetEntity(id);
 	if (e == nullptr)
 	{
-		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning,
+		LoggerManager::.GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning,
 			"Could not find entity with id " + std::to_string(id) + " when querying for faction data"
 			);
 	}

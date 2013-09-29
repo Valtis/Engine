@@ -43,7 +43,7 @@ public:
 		}
 		catch ( std::exception &e )
 		{
-			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage(name, e.what()));
+			LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage(name, e.what()));
 			throw;
 		}
 
@@ -69,7 +69,7 @@ public:
 		}
 		catch ( std::exception &e )
 		{
-			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage(name, e.what()));
+			LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage(name, e.what()));
 			throw;
 		}
 
@@ -94,7 +94,7 @@ public:
 		}
 		catch ( std::exception &e )
 		{
-			LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage(name, e.what()));
+			LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Error, GetFunctionCallErrorMessage(name, e.what()));
 			throw;
 		}
 

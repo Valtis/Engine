@@ -1,5 +1,5 @@
 #include "Utility/LoggerManager.h"
-LoggerManager *LoggerManager::mInstance = nullptr;
+
 std::string LoggerManager::mLogFolder = "";
 
 std::string LoggerManager::GetFullName( const std::string &name )
@@ -15,6 +15,8 @@ Logger & LoggerManager::GetLog( std::string name )
 	{
 		mLogs[name].reset(new Logger());
 		mLogs[name]->Open(name);
+		mLogs[name]->AddTimeStamps(true);
+		mLogs[name]->SetLoggingLevel(LogLevel::All);
 	}
 
 	return *mLogs[name];
@@ -22,8 +24,7 @@ Logger & LoggerManager::GetLog( std::string name )
 
 void LoggerManager::Release()
 {
-	delete mInstance;
-	mInstance = nullptr;
+	mLogs.clear();
 }
 
 LoggerManager::LoggerManager()
@@ -34,15 +35,6 @@ LoggerManager::LoggerManager()
 void LoggerManager::SetLogFolder( std::string folder )
 {
 	mLogFolder = folder;
-}
-
-LoggerManager & LoggerManager::Instance()
-{
-	if (mInstance == nullptr)
-	{
-		mInstance = new LoggerManager();
-	}
-	return *mInstance;
 }
 
 LoggerManager::~LoggerManager()

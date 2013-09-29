@@ -18,5 +18,5 @@ namespace EventFactory
 	std::unique_ptr<Event> CreateLocationQueryEvent(double &x, double &y, bool &wasHandled);
 	std::unique_ptr<Event> CreateSpawnEntityEvent(std::string scriptName, int parentID);
 	std::unique_ptr<Event> CreateParentIDNotificationEvent(int id);
-
+	std::unique_ptr<Event> CreatePlaySoundEffectEvent(int id);
 }

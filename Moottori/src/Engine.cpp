@@ -100,8 +100,6 @@ void Engine::Draw()
 void Engine::Initialize()
 {
 	LoggerManager::SetLogFolder("logs");
-	LoggerManager::Instance().GetLog(SCRIPT_LOG).SetLoggingLevel(LogLevel::All);
-	LoggerManager::Instance().GetLog(SCRIPT_LOG).AddTimeStamps(true);
 
 	SDL_Init(SDL_INIT_VIDEO);
 	InitializeLua();
@@ -203,14 +201,14 @@ void Engine::CreateAndAttachCamera( int entityID )
 	Entity *e = EntityManager::Instance().GetEntity(entityID);
 	if (e == nullptr)
 	{
-		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning, 
+		LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning, 
 			"Could not find entity with id " + std::to_string(entityID) + " for a camera to attach to - aborting");
 		return;
 	}
 
 	if (e->GetComponent(ComponentType::Location) == nullptr)
 	{
-		LoggerManager::Instance().GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning, 
+		LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning, 
 			"Entity with id " + std::to_string(entityID) + " does not contain location - cannot attach camera - aborting");
 		return;
 	}

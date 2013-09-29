@@ -11,7 +11,7 @@
 #include <SDL_mixer.h>
 
 class Music;
-
+class SoundEffects;
 
 
 class SoundManager
@@ -51,6 +51,8 @@ public:
 private:
 	SoundManager(int frequency, int chunckSize);
 
+	void LoadSoundEffects();
+
 	void LoadMusic();
 
 	void InitializeOggSupport();
@@ -62,5 +64,6 @@ private:
 	static SoundManager *mInstance;
 
 	std::unique_ptr<Music> mMusic;
+	std::unique_ptr<SoundEffects> mSoundEffects;
 
 };

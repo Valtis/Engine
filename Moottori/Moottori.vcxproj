@@ -38,6 +38,7 @@
     <ClInclude Include="include\Event\EventVisitor.h" />
     <ClInclude Include="include\Event\EventHandler.h" />
     <ClInclude Include="include\Event\ParentIDNotificationEvent.h" />
+    <ClInclude Include="include\Event\PlaySoundEffectEvent.h" />
     <ClInclude Include="include\Event\QueryDirectionEvent.h" />
     <ClInclude Include="include\Event\RequestTerminationEvent.h" />
     <ClInclude Include="include\Event\SpawnEntityEvent.h" />
@@ -49,6 +50,7 @@
     <ClInclude Include="include\Graphics\SpriteManager.h" />
     <ClInclude Include="include\Level\Level.h" />
     <ClInclude Include="include\Sound\Music.h" />
+    <ClInclude Include="include\Sound\SoundEffects.h" />
     <ClInclude Include="include\Sound\SoundManager.h" />
     <ClInclude Include="include\UI\Controller\Controller.h" />
     <ClInclude Include="include\UI\Controller\ControllerFactory.h" />
@@ -87,6 +89,7 @@
     <ClCompile Include="src\Level\Level.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Sound\Music.cpp" />
+    <ClCompile Include="src\Sound\SoundEffects.cpp" />
     <ClCompile Include="src\Sound\SoundManager.cpp" />
     <ClCompile Include="src\UI\Controller\ControllerFactory.cpp" />
     <ClCompile Include="src\UI\Controller\KeyboardController.cpp" />

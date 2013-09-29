@@ -1,6 +1,7 @@
 #include "Sound/SoundManager.h"
 #include <stdexcept>
 #include "Sound/Music.h"
+#include "Sound/SoundEffects.h"
 
 SoundManager *SoundManager::mInstance = nullptr;
 
@@ -10,7 +11,7 @@ SoundManager::SoundManager(int frequency, int chunkSize) : mMusic()
 	OpenMixAudio(frequency, chunkSize);
 	InitializeOggSupport();
 	LoadMusic();
-
+	LoadSoundEffects();
 }
 
 void SoundManager::InitializeSDLSoundSubsystem()
@@ -47,6 +48,12 @@ void SoundManager::LoadMusic()
 }
 
 
+void SoundManager::LoadSoundEffects()
+{
+	mSoundEffects.reset(new SoundEffects());
+	mSoundEffects->Initialize();
+}
+
 
 SoundManager::~SoundManager()
 {
@@ -59,7 +66,9 @@ void SoundManager::UninitializeMix()
 {
 	// calling Mix_Init with 0 flag returns whether it is initialized or not. For every Mix_Init call, there should be corresponding Mix_Quit. Hence the loop
 	while(Mix_Init(0))
+	{
 		Mix_Quit();
+	}
 }
 
 void SoundManager::ShutdownMix()

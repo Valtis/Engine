@@ -6,17 +6,10 @@
 
 class LoggerManager
 {
-public:
-
-	~LoggerManager();
-	
-	static LoggerManager &Instance();
-
+public:	
 	static void SetLogFolder(std::string folder);
-
 	static void Release();
-
-	Logger &GetLog(std::string name);
+	static Logger &GetLog(std::string name);
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
 	LoggerManager(const LoggerManager &) = delete;
@@ -31,9 +24,10 @@ public:
 
 private:
 	LoggerManager();
+	~LoggerManager();
 
-	std::string GetFullName( const std::string &name );
-	static LoggerManager *mInstance;
+	static std::string GetFullName( const std::string &name );
+
 	static std::string mLogFolder;
-	std::unordered_map<std::string, std::unique_ptr<Logger>> mLogs;
+	static std::unordered_map<std::string, std::unique_ptr<Logger>> mLogs;
 };

@@ -6,7 +6,7 @@
 
 enum class EventType : int { None, UIEvent, QueryLocation, QueryDirection, QueryFaction, ChangeAcceleration, 
 	ChangeVelocity, ChangeLocation, ChangeAnimationState, RequestTermination, BoundaryCollision, EntityCollision,
-	SpawnEntity, ParentIDNotification
+	SpawnEntity, ParentIDNotification, PlaySoundEffect
 };
 
 
