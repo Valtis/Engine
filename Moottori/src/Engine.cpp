@@ -2,7 +2,7 @@
 #include "Graphics/Renderer/Renderer.h"
 #include "Entity/EntityManager.h"
 #include "Graphics/Renderer/Renderer.h"
-#include "Graphics/SpriteManager.h"
+#include "Sound/SoundManager.h"
 #include "Utility/LoggerManager.h"
 #include "Event/UIEvent.h"
 #include "Utility/Defines.h"
@@ -15,6 +15,7 @@
 #include "Component/LocationComponent.h"
 #include "Component/GraphicsComponent.h"
 #include "Graphics/Sprite.h"
+#include "Graphics/SpriteManager.h"
 #include "Graphics/Camera/EntityTrackingCamera.h"
 
 Engine::Engine() : mDrawTickLength(0), mLastDrawTick(0), mGameLogicTickLength(0), mLastGameLogicTick(0), mIsRunning(true)
@@ -66,10 +67,12 @@ void Engine::UpdateGameState()
 		double ticksPassed = (double)(currentTick - mLastGameLogicTick)/(double)mGameLogicTickLength;
 		mLevel->Update(ticksPassed); // todo: replace with level manager code
 		EntityManager::Instance().Update(ticksPassed); 
-		mCollisionManager.Update(ticksPassed);
-		mLastGameLogicTick = SDL_GetTicks();
 	
+		mCollisionManager.Update(ticksPassed);
+		SoundManager::Instance().Update(ticksPassed);
+		mLastGameLogicTick = SDL_GetTicks();
 		UpdateScriptState(ticksPassed);
+	
 	}
 }
 
@@ -110,52 +113,15 @@ void Engine::Initialize()
 	EntityFactory::RegisterCreationScript("data/scripts/entity_creation.lua");
 	mLuaState.CallFunction("OnGameInit");
 
-	// --------------- TEST CODE ----------------------
-	// --------------- UGLY UGLY UGLY -----------------
-
-	
-	
-	std::unique_ptr<Entity> e(new Entity);
-	std::unique_ptr<LocationComponent> l(new LocationComponent);
-	l->SetX(0);
-	l->SetY(0);
-
-	mLevel->AddEntity(e->GetID());
-
-	std::unique_ptr<GraphicsComponent> g(new GraphicsComponent);
-	g->AddSprite(0, 200000, 0);
-
-	e->AddComponent(ComponentType::Location, std::move(l));
-	e->AddComponent(ComponentType::Graphics, std::move(g));
-
-	Renderer::Instance().AddEntity(e->GetID());
-	EntityManager::Instance().AddEntity(std::move(e));
-
-	e.reset(new Entity);
-	mLevel->AddEntity(e->GetID());
-	l.reset(new LocationComponent);
-	l->SetX(200);
-	l->SetY(200);
-
-	g.reset(new GraphicsComponent);
-	g->AddSprite(0, 200001, 0);
-
-	e->AddComponent(ComponentType::Location, std::move(l));
-	e->AddComponent(ComponentType::Graphics, std::move(g));
-
-	Renderer::Instance().AddEntity(e->GetID());
-	EntityManager::Instance().AddEntity(std::move(e));
-
-
 	mCollisionManager.SetCollidabeEntities(mLevel->GetEntities());
 	mCollisionManager.SetLevelWidth(mLevel->GetWidth());
 	mCollisionManager.SetLevelHeight(mLevel->GetHeight());
 
-	// END OF TEST CODE
 
 	mLastDrawTick = SDL_GetTicks();
 	mLastGameLogicTick = SDL_GetTicks();
 	EntityManager::Instance().AddListener(this);
+	SoundManager::Instance().Play();
 }
 
 int Engine::GetNumberOfActiveEntities()
@@ -215,7 +181,7 @@ void Engine::CleanUp()
 	SpriteManager::Release();
 	Renderer::Release();
 	LoggerManager::Release();
-
+	SoundManager::Release();
 	SDL_Quit();
 }
 

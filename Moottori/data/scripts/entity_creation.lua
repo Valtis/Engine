@@ -54,6 +54,21 @@ function CreateMissile()
 	AddSprite(0, 200009, 5)
 end
 
+function CreateSun()
+	AddLocationComponent(400, 400, "")
+	AddGraphicsComponent("data/scripts/generic_entity/static_animation.lua")
+
+	AddSprite(0, 200010, 5)
+	AddSprite(0, 200011, 5)
+
+end
+
+function CreateStar()
+	AddLocationComponent(math.random(level_width),  math.random(level_height), "")
+	AddGraphicsComponent("")
+	AddSprite(0, 200012, 0)
+end
+
 
 function Initialize()
 	dofile("data/scripts/defines.lua")

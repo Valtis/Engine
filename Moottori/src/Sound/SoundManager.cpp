@@ -2,12 +2,15 @@
 #include <stdexcept>
 #include "Sound/Music.h"
 
+SoundManager *SoundManager::mInstance = nullptr;
+
 SoundManager::SoundManager(int frequency, int chunkSize) : mMusic()
 {
 	InitializeSDLSoundSubsystem();
 	OpenMixAudio(frequency, chunkSize);
 	InitializeOggSupport();
-	mMusic.reset(new Music());
+	LoadMusic();
+
 }
 
 void SoundManager::InitializeSDLSoundSubsystem()
@@ -35,6 +38,14 @@ void SoundManager::InitializeOggSupport()
 		throw std::runtime_error(std::string("Failed to initialize ogg support - Error: ") + Mix_GetError());
 	}
 }
+
+
+void SoundManager::LoadMusic()
+{
+	mMusic.reset(new Music());
+	mMusic->Initialize();
+}
+
 
 
 SoundManager::~SoundManager()

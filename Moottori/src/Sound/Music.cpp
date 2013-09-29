@@ -1,12 +1,12 @@
 #include "Sound/Music.h"
 #include <stdexcept>
 #include <fstream>
-#include <SDL_mixer.h>
+
 #include <string>
 
 Music::Music() : mMusic(), mCurrentSong(0), mIsPlaying(false)
 {
-    Mix_VolumeMusic(10);
+    Mix_VolumeMusic(20); // todo: Move to UI/settings or something. Shouldn't really hard code volume...
 }
 
 Music::~Music()
@@ -112,6 +112,6 @@ bool Music::IsPlaying()
 
 bool Music::MusicFinished()
 {
-	return Mix_PlayingMusic();
+	return !Mix_PlayingMusic();
 }
 

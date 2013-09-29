@@ -100,6 +100,7 @@
   <ItemGroup>
     <None Include="..\README.md" />
     <None Include="data\input\keybindings.dat" />
+    <None Include="data\music\Purple Motion - Charts overdrive.ogg" />
     <None Include="data\scripts\asteroid\asteroid_collision.lua" />
     <None Include="data\scripts\asteroid\asteroid_health.lua" />
     <None Include="data\scripts\asteroid\asteroid_location.lua" />
@@ -124,9 +125,6 @@
     <Text Include="include\Component\FactionComponent.h" />
     <Text Include="include\Event\QueryFactionEvent.h" />
     <Text Include="include\Event\QueryLocationEvent.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="data\music\Purple Motion - Charts overdrive.mp3" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{39514168-5CDD-4896-80D5-F8A83C882418}</ProjectGuid>

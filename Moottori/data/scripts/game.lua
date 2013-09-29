@@ -24,4 +24,8 @@ function OnGameInit()
 
 	entityID = engine:AddEntity("CreatePlayer")
 	engine:AttachCamera(entityID)
+
+	engine:AddEntity("CreateSun")
+	engine:AddEntity("CreateStar")
+	engine:AddEntity("CreateStar")
 end

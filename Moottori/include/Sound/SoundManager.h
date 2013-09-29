@@ -51,6 +51,8 @@ public:
 private:
 	SoundManager(int frequency, int chunckSize);
 
+	void LoadMusic();
+
 	void InitializeOggSupport();
 
 	void OpenMixAudio( int frequency, int chunkSize );
