@@ -6,8 +6,11 @@
 #include <string>
 
 #include "Graphics/Camera/Camera.h"
-#include "Utility/UniqueID.h"
+
+
 class Entity;
+class Emitter; 
+
 class Renderer
 {
 public:
@@ -30,9 +33,12 @@ public:
 	SDL_Renderer *GetRenderingContext() { return mRenderer; }
 
 	void CreateWindow(std::string title, int width, int height);
-	
+
 	void AddEntity(int id);
 	void Draw(Camera *camera);
+
+	void UpdateEmitters(double ticks_passed);
+	void AddEmitter(std::unique_ptr<Emitter> e);
 
 protected:
 private:
@@ -46,7 +52,15 @@ private:
 	void SortByDrawPriority(std::vector<Entity *> &drawList);
 	void DrawEntity(Entity *e, Camera *c);
 
+	int GetCameraYOffset( Camera * camera );
+
+	int GetCameraXOffset( Camera * camera );
+
+	void DrawEmitters(Camera *camera);
+
 	std::vector<int> mDrawables;
+	std::vector<std::unique_ptr<Emitter>> mParticleEmitters;
+
 	SDL_Window *mWindow;
 	SDL_Renderer *mRenderer;
 };

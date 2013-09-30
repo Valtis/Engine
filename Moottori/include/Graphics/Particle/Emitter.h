@@ -24,6 +24,9 @@ public:
 
 	int GetX() { return mLocation.x; }
 	int GetY() { return mLocation.y; }
+	int GetWidth() { return mLocation.w; }
+	int GetHeight() { return mLocation.h; }
+
 
 private:
 

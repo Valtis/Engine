@@ -1,6 +1,7 @@
 #include "Graphics/Renderer/Renderer.h"
 #include "Graphics/SpriteManager.h"
 #include "Graphics/Sprite.h"
+#include "Graphics/Particle/Emitter.h"
 
 #include "Entity/EntityManager.h"
 #include "Entity/Entity.h"
@@ -64,6 +65,7 @@ void Renderer::Draw(Camera *camera)
 	SDL_assert(camera != nullptr);
 	ClearScreen();
 	DrawEntities(camera);
+	DrawEmitters(camera);
 
 	
 	SDL_RenderPresent(mRenderer);
@@ -155,7 +157,7 @@ bool Renderer::CullEntity(Entity *e, Camera *camera)
 	return false;
 }
 
-void Renderer::SortByDrawPriority(std::vector<Entity *> &drawList) // bool cmp(const Type1 &a, const Type2 &b)
+void Renderer::SortByDrawPriority(std::vector<Entity *> &drawList)
 {
 	std::sort(std::begin(drawList), std::end(drawList), [](Entity *first, Entity *second) 
 	{ 
@@ -190,31 +192,84 @@ void Renderer::DrawEntity(Entity *e, Camera *camera)
 	SDL_assert(g != nullptr);
 	SDL_assert(l != nullptr);
 
-	Sprite *s = SpriteManager::Instance().GetSprite(g->GetCurrentSpriteID());
+	Sprite *sprite = SpriteManager::Instance().GetSprite(g->GetCurrentSpriteID());
 	
-	if (s == nullptr)
+	if (sprite == nullptr)
 	{
 		throw std::runtime_error("Couldn't find sprite with id " + g->GetCurrentSpriteID());
 	}
 
-	SDL_Rect drawDst = s->GetLocation();
-	drawDst.x = l->GetX() - camera->GetX() + camera->GetScreenWidth()/2;
-	drawDst.y = l->GetY() - camera->GetY() + camera->GetScreenHeight()/2;
+	SDL_Rect drawDst = sprite->GetLocation();
+
+	drawDst.x = l->GetX() - GetCameraXOffset(camera);
+	drawDst.y = l->GetY() - GetCameraYOffset(camera);
 
 
-	SDL_Texture *texture = SpriteManager::Instance().GetTextureForDrawing(s->GetSpriteSheetID());
+
+	SDL_Texture *texture = SpriteManager::Instance().GetTextureForDrawing(sprite->GetSpriteSheetID());
 
 	if (texture == nullptr)
 	{
-		throw std::runtime_error("Couldn't find sprite sheet with id" + s->GetSpriteSheetID());
+		throw std::runtime_error("Couldn't find sprite sheet with id" + sprite->GetSpriteSheetID());
 	}
-	SDL_Rect spriteLocation = s->GetLocation();
+	SDL_Rect spriteLocation = sprite->GetLocation();
 
 	SDL_RenderCopyEx(mRenderer, texture, &spriteLocation, &drawDst, l->GetRotation(), NULL, SDL_FLIP_NONE);
 }
+
+
+int Renderer::GetCameraXOffset( Camera * camera )
+{
+	return camera->GetX() + camera->GetScreenWidth()/2;
+}
+
+int Renderer::GetCameraYOffset( Camera * camera )
+{
+	return camera->GetY() + camera->GetScreenHeight()/2;
+}
+
 
 void Renderer::AddEntity( int id )
 {
 	mDrawables.push_back(id);
 }
 
+void Renderer::DrawEmitters(Camera *camera)
+{
+	for (auto &emitter : mParticleEmitters)
+	{
+		if (emitter->GetX() + emitter->GetWidth() < camera->GetX() ||
+			emitter->GetY() + emitter->GetHeight() < camera->GetY() ||
+			emitter->GetX() > camera->GetScreenWidth() ||
+			emitter->GetY() > camera->GetScreenHeight())
+		{
+			continue;
+		}
+		SDL_Rect location;
+		location.x = emitter->GetX() - GetCameraXOffset(camera);
+		location.y = emitter->GetY() - GetCameraYOffset(camera);
+		location.w = emitter->GetWidth();
+		location.h = emitter->GetHeight();
+		SDL_RenderCopy(mRenderer, emitter->GetTexture(), nullptr, &location);
+	}
+}
+
+
+void Renderer::AddEmitter( std::unique_ptr<Emitter> e )
+{
+	mParticleEmitters.push_back(std::move(e));
+}
+
+
+void Renderer::UpdateEmitters(double ticks_passed)
+{
+	mParticleEmitters.erase(
+		std::remove_if(
+		mParticleEmitters.begin(), mParticleEmitters.end(), [](std::unique_ptr<Emitter> &emitter) { return !emitter->IsAlive(); }
+	), mParticleEmitters.end());
+
+	for (auto &emitter : mParticleEmitters)
+	{
+		emitter->Update(ticks_passed);
+	}
+}
