@@ -2,6 +2,7 @@
 #include "Graphics/SpriteManager.h"
 #include "Graphics/Sprite.h"
 #include "Graphics/Particle/Emitter.h"
+#include "Graphics/Particle/Particle.h"
 
 #include "Entity/EntityManager.h"
 #include "Entity/Entity.h"
@@ -24,18 +25,18 @@ Renderer::Renderer()
 Renderer::~Renderer()
 {
 	SDL_DestroyRenderer(mRenderer);
-    SDL_DestroyWindow(mWindow);
+	SDL_DestroyWindow(mWindow);
 }
 
 
 Renderer &Renderer::Instance()
 {
-    if (mInstance == nullptr)
-    {
-        mInstance = new Renderer();
-    }
+	if (mInstance == nullptr)
+	{
+		mInstance = new Renderer();
+	}
 
-    return *mInstance;
+	return *mInstance;
 }
 
 void Renderer::Release()
@@ -55,7 +56,7 @@ void Renderer::CreateWindow(std::string title, int width, int height)
 	{
 		throw std::runtime_error("Failed to create window and render context");
 	}
-	
+
 	SDL_SetWindowTitle(mWindow, title.c_str());
 
 }
@@ -66,7 +67,7 @@ void Renderer::Draw(Camera *camera)
 	ClearScreen();
 	DrawEntities(camera);
 	DrawEmitters(camera);
-	
+
 	SDL_RenderPresent(mRenderer);
 }
 
@@ -91,9 +92,9 @@ std::vector<Entity *> Renderer::GetEntitiesForDrawing(Camera *camera)
 {
 	std::vector<Entity *> drawList;
 	for (auto it = std::begin(mDrawables); it != std::end(mDrawables); ++it)
-    {
-        Entity *e = EntityManager::Instance().GetEntity(*it);
-		
+	{
+		Entity *e = EntityManager::Instance().GetEntity(*it);
+
 		if (e == nullptr)
 		{
 			it = mDrawables.erase(it);
@@ -104,12 +105,12 @@ std::vector<Entity *> Renderer::GetEntitiesForDrawing(Camera *camera)
 
 			continue;
 		}
-			
+
 		if (!CullEntity(e, camera))
 		{
 			drawList.push_back(e);
 		}
-    }
+	}
 
 	return drawList;
 }
@@ -126,7 +127,7 @@ bool Renderer::CullEntity(Entity *e, Camera *camera)
 
 	int spriteID = graphics->GetCurrentSpriteID();
 	auto sprite = SpriteManager::Instance().GetSprite(spriteID);
-	
+
 	// location within the sprite sheet. We are interested ind width and height params only
 	int spriteWidth = sprite->GetLocation().w;
 	int spriteHeight = sprite->GetLocation().h;
@@ -169,7 +170,7 @@ void Renderer::SortByDrawPriority(std::vector<Entity *> &drawList)
 		auto secondGraphics = dynamic_cast<GraphicsComponent *>(second->GetComponent(ComponentType::Graphics));
 		SDL_assert(firstGraphics != nullptr);
 		SDL_assert(secondGraphics != nullptr);
-		
+
 		auto firstSprite = SpriteManager::Instance().GetSprite(firstGraphics->GetCurrentSpriteID());
 		auto secondSprite = SpriteManager::Instance().GetSprite(secondGraphics->GetCurrentSpriteID());
 
@@ -197,7 +198,7 @@ void Renderer::DrawEntity(Entity *e, Camera *camera)
 	SDL_assert(l != nullptr);
 
 	Sprite *sprite = SpriteManager::Instance().GetSprite(g->GetCurrentSpriteID());
-	
+
 	if (sprite == nullptr)
 	{
 		throw std::runtime_error("Couldn't find sprite with id " + g->GetCurrentSpriteID());
@@ -248,12 +249,23 @@ void Renderer::DrawEmitters(Camera *camera)
 		{
 			continue;
 		}
-		SDL_Rect location;
-		location.x = emitter->GetX() - GetCameraXOffset(camera);
-		location.y = emitter->GetY() - GetCameraYOffset(camera);
-		location.w = emitter->GetWidth();
-		location.h = emitter->GetHeight();
-		SDL_RenderCopy(mRenderer, emitter->GetTexture(), nullptr, &location);
+		SDL_Rect emitterLocation;
+		emitterLocation.x = emitter->GetX() - GetCameraXOffset(camera);
+		emitterLocation.y = emitter->GetY() - GetCameraYOffset(camera);
+		emitterLocation.w = 1;
+		emitterLocation.h = 1;
+
+		auto particles = emitter->GetParticles();
+
+		for (auto &particle : particles)
+		{
+			SDL_Rect particleLocation = emitterLocation;
+			particleLocation.x += particle->GetX();
+			particleLocation.y += particle->GetY();
+			SDL_RenderCopy(mRenderer, particle->GetTexture(), nullptr, &particleLocation);
+		}
+
+		
 	}
 }
 

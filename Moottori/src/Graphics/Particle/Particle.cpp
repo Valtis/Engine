@@ -1,30 +1,72 @@
 #include "Graphics/Particle/Particle.h"
-
+#include "Graphics/SurfaceOperations.h"
+#include "Graphics/Renderer/Renderer.h"
 
 Particle::Particle(double x, double y, double xVelocity, double yVelocity, double lifetimeInTicks) : mX(x), mY(y), 
 	mXVelocity(xVelocity), mYVelocity(yVelocity), mLifeTime(lifetimeInTicks), mLifeRemaining(lifetimeInTicks)
 {
-	mColor.a = 0;
-	mColor.r = 0;
-	mColor.g = 0;
-	mColor.b = 0;
+
 }
 
-void Particle::SetColor(int r, int g, int b)
+Particle::~Particle()
 {
-	mColor.r = r;
-	mColor.g = g;
-	mColor.b = b;
-	mColor.b = 255;
+	if (mTexture != nullptr)
+	{
+		SDL_DestroyTexture(mTexture);
+	}
+}
 
-	mOriginalColor = mColor;
+void Particle::Initialize(SDL_Color color)
+{	
+	SDL_Surface *surface = CreateSurface(color);
+
+	mTexture = SDL_CreateTextureFromSurface(Renderer::Instance().GetRenderingContext(), surface);
+	SDL_FreeSurface(surface);
+
+	if (mTexture == nullptr)
+	{
+		throw std::runtime_error("Failed to allocate texture for particle emitter");
+	}
+}
+SDL_Surface * Particle::CreateSurface( SDL_Color color )
+{
+	Uint32 rmask, gmask, bmask, amask;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+	rmask = 0xff000000;
+	gmask = 0x00ff0000;
+	bmask = 0x0000ff00;
+	amask = 0x000000ff;
+#else
+	rmask = 0x000000ff;
+	gmask = 0x0000ff00;
+	bmask = 0x00ff0000;
+	amask = 0xff000000;
+#endif
+
+	SDL_Surface *surface = SDL_CreateRGBSurface(0, 1, 1, 32, rmask, gmask, bmask, amask);
+	if (surface == nullptr)
+	{
+		throw std::runtime_error("Failed to allocate surface for particle emitter");
+	}
+
+	SetSurfaceColor(color, surface);
+
+	return surface;
+}
+
+
+void Particle::SetSurfaceColor( SDL_Color &color, SDL_Surface * surface )
+{
+	SetRed(0, 0, color.r, surface);
+	SetGreen(0, 0, color.g, surface);
+	SetBlue(0, 0, color.b, surface);
+	SetAlpha(0, 0, color.a, surface);
 }
 
 
 void Particle::Update(double ticks_passed)
 {
 	UpdateLife(ticks_passed);
-	UpdateColor();
 	UpdateLocation();
 }
 
@@ -37,20 +79,10 @@ void Particle::UpdateLife( double ticks_passed )
 	}
 }
 
-void Particle::UpdateColor()
-{
-	if (mLifeTime == 0)
-	{
-		return; 
-	}
-	/*mColor.r = (double)mOriginalColor.r * (mLifeRemaining/mLifeTime); 
-	mColor.g = (double)mOriginalColor.g * (mLifeRemaining/mLifeTime);
-	mColor.b = (double)mOriginalColor.b * (mLifeRemaining/mLifeTime);
-	mColor.a = (double)mOriginalColor.a * (mLifeRemaining/mLifeTime);*/
-}
 
 void Particle::UpdateLocation()
 {
 	mX += mXVelocity;
 	mY += mYVelocity;
 }
+

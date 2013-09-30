@@ -1,5 +1,7 @@
+#pragma once
 #include <vector>
 
+#include <memory>
 #include "Graphics/Particle/Particle.h"
 
 class Emitter 
@@ -13,7 +15,7 @@ public:
 
 	bool IsAlive() { return !mParticles.empty(); }
 
-	SDL_Texture *GetTexture() { return mTexture; }
+	std::vector<Particle *> GetParticles();
 
 	int GetX() { return mLocation.x - mLocation.w/2; }
 	int GetY() { return mLocation.y - mLocation.h/2; }
@@ -24,22 +26,14 @@ public:
 private:
 
 	void CreateParticles(int particleCount, double particleLifeTime, double maxSpeed);
-	void AllocateBuffer();
-
-	void UpdateTexture();
-
-	void ClearBuffer();
-
-	void UpdatePixelValueToParticleValues(Particle &particle);
-
 	void CreateParticle( double particleLifeTime, double maxSpeed);
 
-	void SetColor( Particle &particle );
+	void SetColor( Particle *particle );
 
 	void RemoveDeadParticles();
 	void UpdateParticles( double ticks_passed );
 
-	std::vector<Particle> mParticles;
+	std::vector<std::unique_ptr<Particle>> mParticles;
 	SDL_Rect mLocation;
 	SDL_Texture *mTexture;
 	SDL_Surface *mSurface;

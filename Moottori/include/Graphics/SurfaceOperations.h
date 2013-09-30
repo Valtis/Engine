@@ -1,4 +1,6 @@
+#pragma once
 #include <SDL.h>
+
 Uint8 GetAlpha(int x, int y, SDL_Surface *surface);
 Uint8 GetRed(int x, int y, SDL_Surface *surface);
 Uint8 GetGreen(int x, int y, SDL_Surface *surface);
