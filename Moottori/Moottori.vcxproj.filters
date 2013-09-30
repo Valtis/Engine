@@ -79,6 +79,12 @@
     <Filter Include="Source Files\Sound">
       <UniqueIdentifier>{34ca215f-c235-4d07-8ef1-cf2d0db8b497}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics\Particle">
+      <UniqueIdentifier>{cbd3bf3a-3836-4963-b7ec-a35d8735edbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Particle">
+      <UniqueIdentifier>{a6cc58af-0112-4aae-b149-9049ad113f1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Component\Component.h">
@@ -240,6 +246,12 @@
     <ClInclude Include="include\Component\SoundEffectComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="include\Graphics\Particle\Emitter.h">
+      <Filter>Header Files\Graphics\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Graphics\Particle\Particle.h">
+      <Filter>Header Files\Graphics\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -346,6 +358,12 @@
     </ClCompile>
     <ClCompile Include="src\Component\SoundEffectComponent.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Particle\Emitter.cpp">
+      <Filter>Source Files\Graphics\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Particle\Particle.cpp">
+      <Filter>Source Files\Graphics\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

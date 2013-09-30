@@ -46,6 +46,8 @@
     <ClInclude Include="include\Event\UIEvent.h" />
     <ClInclude Include="include\Graphics\Camera\EntityTrackingCamera.h" />
     <ClInclude Include="include\Graphics\Camera\Camera.h" />
+    <ClInclude Include="include\Graphics\Particle\Emitter.h" />
+    <ClInclude Include="include\Graphics\Particle\Particle.h" />
     <ClInclude Include="include\Graphics\Renderer\Renderer.h" />
     <ClInclude Include="include\Graphics\Sprite.h" />
     <ClInclude Include="include\Graphics\SpriteManager.h" />
@@ -85,6 +87,8 @@
     <ClCompile Include="src\Event\EventScriptCaller.cpp" />
     <ClCompile Include="src\Event\EventSender.cpp" />
     <ClCompile Include="src\Graphics\Camera\EntityTrackingCamera.cpp" />
+    <ClCompile Include="src\Graphics\Particle\Emitter.cpp" />
+    <ClCompile Include="src\Graphics\Particle\Particle.cpp" />
     <ClCompile Include="src\Graphics\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Graphics\Sprite.cpp" />
     <ClCompile Include="src\Graphics\SpriteManager.cpp" />
