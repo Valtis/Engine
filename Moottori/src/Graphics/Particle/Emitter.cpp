@@ -49,13 +49,7 @@ Emitter::~Emitter()
 
 void Emitter::SetColor( Particle *particle )
 {
-	SDL_Color color;
-	// hard coded for now: either reddish or yellowish particles
-	color.r = Random::GetRandom<int>(255, 240);
-	color.g = Random::GetRandom<int>(150);
-	color.b = 0;
-	color.a = 255;
-	particle->Initialize(color);
+	particle->Initialize();
 }
 
 

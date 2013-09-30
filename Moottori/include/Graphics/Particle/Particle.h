@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL.h>
-
+#include <vector>
 class Particle 
 {
 public:
@@ -17,7 +17,7 @@ private:
 public:
 #endif
 
-	void Initialize(SDL_Color color);
+	void Initialize();
 
 	SDL_Texture *GetTexture() { return mTexture; }
 	void Update(double ticks_passed);
@@ -31,9 +31,9 @@ private:
 	void UpdateLife( double ticks_passed );
 	void UpdateLocation();
 
-	SDL_Surface *CreateSurface(SDL_Color color);
+	SDL_Surface *CreateSurface();
 
-	void SetSurfaceColor( SDL_Color &color, SDL_Surface * surface );
+	void SetSurfaceColor(SDL_Surface * surface );
 
 
 	double mX;
@@ -45,4 +45,5 @@ private:
 	double mLifeRemaining;
 
 	SDL_Texture *mTexture;
+	static std::vector<SDL_Texture *> mTextureCache; // HACKY SOLUTION - TESTING CACHING
 };

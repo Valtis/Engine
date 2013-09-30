@@ -1,6 +1,8 @@
 #include "Graphics/Particle/Particle.h"
 #include "Graphics/SurfaceOperations.h"
 #include "Graphics/Renderer/Renderer.h"
+#include "Utility/Random.h"
+std::vector<SDL_Texture *> Particle::mTextureCache;
 
 Particle::Particle(double x, double y, double xVelocity, double yVelocity, double lifetimeInTicks) : mX(x), mY(y), 
 	mXVelocity(xVelocity), mYVelocity(yVelocity), mLifeTime(lifetimeInTicks), mLifeRemaining(lifetimeInTicks)
@@ -10,25 +12,32 @@ Particle::Particle(double x, double y, double xVelocity, double yVelocity, doubl
 
 Particle::~Particle()
 {
-	if (mTexture != nullptr)
-	{
-		SDL_DestroyTexture(mTexture);
-	}
+
 }
 
-void Particle::Initialize(SDL_Color color)
+void Particle::Initialize()
 {	
-	SDL_Surface *surface = CreateSurface(color);
-
-	mTexture = SDL_CreateTextureFromSurface(Renderer::Instance().GetRenderingContext(), surface);
-	SDL_FreeSurface(surface);
-
-	if (mTexture == nullptr)
+	if (mTextureCache.size() < 100)
 	{
-		throw std::runtime_error("Failed to allocate texture for particle emitter");
+		SDL_Surface *surface = CreateSurface();
+
+		mTexture = SDL_CreateTextureFromSurface(Renderer::Instance().GetRenderingContext(), surface);
+		SDL_FreeSurface(surface);
+
+		if (mTexture == nullptr)
+		{
+			throw std::runtime_error("Failed to allocate texture for particle emitter");
+		}
+		mTextureCache.push_back(mTexture);
+		return;
 	}
+
+	int pos = Random::GetRandom<int>(100);
+	mTexture = mTextureCache[pos];
+	
+
 }
-SDL_Surface * Particle::CreateSurface( SDL_Color color )
+SDL_Surface * Particle::CreateSurface( )
 {
 	Uint32 rmask, gmask, bmask, amask;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -49,14 +58,20 @@ SDL_Surface * Particle::CreateSurface( SDL_Color color )
 		throw std::runtime_error("Failed to allocate surface for particle emitter");
 	}
 
-	SetSurfaceColor(color, surface);
+	SetSurfaceColor(surface);
 
 	return surface;
 }
 
 
-void Particle::SetSurfaceColor( SDL_Color &color, SDL_Surface * surface )
+void Particle::SetSurfaceColor( SDL_Surface * surface )
 {
+	SDL_Color color;
+	// hard coded for now: either reddish or yellowish particles
+	color.r = Random::GetRandom<int>(255, 240);
+	color.g = Random::GetRandom<int>(150);
+	color.b = 0;
+	color.a = 255;
 	SetRed(0, 0, color.r, surface);
 	SetGreen(0, 0, color.g, surface);
 	SetBlue(0, 0, color.b, surface);
