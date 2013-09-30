@@ -114,6 +114,7 @@
     <None Include="..\README.md" />
     <None Include="data\input\keybindings.dat" />
     <None Include="data\music\Purple Motion - Charts overdrive.ogg" />
+    <None Include="data\music\Purple Motion _ Future Crew - Skyrider.ogg" />
     <None Include="data\scripts\asteroid\asteroid_collision.lua" />
     <None Include="data\scripts\asteroid\asteroid_health.lua" />
     <None Include="data\scripts\asteroid\asteroid_location.lua" />
@@ -125,6 +126,10 @@
     <None Include="data\scripts\generic_entity\graphics.lua" />
     <None Include="data\scripts\generic_entity\sound.lua" />
     <None Include="data\scripts\generic_entity\static_animation.lua" />
+    <None Include="data\scripts\missile\missile_collision.lua" />
+    <None Include="data\scripts\missile\missile_health.lua" />
+    <None Include="data\scripts\missile\missile_location.lua" />
+    <None Include="data\scripts\missile\missile_velocity.lua" />
     <None Include="data\scripts\ship\ship_acceleration.lua" />
     <None Include="data\scripts\ship\ship_input.lua" />
     <None Include="data\scripts\ship\ship_location.lua" />
