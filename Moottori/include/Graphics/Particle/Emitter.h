@@ -6,10 +6,6 @@ class Emitter
 {
 public:
 	Emitter(int particles, SDL_Rect location, double particleLifeTime);
-
-
-
-
 	~Emitter();
 
 	void Update(double ticks_passed);

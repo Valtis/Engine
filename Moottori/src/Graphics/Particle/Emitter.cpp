@@ -104,7 +104,7 @@ void Emitter::UpdateTexture()
 
 void Emitter::UpdatePixelValueToParticleValues( Particle &particle )
 {
-	SDL_assert(particle.IsAlive());
+	SDL_assert(particle.IsAlive() == false);
 	int position = particle.GetX() + particle.GetY() * mLocation.w;
 
 	if (position < 0 || position >= mLocation.h*mLocation.w)

@@ -2,6 +2,9 @@
 class Random
 {
 public:
+	
+
+	
 	template <typename T>
 	static T GetRandom(T upperLimit, T lowerLimit = 0)
 	{
@@ -19,7 +22,7 @@ public:
 			return 0;
 		}
 
-		std::uniform_real_distribution<T> distribution(lowerLimit, upperLimit);
+		std::uniform_real_distribution<double> distribution(lowerLimit, upperLimit);
 		return distribution(mEngine);
 	}
 

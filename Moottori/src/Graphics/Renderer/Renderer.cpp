@@ -66,7 +66,6 @@ void Renderer::Draw(Camera *camera)
 	ClearScreen();
 	DrawEntities(camera);
 	DrawEmitters(camera);
-
 	
 	SDL_RenderPresent(mRenderer);
 }
@@ -220,12 +219,12 @@ void Renderer::DrawEntity(Entity *e, Camera *camera)
 
 int Renderer::GetCameraXOffset( Camera * camera )
 {
-	return camera->GetX() + camera->GetScreenWidth()/2;
+	return camera->GetX() - camera->GetScreenWidth()/2;
 }
 
 int Renderer::GetCameraYOffset( Camera * camera )
 {
-	return camera->GetY() + camera->GetScreenHeight()/2;
+	return camera->GetY() - camera->GetScreenHeight()/2;
 }
 
 

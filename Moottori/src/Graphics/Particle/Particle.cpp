@@ -36,6 +36,10 @@ void Particle::UpdateLife( double ticks_passed )
 
 void Particle::UpdateAlpha()
 {
+	if (mLifeTime == 0)
+	{
+		return; 
+	}
 	mColor.a = 255.0 - 255.0*(mLifeRemaining/mLifeTime);
 }
 
