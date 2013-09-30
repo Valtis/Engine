@@ -19,7 +19,7 @@ public:
 			return 0;
 		}
 
-		std::uniform_int_distribution<T> distribution(lowerLimit, upperLimit);
+		std::uniform_real_distribution<T> distribution(lowerLimit, upperLimit);
 		return distribution(mEngine);
 	}
 

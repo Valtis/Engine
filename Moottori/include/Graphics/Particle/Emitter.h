@@ -10,7 +10,7 @@ public:
 	bool IsAlive() { return !mParticles.empty(); }
 
 private:
-	void CreateParticles(int particleCount);
+	void CreateParticles(int particleCount, double particleLifeTime);
 	void RemoveDeadParticles();
 	void UpdateParticles( double ticks_passed );
 
