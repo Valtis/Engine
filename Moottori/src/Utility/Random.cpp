@@ -6,4 +6,5 @@ bool Random::mIsInitialized = false;
 void Random::InitializeRandomGenerator()
 {
 	mEngine.seed(time(nullptr));
+	mIsInitialized = true;
 }

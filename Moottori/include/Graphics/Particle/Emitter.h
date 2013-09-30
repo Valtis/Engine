@@ -5,32 +5,34 @@
 class Emitter 
 {
 public:
-	Emitter(int particles, SDL_Rect location, double particleLifeTime);
+	Emitter(int particles, SDL_Rect location, double particleLifeTime, double maxSpeed);
 	~Emitter();
 
 	void Update(double ticks_passed);
 
-	void UpdateTexture();
-
-	void UpdatePixelValueToParticleValues(Particle &particle);
 
 	bool IsAlive() { return !mParticles.empty(); }
 
 	SDL_Texture *GetTexture() { return mTexture; }
 
-	int GetX() { return mLocation.x; }
-	int GetY() { return mLocation.y; }
+	int GetX() { return mLocation.x - mLocation.w/2; }
+	int GetY() { return mLocation.y - mLocation.h/2; }
 	int GetWidth() { return mLocation.w; }
 	int GetHeight() { return mLocation.h; }
 
 
 private:
 
-	void CreateParticles(int particleCount, double particleLifeTime);
-	void CreateTexture();
+	void CreateParticles(int particleCount, double particleLifeTime, double maxSpeed);
 	void AllocateBuffer();
 
-	void CreateParticle( double particleLifeTime );
+	void UpdateTexture();
+
+	void ClearBuffer();
+
+	void UpdatePixelValueToParticleValues(Particle &particle);
+
+	void CreateParticle( double particleLifeTime, double maxSpeed);
 
 	void SetColor( Particle &particle );
 
@@ -40,5 +42,5 @@ private:
 	std::vector<Particle> mParticles;
 	SDL_Rect mLocation;
 	SDL_Texture *mTexture;
-	Uint32 *mBuffer;
+	SDL_Surface *mSurface;
 };

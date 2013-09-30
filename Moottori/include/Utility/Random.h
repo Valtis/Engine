@@ -3,8 +3,6 @@ class Random
 {
 public:
 	
-
-	
 	template <typename T>
 	static T GetRandom(T upperLimit, T lowerLimit = 0)
 	{

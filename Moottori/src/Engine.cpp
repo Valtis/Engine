@@ -17,7 +17,7 @@
 #include "Graphics/Sprite.h"
 #include "Graphics/SpriteManager.h"
 #include "Graphics/Camera/EntityTrackingCamera.h"
-#include "Graphics/Particle/Emitter.h"
+
 
 Engine::Engine() : mDrawTickLength(0), mLastDrawTick(0), mGameLogicTickLength(0), mLastGameLogicTick(0), mIsRunning(true)
 {
@@ -122,13 +122,6 @@ void Engine::Initialize()
 	EntityManager::Instance().AddListener(this);
 	SoundManager::Instance().Play();
 
-	SDL_Rect test_location;
-	test_location.x = 100;
-	test_location.y = 100;
-	test_location.w = 100;
-	test_location.h = 100;
-	std::unique_ptr<Emitter> test_emitter(new Emitter(100, test_location, 10.0));
-	Renderer::Instance().AddEmitter(std::move(test_emitter));
 }
 
 int Engine::GetNumberOfActiveEntities()

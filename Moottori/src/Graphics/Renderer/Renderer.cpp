@@ -131,24 +131,29 @@ bool Renderer::CullEntity(Entity *e, Camera *camera)
 	int spriteWidth = sprite->GetLocation().w;
 	int spriteHeight = sprite->GetLocation().h;
 
+	return IsOutsideCamera(location->GetX(), location->GetY(), spriteWidth, spriteHeight, camera);
+}
+
+bool Renderer::IsOutsideCamera(int x, int y, int width, int height, Camera *camera)
+{
 	// outside right edge
-	if (location->GetX() > (camera->GetX() + camera->GetScreenWidth()/2))
+	if (x > (camera->GetX() + camera->GetScreenWidth()/2))
 	{
 		return true;
 	}
 	// outside bottom edge
-	if (location->GetY()  > (camera->GetY() + camera->GetScreenHeight()/2))
+	if (y  > (camera->GetY() + camera->GetScreenHeight()/2))
 	{
 		return true;
 	}
 
 	// outside left edge
-	if (location->GetX() + spriteWidth < (camera->GetX() - camera->GetScreenWidth()/2))
+	if (x + width < (camera->GetX() - camera->GetScreenWidth()/2))
 	{
 		return true;
 	}
 	// outside top edge
-	if (location->GetY() + spriteHeight < (camera->GetY() - camera->GetScreenHeight()/2))
+	if (y + height < (camera->GetY() - camera->GetScreenHeight()/2))
 	{
 		return true;
 	}
@@ -233,14 +238,13 @@ void Renderer::AddEntity( int id )
 	mDrawables.push_back(id);
 }
 
+
+
 void Renderer::DrawEmitters(Camera *camera)
 {
 	for (auto &emitter : mParticleEmitters)
 	{
-		if (emitter->GetX() + emitter->GetWidth() < camera->GetX() ||
-			emitter->GetY() + emitter->GetHeight() < camera->GetY() ||
-			emitter->GetX() > camera->GetScreenWidth() ||
-			emitter->GetY() > camera->GetScreenHeight())
+		if (IsOutsideCamera(emitter->GetX(), emitter->GetY(), emitter->GetWidth(), emitter->GetHeight(), camera))
 		{
 			continue;
 		}

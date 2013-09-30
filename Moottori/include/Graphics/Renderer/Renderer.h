@@ -49,8 +49,10 @@ private:
 	void DrawEntities(Camera *camera);
 	std::vector<Entity *> GetEntitiesForDrawing(Camera *camera);
 	bool CullEntity(Entity *e, Camera *camera);
+	bool IsOutsideCamera(int x, int y, int width, int height, Camera *camera);
 	void SortByDrawPriority(std::vector<Entity *> &drawList);
 	void DrawEntity(Entity *e, Camera *c);
+
 
 	int GetCameraYOffset( Camera * camera );
 

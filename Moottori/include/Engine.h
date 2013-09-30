@@ -70,5 +70,6 @@ private:
 	void InitializeInputTypes();
 	int GetNumberOfActiveEntities();
 	void CreateLevel(int width, int height);
+	
 
 };
