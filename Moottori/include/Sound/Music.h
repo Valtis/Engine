@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <SDL_mixer.h>
+#include <string>	
 
 class Music
 {

@@ -26,7 +26,10 @@ private:
 
 	void ParseLine( std::string line );
 
-	std::unordered_map<SDL_Scancode, bool> mKeyIsPressed;
-	std::unordered_map<SDL_Scancode, int> mKeyBindings;
+	//std::unordered_map<SDL_Scancode, bool> mKeyIsPressed;
+	//std::unordered_map<SDL_Scancode, int> mKeyBindings;
+
+	std::unordered_map<int, bool> mKeyIsPressed;
+	std::unordered_map<int, int> mKeyBindings;
 
 };

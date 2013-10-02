@@ -6,12 +6,12 @@
 #include "Utility/LoggerManager.h"
 #include "Event/UIEvent.h"
 #include "Utility/Defines.h"
-#include "Level/Level.h"
+#include "Level/LevelManager.h"
 #include "Entity/Entity.h"
+#include "Entity/EntityFactory.h"
 
 // feel free to delete following headers once refactored, only for testing
-
-#include "Entity/EntityFactory.h"
+#include "Script/ScriptInterface.h"
 #include "Component/LocationComponent.h"
 #include "Component/GraphicsComponent.h"
 #include "Graphics/Sprite.h"
@@ -66,10 +66,10 @@ void Engine::UpdateGameState()
 	if (currentTick > mGameLogicTickLength + mLastGameLogicTick)
 	{
 		double ticksPassed = (double)(currentTick - mLastGameLogicTick)/(double)mGameLogicTickLength;
-		mLevel->Update(ticksPassed); // todo: replace with level manager code
+		LevelManager::Instance().Update(ticksPassed); // todo: replace with level manager code
 		EntityManager::Instance().Update(ticksPassed); 
 	
-		mCollisionManager.Update(ticksPassed);
+		CollisionManager::Instance().Update(ticksPassed);
 		SoundManager::Instance().Update(ticksPassed);
 		mLastGameLogicTick = SDL_GetTicks();
 		UpdateScriptState(ticksPassed);
@@ -112,21 +112,20 @@ void Engine::Initialize()
 	EntityFactory::RegisterCreationScript("data/scripts/entity_creation.lua");
 	mLuaState.CallFunction("OnGameInit");
 
-	mCollisionManager.SetCollidabeEntities(mLevel->GetEntities());
-	mCollisionManager.SetLevelWidth(mLevel->GetWidth());
-	mCollisionManager.SetLevelHeight(mLevel->GetHeight());
+	CollisionManager::Instance().SetCollidabeEntities(LevelManager::Instance().GetActiveLevel()->GetEntities());
+	CollisionManager::Instance().SetLevelWidth(LevelManager::Instance().GetActiveLevel()->GetWidth());
+	CollisionManager::Instance().SetLevelHeight(LevelManager::Instance().GetActiveLevel()->GetHeight());
 
 
 	mLastDrawTick = SDL_GetTicks();
 	mLastGameLogicTick = SDL_GetTicks();
-	EntityManager::Instance().AddListener(this);
 	SoundManager::Instance().Play();
 
 }
 
 int Engine::GetNumberOfActiveEntities()
 {
-	return mLevel->GetEntities().size();
+	return LevelManager::Instance().GetActiveLevel()->GetEntities().size();
 }
 
 void Engine::InitializeLua()
@@ -134,23 +133,20 @@ void Engine::InitializeLua()
 	mLuaState.Open();
 	mLuaState.OpenAllLuaLibraries();
 	mLuaState.LoadScriptFile("data/scripts/game.lua");
+	std::unique_ptr<ScriptInterface> interface(new ScriptInterface());
+	interface->RegisterUI(&mUI);
+	mLuaState.RegisterScriptEngineInterface(std::move(interface));
+
 
 	luabind::module(mLuaState.State()) [
 		luabind::class_<Engine>("Engine")
 			.def_readwrite("draw_tick_length", &Engine::mDrawTickLength)
 			.def_readwrite("game_logic_tick_length", &Engine::mGameLogicTickLength)
-			.def("AddEntity", &Engine::AddEntity)
-			.def("CreateLevel", &Engine::CreateLevel)
 			.def("AttachCamera", &Engine::CreateAndAttachCamera)
 			.def("GetNumberOfActiveEntities", &Engine::GetNumberOfActiveEntities)
 	];
 
-	luabind::globals(mLuaState.State())["engine"] = this;
-}
-
-void Engine::CreateLevel(int width, int height)
-{
-	mLevel.reset(new Level(width, height));
+	luabind::globals(mLuaState.State())["placeholder"] = this;
 }
 
 void Engine::InitializeInputTypes()
@@ -182,21 +178,10 @@ void Engine::CleanUp()
 	Renderer::Release();
 	LoggerManager::Release();
 	SoundManager::Release();
+	LevelManager::Release();
+	CollisionManager::Release();
 	SDL_Quit();
 }
-
-int Engine::AddEntity( const char *scriptName )
-{
-	auto e = EntityFactory::CreateEntity(scriptName , &mUI);
-	int id = e->GetID();
-	EntityManager::Instance().AddEntity(std::move(e));
-	mLevel->AddEntity(id);
-	Renderer::Instance().AddEntity(id);
-	mCollisionManager.AddEntity(id);
-	return id;
-}
-
-
 
 void Engine::CreateAndAttachCamera( int entityID )
 {
@@ -215,14 +200,8 @@ void Engine::CreateAndAttachCamera( int entityID )
 		return;
 	}
 
-	std::unique_ptr<Camera> c(new EntityTrackingCamera(entityID, mLevel->GetWidth(), mLevel->GetHeight()));
+	std::unique_ptr<Camera> c(new EntityTrackingCamera(entityID, 
+		LevelManager::Instance().GetActiveLevel()->GetWidth(), LevelManager::Instance().GetActiveLevel()->GetHeight()));
 	mUI.AttachCamera(std::move(c));
-}
-
-void Engine::NotifyEventSpawn( int id )
-{
-	mCollisionManager.AddEntity(id);
-	mLevel->AddEntity(id);
-	Renderer::Instance().AddEntity(id);
 }
 

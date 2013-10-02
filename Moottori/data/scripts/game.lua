@@ -4,11 +4,10 @@ function OnUpdate(ticks_passed)
 
 	number_of_ticks_passed = ticks_passed + number_of_ticks_passed
 
-	if number_of_ticks_passed*engine.game_logic_tick_length > 1000 then
-		if engine:GetNumberOfActiveEntities() < 20 then
+	if number_of_ticks_passed*game_logic_tick > 1000 then
+		if placeholder:GetNumberOfActiveEntities() < 20 then
 			number_of_ticks_passed = 0
-			engine:AddEntity("CreateAsteroid")
-
+			engine:SpawnEntity("CreateAsteroid", -1)
 		end
 	end
 
@@ -17,15 +16,15 @@ end
 
 function OnGameInit()
 	dofile('data/scripts/defines.lua')
-	engine.draw_tick_length = game_draw_tick
-	engine.game_logic_tick_length = game_logic_tick
-	engine:CreateLevel(level_width, level_height)
+	placeholder.draw_tick_length = game_draw_tick
+	placeholder.game_logic_tick_length = game_logic_tick
+	engine:AddLevel(level_width, level_height)
 
 
-	entityID = engine:AddEntity("CreatePlayer")
-	engine:AttachCamera(entityID)
+	entityID = engine:SpawnEntity("CreatePlayer", -1)
+	placeholder:AttachCamera(entityID)
 
-	engine:AddEntity("CreateSun")
-	engine:AddEntity("CreateStar")
-	engine:AddEntity("CreateStar")
+	engine:SpawnEntity("CreateSun", -1)
+	engine:SpawnEntity("CreateStar", -1)
+	engine:SpawnEntity("CreateStar", -1)
 end

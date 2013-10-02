@@ -8,8 +8,7 @@ class GraphicsComponent;
 class CollisionManager
 {
 public:
-	CollisionManager() : mLevelWidth(0), mLevelHeight(0) {}
-
+	
 	void SetLevelWidth(int width) { mLevelWidth = width; }
 	void SetLevelHeight(int height) { mLevelHeight = height; }
 
@@ -18,7 +17,14 @@ public:
 
 	void AddEntity( int i );
 
+	static void Release();
+
+	static CollisionManager &Instance();
+
+
 private:
+	CollisionManager() : mLevelWidth(0), mLevelHeight(0) {}
+
 	int GetCenterX(Entity *e);
 	int GetCenterY(Entity *e);
 
@@ -40,6 +46,8 @@ private:
 
 	int mLevelWidth;
 	int mLevelHeight;
+
+	static CollisionManager *mInstance;
 
 };
 

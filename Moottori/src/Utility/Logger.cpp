@@ -33,12 +33,12 @@ void Logger::Close()
     }
 }
 
-void Logger::AddTimeStamps(bool stamp) throw()
+void Logger::AddTimeStamps(bool stamp)
 {
     mTimeStamps = stamp;
 }
 
-std::string Logger::CreateStamp(bool initializeStamp) throw()
+std::string Logger::CreateStamp(bool initializeStamp)
 {
 #pragma warning(push)
 #pragma warning(disable: 4996)

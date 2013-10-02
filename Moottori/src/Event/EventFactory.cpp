@@ -9,9 +9,8 @@
 #include "Event/BoundaryCollisionEvent.h"
 #include "Event/EntityCollisionEvent.h"
 #include "Event/RequestTerminationEvent.h"
-#include "Event/SpawnEntityEvent.h"
+
 #include "Event/ParentIDNotificationEvent.h"
-#include "Event/PlaySoundEffectEvent.h"
 #include "Event/UIEvent.h"
 
 namespace EventFactory
@@ -73,18 +72,8 @@ namespace EventFactory
 		return std::unique_ptr<Event>(new RequestTerminationEvent(id));
 	}
 
-	std::unique_ptr<Event> CreateSpawnEntityEvent(std::string scriptName, int parentID)
-	{
-		return std::unique_ptr<Event>(new SpawnEntityEvent(scriptName, parentID));
-	}
-
 	std::unique_ptr<Event> CreateParentIDNotificationEvent(int parentID)
 	{
 		return std::unique_ptr<Event>(new ParentIDNotificationEvent(parentID));
-	}
-
-	std::unique_ptr<Event> CreatePlaySoundEffectEvent(int id)
-	{
-		return std::unique_ptr<Event>(new PlaySoundEffectEvent(id));
 	}
 }

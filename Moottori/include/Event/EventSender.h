@@ -1,12 +1,18 @@
 #pragma once
-class EventHandler;
+#include <memory>
+
+
+#include "Event/EventHandler.h"
+#include "Utility/Enumerations.h"
+#include "Utility/LoggerManager.h"
+
+class Event;
 class LuaState;
 
-#include "Utility/Enumerations.h"
 class EventSender
 {
 public:
-	EventSender() { }
+	EventSender();
 	~EventSender() { }
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
@@ -22,12 +28,34 @@ public:
 
 
 
-	void Init(EventHandler *handler, LuaState *luaState);
+	void Initialize(EventHandler *handler);
+	void RegisterFunctions(LuaState *luaState);
 
 private:
-	EventHandler *mEventHandler;
+
+	class EventHandlerHelper
+	{
+		public:
+		EventHandlerHelper() : mEventHandler(nullptr) { }
+		EventHandler *mEventHandler;
+		void ProcessEvent(std::unique_ptr<Event> event)
+		{
+
+			if (mEventHandler == nullptr)
+			{
+				LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning,
+					"Script attempting to execute entity function without associated event handler"
+					);
+				return;
+			}
+			mEventHandler->ProcessEvent(std::move(event));
+		
+		}
+	};
+
+	std::unique_ptr<EventHandlerHelper> mEventHandler;
+	
 	LuaState *mLuaState;
-	void RegisterFunctions();
 
 	void SendDirectionQueryMessage();
 	void SendDirectionQueryMessageToEntity(int id);

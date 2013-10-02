@@ -24,5 +24,4 @@ private:
 	int mWidth;
 	int mHeight;
 	std::vector<int> mLevelEntities;
-	LuaState mLuaState; 
 };

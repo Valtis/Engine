@@ -2,19 +2,19 @@
 #include "EventVisitor.h"
 #include "Utility/LuaState.h"
 
-class EventScriptCaller : public EventVisitor
+class EventActionExecutor : public EventVisitor
 {
 public:
-	EventScriptCaller(LuaState &state) : mState(state) { }
-	~EventScriptCaller() { }
+	EventActionExecutor(LuaState &state) : mState(state) { }
+	~EventActionExecutor() { }
 
 #if !defined _MSC_VER || _MSC_VER >= 1800 
-	EventScriptCaller(const EventScriptCaller &) = delete;
-	EventScriptCaller &operator=(const EventScriptCaller &) = delete;
+	EventActionExecutor(const EventActionExecutor &) = delete;
+	EventActionExecutor &operator=(const EventActionExecutor &) = delete;
 #else
 private:
-	EventScriptCaller(const EventScriptCaller &);
-	EventScriptCaller &operator=(const EventScriptCaller &);
+	EventActionExecutor(const EventActionExecutor &);
+	EventActionExecutor &operator=(const EventActionExecutor &);
 public:
 #endif
 
@@ -27,7 +27,8 @@ public:
 	virtual void Visit(const RequestTerminationEvent *event) const override;
 	virtual void Visit(const EntityCollisionEvent *event) const override;
 	virtual void Visit(const ParentIDNotificationEvent *event) const override;
-	virtual void Visit(const PlaySoundEffectEvent *event) const override;
+
+	//virtual void Visit(const SpawnParticleEmitterEvent *event) const override;
 
 private:
 	LuaState &mState;

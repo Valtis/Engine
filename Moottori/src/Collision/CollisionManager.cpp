@@ -10,7 +10,23 @@
 
 
 #include <SDL_assert.h>
+CollisionManager *CollisionManager::mInstance = nullptr;
 
+CollisionManager &CollisionManager::Instance()
+{
+	if (mInstance == nullptr)
+	{
+		mInstance = new CollisionManager();
+	}
+
+	return *mInstance;
+}
+
+void CollisionManager::Release()
+{
+	delete mInstance;
+	mInstance = nullptr;
+}
 
 void CollisionManager::SetCollidabeEntities(std::vector<int> entitites)
 {

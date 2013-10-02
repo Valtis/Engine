@@ -81,7 +81,7 @@ void SoundManager::ShutdownMix()
 
 void SoundManager::UninitializeSDLAudio()
 {
-	if (SDL_WasInit(SDL_INIT_AUDIO) == true)
+	if (SDL_WasInit(SDL_INIT_AUDIO) == SDL_TRUE)
 	{
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 	}

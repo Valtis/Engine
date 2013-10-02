@@ -3,9 +3,12 @@
 #include <lua.hpp>
 #include <luabind/luabind.hpp>
 #include <stdexcept>
-
 #include "Utility/LoggerManager.h"
 
+#ifndef lua_open
+#define lua_open  luaL_newstate
+#endif
+class ScriptInterface;
 // a lightweight wrapper around lua_State; mostly meant to handle releasing the resources once not needed anymore
 class LuaState
 {
@@ -23,7 +26,7 @@ public:
 	void OpenAllLuaLibraries();
 
 
-	// calling the template version without parameters causes internal compiler error on vs 2012
+	// calling the variadic template version without parameters causes internal compiler error on vs 2012
 	template <typename T>
 	T CallFunction(std::string name)
 	{
@@ -101,17 +104,19 @@ public:
 	}
 
 
-
-	lua_State *State();
+	void RegisterScriptEngineInterface(std::unique_ptr<ScriptInterface> interface);
 
 	bool ScriptLoaded();
 
 	bool FunctionExists(std::string name);
+
+	lua_State *State();
 
 private:
 	lua_State *mState;
 	bool mScriptLoaded;
 	std::vector<std::string> mAttachedScriptFiles;
 	std::string GetFunctionCallErrorMessage(std::string name, std::string exceptionMessage);
+	std::unique_ptr<ScriptInterface> mInterface;
 };
 

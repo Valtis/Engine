@@ -1,5 +1,5 @@
 #include "Utility/LuaState.h"
-
+#include "Script/ScriptInterface.h"
 
 LuaState::LuaState() : mState(nullptr), mScriptLoaded(false)
 {
@@ -31,9 +31,6 @@ void LuaState::LoadScriptFile( std::string fileName )
 	mAttachedScriptFiles.push_back(fileName);
 	mScriptLoaded = true;
 }
-
-
-
 
 void LuaState::OpenAllLuaLibraries()
 {
@@ -130,4 +127,12 @@ std::string LuaState::GetFunctionCallErrorMessage(std::string name, std::string 
 	}
 
 	return errorMsg;
+}
+
+void LuaState::RegisterScriptEngineInterface( std::unique_ptr<ScriptInterface> interface )
+{
+	mInterface = std::move(interface);
+	mInterface->RegisterLuaState(this);
+	mInterface->RegisterMethods();
+
 }

@@ -85,6 +85,12 @@
     <Filter Include="Source Files\Graphics\Particle">
       <UniqueIdentifier>{a6cc58af-0112-4aae-b149-9049ad113f1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Script">
+      <UniqueIdentifier>{225696d0-14bb-4952-89a8-f1090b205727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Script">
+      <UniqueIdentifier>{1c2a98aa-54d2-47aa-84c5-0854cb66d952}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Component\Component.h">
@@ -201,9 +207,6 @@
     <ClInclude Include="include\Event\EventVisitor.h">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
-    <ClInclude Include="include\Event\EventScriptCaller.h">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
     <ClInclude Include="include\Event\EventSender.h">
       <Filter>Header Files\Event</Filter>
     </ClInclude>
@@ -222,9 +225,6 @@
     <ClInclude Include="include\Utility\LoggerManager.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="include\Event\SpawnEntityEvent.h">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
     <ClInclude Include="include\Entity\EntityManagerListener.h">
       <Filter>Source Files\Entity</Filter>
     </ClInclude>
@@ -240,12 +240,6 @@
     <ClInclude Include="include\Sound\SoundEffects.h">
       <Filter>Header Files\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="include\Event\PlaySoundEffectEvent.h">
-      <Filter>Header Files\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Component\SoundEffectComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="include\Graphics\Particle\Emitter.h">
       <Filter>Header Files\Graphics\Particle</Filter>
     </ClInclude>
@@ -257,6 +251,18 @@
     </ClInclude>
     <ClInclude Include="include\Graphics\SurfaceOperations.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Event\EventActionExecutor.h">
+      <Filter>Header Files\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Script\ScriptInterface.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Script\EngineEventHandler.h">
+      <Filter>Header Files\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Level\LevelManager.h">
+      <Filter>Header Files\Level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -332,9 +338,6 @@
     <ClCompile Include="src\Component\HealthComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Event\EventScriptCaller.cpp">
-      <Filter>Source Files\Event</Filter>
-    </ClCompile>
     <ClCompile Include="src\Event\EventFactory.cpp">
       <Filter>Source Files\Event</Filter>
     </ClCompile>
@@ -362,9 +365,6 @@
     <ClCompile Include="src\Sound\SoundEffects.cpp">
       <Filter>Source Files\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="src\Component\SoundEffectComponent.cpp">
-      <Filter>Source Files\Components</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\Particle\Emitter.cpp">
       <Filter>Source Files\Graphics\Particle</Filter>
     </ClCompile>
@@ -376,6 +376,18 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\SurfaceOperations.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Event\EventActionExecutor.cpp">
+      <Filter>Source Files\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\ScriptInterface.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\EngineEventHandler.cpp">
+      <Filter>Source Files\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Level\LevelManager.cpp">
+      <Filter>Source Files\Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,6 @@
 #include "Utility/StringUtility.h"
+#include <cstring>
+
 namespace Utility
 {
 	std::vector<std::string> Tokenize(std::string text, std::string delimiters)

@@ -6,15 +6,20 @@
 #include "Entity/Entity.h"
 #include "Entity/EntityManager.h"
 
-void EventSender::Init(EventHandler *handler, LuaState *luaState)
+EventSender::EventSender() : mEventHandler(new EventHandlerHelper())
 {
-	mEventHandler = handler;
-	mLuaState = luaState;
-	RegisterFunctions();
+	
 }
 
-void EventSender::RegisterFunctions()
+void EventSender::Initialize(EventHandler *handler)
 {
+	mEventHandler->mEventHandler = handler;
+
+}
+
+void EventSender::RegisterFunctions(LuaState *state)
+{
+	mLuaState = state;
 	luabind::module(mLuaState->State()) [
 		luabind::class_<EventSender>("EventSender")
 			.def("SendDirectionQueryMessage", &EventSender::SendDirectionQueryMessage)
@@ -28,8 +33,6 @@ void EventSender::RegisterFunctions()
 			.def("SendFactionQueryMessageToEntity", &EventSender::SendFactionQueryMessageToEntity)
 			.def("SendLocationQueryMessage", &EventSender::SendLocationQueryMessage)
 			.def("SendLocationQueryMessageToEntity", &EventSender::SendLocationQueryMessageToEntity)
-			.def("SendSpawnEntityMessage", &EventSender::SendSpawnEntityMessage)
-			.def("SendPlaySoundEffectMessage", &EventSender::SendPlaySoundEffectEvent)
 	];
 
 	luabind::globals(mLuaState->State())["messaging"] = this;	
@@ -37,7 +40,7 @@ void EventSender::RegisterFunctions()
 
 void EventSender::SendDirectionQueryMessage()
 {
-	HandleDirectionQueryMessage(mEventHandler);
+	HandleDirectionQueryMessage(mEventHandler->mEventHandler);
 }
 
 
@@ -72,7 +75,7 @@ void EventSender::HandleDirectionQueryMessage( EventHandler *handler )
 
 void EventSender::SendLocationQueryMessage()
 {
-	HandleLocationQueryMessage(mEventHandler);
+	HandleLocationQueryMessage(mEventHandler->mEventHandler);
 }
 
 
@@ -123,7 +126,7 @@ void EventSender::SendFactionQueryMessageToEntity(int id)
 void EventSender::SendFactionQueryMessage()
 {
 	
-	HandleFactionQueryMessage(mEventHandler);
+	HandleFactionQueryMessage(mEventHandler->mEventHandler);
 }
 
 void EventSender::HandleFactionQueryMessage(EventHandler *handler)
@@ -151,7 +154,7 @@ void EventSender::SendVelocityChangeMessage(double xVelocityChange, double yVelo
 
 void EventSender::SendAnimationStateMessage(int animationID, bool animationState)
 {
-	mEventHandler->AddEvent(EventFactory::CreateAnimationStateChangeEvent(animationID, animationState));
+	mEventHandler->ProcessEvent(EventFactory::CreateAnimationStateChangeEvent(animationID, animationState));
 }
 
 
@@ -168,17 +171,7 @@ void EventSender::SendLocationChangeMessage(double xPositionChange, double yPosi
 
 void EventSender::SendEntityTerminationRequestMessage(int id)
 {
+
 	mEventHandler->ProcessEvent(EventFactory::CreateEntityTerminationRequestEvent(id));
 }
 
-
-void EventSender::SendSpawnEntityMessage(const char *scriptName, int id)
-{
-	mEventHandler->ProcessEvent(EventFactory::CreateSpawnEntityEvent(scriptName, id));
-}
-
-
-void EventSender::SendPlaySoundEffectEvent(int id)
-{
-	mEventHandler->ProcessEvent(EventFactory::CreatePlaySoundEffectEvent(id));
-}

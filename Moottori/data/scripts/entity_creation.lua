@@ -19,7 +19,6 @@ function CreatePlayer()
 	AddGraphicsComponent("data/scripts/generic_entity/graphics.lua")
 	AddCollisionComponent(collisionRadius, "")
 	AddFactionComponent(player_faction, "")
-	AddSoundComponent("data/scripts/generic_entity/sound.lua")
 
 	AddPlayerSprites()
 end

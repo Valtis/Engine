@@ -19,7 +19,6 @@
     <ClInclude Include="include\Component\HealthComponent.h" />
     <ClInclude Include="include\Component\InputComponent.h" />
     <ClInclude Include="include\Component\LocationComponent.h" />
-    <ClInclude Include="include\Component\SoundEffectComponent.h" />
     <ClInclude Include="include\Component\VelocityComponent.h" />
     <ClInclude Include="include\Engine.h" />
     <ClInclude Include="include\Entity\Entity.h" />
@@ -34,15 +33,13 @@
     <ClInclude Include="include\Event\EntityCollisionEvent.h" />
     <ClInclude Include="include\Event\Event.h" />
     <ClInclude Include="include\Event\EventFactory.h" />
-    <ClInclude Include="include\Event\EventScriptCaller.h" />
+    <ClInclude Include="include\Event\EventActionExecutor.h" />
     <ClInclude Include="include\Event\EventSender.h" />
     <ClInclude Include="include\Event\EventVisitor.h" />
     <ClInclude Include="include\Event\EventHandler.h" />
     <ClInclude Include="include\Event\ParentIDNotificationEvent.h" />
-    <ClInclude Include="include\Event\PlaySoundEffectEvent.h" />
     <ClInclude Include="include\Event\QueryDirectionEvent.h" />
     <ClInclude Include="include\Event\RequestTerminationEvent.h" />
-    <ClInclude Include="include\Event\SpawnEntityEvent.h" />
     <ClInclude Include="include\Event\UIEvent.h" />
     <ClInclude Include="include\Graphics\Camera\EntityTrackingCamera.h" />
     <ClInclude Include="include\Graphics\Camera\Camera.h" />
@@ -53,6 +50,9 @@
     <ClInclude Include="include\Graphics\SpriteManager.h" />
     <ClInclude Include="include\Graphics\SurfaceOperations.h" />
     <ClInclude Include="include\Level\Level.h" />
+    <ClInclude Include="include\Level\LevelManager.h" />
+    <ClInclude Include="include\Script\EngineEventHandler.h" />
+    <ClInclude Include="include\Script\ScriptInterface.h" />
     <ClInclude Include="include\Sound\Music.h" />
     <ClInclude Include="include\Sound\SoundEffects.h" />
     <ClInclude Include="include\Sound\SoundManager.h" />
@@ -78,7 +78,6 @@
     <ClCompile Include="src\Component\HealthComponent.cpp" />
     <ClCompile Include="src\Component\InputComponent.cpp" />
     <ClCompile Include="src\Component\LocationComponent.cpp" />
-    <ClCompile Include="src\Component\SoundEffectComponent.cpp" />
     <ClCompile Include="src\Component\VelocityComponent.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Entity\Entity.cpp" />
@@ -86,7 +85,7 @@
     <ClCompile Include="src\Entity\EntityManager.cpp" />
     <ClCompile Include="src\Event\Event.cpp" />
     <ClCompile Include="src\Event\EventFactory.cpp" />
-    <ClCompile Include="src\Event\EventScriptCaller.cpp" />
+    <ClCompile Include="src\Event\EventActionExecutor.cpp" />
     <ClCompile Include="src\Event\EventSender.cpp" />
     <ClCompile Include="src\Graphics\Camera\EntityTrackingCamera.cpp" />
     <ClCompile Include="src\Graphics\Particle\Emitter.cpp" />
@@ -96,7 +95,10 @@
     <ClCompile Include="src\Graphics\SpriteManager.cpp" />
     <ClCompile Include="src\Graphics\SurfaceOperations.cpp" />
     <ClCompile Include="src\Level\Level.cpp" />
+    <ClCompile Include="src\Level\LevelManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Script\EngineEventHandler.cpp" />
+    <ClCompile Include="src\Script\ScriptInterface.cpp" />
     <ClCompile Include="src\Sound\Music.cpp" />
     <ClCompile Include="src\Sound\SoundEffects.cpp" />
     <ClCompile Include="src\Sound\SoundManager.cpp" />

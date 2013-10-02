@@ -6,13 +6,12 @@
 #include "Collision/CollisionManager.h"
 #include "Utility/Enumerations.h"
 #include "Utility/LuaState.h"
-#include "Entity/EntityManagerListener.h"
 
 class Event;
 class Entity;
 class Level;
 
-class Engine : public EntityManagerListener
+class Engine
 {
 public:
 	Engine();
@@ -41,9 +40,6 @@ private:
 	void Draw();
 	bool InputHandler(Event *event);
 
-	void NotifyEventSpawn(int id) override;
-
-
 	Uint32 mDrawTickLength;
 	Uint32 mLastDrawTick;
 
@@ -57,8 +53,6 @@ private:
 	std::set<int> mInterestedInInputs;
 	UI mUI;
 
-	std::unique_ptr<Level> mLevel; // TODO - extract to (and create a) level manager 
-	CollisionManager mCollisionManager;
 
 	LuaState mLuaState;
 
@@ -69,7 +63,4 @@ private:
 	void CreateAndAttachCamera( int entityID);
 	void InitializeInputTypes();
 	int GetNumberOfActiveEntities();
-	void CreateLevel(int width, int height);
-	
-
 };

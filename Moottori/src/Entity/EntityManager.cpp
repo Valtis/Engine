@@ -47,7 +47,6 @@ void EntityManager::AddEntity(std::unique_ptr<Entity> entity)
 void EntityManager::RegisterEvents( Entity *entity )
 {
 	entity->RegisterCallback(EventType::RequestTermination, [&](Event *event) { this->HandleTerminationEvent(event); });
-	entity->RegisterCallback(EventType::SpawnEntity, [&](Event *event) { this->HandleSpawnEvent(event); } );
 }
 
 
@@ -94,29 +93,4 @@ void EntityManager::HandleTerminationEvent(Event *event)
 	mDeleteQueue.push_back(termination->GetID());
 }
 
-
-void EntityManager::HandleSpawnEvent(Event *event)
-{
-	auto spawn = dynamic_cast<SpawnEntityEvent *>(event);
-	SDL_assert(spawn != nullptr);
-
-
-	auto entity = EntityFactory::CreateEntity(spawn->GetScriptName());
-
-	int id = entity->GetID();
-	AddEntity(std::move(entity));
-
-	for (auto listener : mListeners)
-	{
-		listener->NotifyEventSpawn(id);
-	}
-
-	GetEntity(id)->ProcessEvent(EventFactory::CreateParentIDNotificationEvent(spawn->GetParentID()));
-
-}
-
-void EntityManager::AddListener( EntityManagerListener *listener )
-{
-	mListeners.push_back(listener);
-}
 

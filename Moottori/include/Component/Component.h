@@ -48,7 +48,4 @@ private:
 	EventHandler *mEventHandler;
 	void HandleEvent(Event *event);
 	void RegisterForEvents(EventType type);
-	std::unique_ptr<EventSender> mEventSender;
-
-	void AddEmitter(int x, int y, int numberOfParticles, double lifeTime, double maxVelocity); // MOVE TO RIGHT CLASS!! THIS REALLY SHOULDN'T BE HERE!
 };

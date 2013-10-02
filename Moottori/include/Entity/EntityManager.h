@@ -1,7 +1,8 @@
 #pragma once
 #include <unordered_map>
 #include <memory>
-#include "EntityManagerListener.h"
+#include <vector>
+
 
 class Entity;
 class Event;
@@ -17,8 +18,6 @@ public:
 	Entity *GetEntity(int id);
 
 	void Update(double ticksPassed);
-	void AddListener(EntityManagerListener *listener);
-
 #if !defined _MSC_VER || _MSC_VER >= 1800 
 	EntityManager(const EntityManager &) = delete;
 	EntityManager &operator=(const EntityManager &) = delete;
@@ -43,5 +42,4 @@ private:
 	void HandleSpawnEvent(Event *event);
 
 	std::vector<int> mDeleteQueue;
-	std::vector<EntityManagerListener *> mListeners;
 };
