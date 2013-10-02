@@ -23,9 +23,8 @@ void Component::AttachScript(std::string scriptFile)
 	mLuaState.LoadScriptFile(scriptFile);
 	mLuaState.OpenAllLuaLibraries();
 
-	std::unique_ptr<ScriptInterface> interface(new ScriptInterface);
-	interface->RegisterEntityEventHandler(mEventHandler);
-	mLuaState.RegisterScriptEngineInterface(std::move(interface));
+	
+	
 
 	luabind::module(mLuaState.State()) [
 		luabind::class_<Component>("Component")
@@ -62,6 +61,9 @@ void Component::HandleEvent(Event *event)
 void Component::RegisterEventHandler(EventHandler *handler)
 {
 	mEventHandler = handler;
+	std::unique_ptr<ScriptInterface> interface(new ScriptInterface);
+	interface->RegisterEntityEventHandler(handler);
+	mLuaState.RegisterScriptEngineInterface(std::move(interface));
 	if (mLuaState.ScriptLoaded())
 	{
 		luabind::module(mLuaState.State()) [

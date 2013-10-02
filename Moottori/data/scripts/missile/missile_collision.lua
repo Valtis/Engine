@@ -14,7 +14,7 @@ function OnEntityCollisionEvent(firstID, secondID)
 	if myFaction ~= theirFaction then
 		x, y, wasHandled = messaging:SendLocationQueryMessage()
 		if wasHandled then
-			component:TERRIBLE_DEBUG_HACK_CreateParticleEmitter(x + 25, y + 25, 500, 80, 4.0)
+			engine:AddParticleEmitter(x + 25, y + 25, 500, 80, 4.0)
 		end
 
 		messaging:SendEntityTerminationRequestMessage(firstID)
