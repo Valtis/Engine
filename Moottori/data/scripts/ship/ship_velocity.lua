@@ -35,8 +35,8 @@ end
 
 function DecaySpeed()
 	
-	velocity_loss_per_tick = 0.3
-	rotation_velocity_loss_per_tick = 1
+	velocity_loss_per_tick = 0.2
+	rotation_velocity_loss_per_tick = 15
 	
 	x_velocity = velocity_component.x_velocity
 	y_velocity = velocity_component.y_velocity
@@ -73,8 +73,8 @@ end
 
 function OnVelocityChangeEvent(x_velocity_change, y_velocity_change, rotation_velocity_change)
 
-	max_velocity = 8
-	max_rotation_speed = 8
+	max_velocity = 10
+	max_rotation_speed = 15
 	
 	velocity_component.x_velocity = velocity_component.x_velocity + x_velocity_change
 	velocity_component.y_velocity = velocity_component.y_velocity + y_velocity_change
@@ -84,17 +84,34 @@ function OnVelocityChangeEvent(x_velocity_change, y_velocity_change, rotation_ve
 	y_sign = SigNum(velocity_component.y_velocity)
 	rotate_sign = SigNum(velocity_component.rotation_velocity)
 	
-	if math.abs(velocity_component.x_velocity) > max_velocity then
-		velocity_component.x_velocity = max_velocity*x_sign
+	max_x_velocity, max_y_velocity = CalculateMaxDirectionalVelocities(max_velocity)
+	
+	if math.abs(velocity_component.x_velocity) > max_x_velocity then
+		velocity_component.x_velocity = max_x_velocity*x_sign
 	end
 
-	if math.abs(velocity_component.y_velocity) > max_velocity then
-		velocity_component.y_velocity = max_velocity*y_sign
+	if math.abs(velocity_component.y_velocity) > max_y_velocity then
+		velocity_component.y_velocity = max_y_velocity*y_sign
 	end
 
 	if math.abs(velocity_component.rotation_velocity) > max_rotation_speed then
 		velocity_component.rotation_velocity = max_rotation_speed*rotate_sign
 	end
+end
+
+function CalculateMaxDirectionalVelocities(max_velocity) 
+	--[[angle, wasHandled = messaging:SendDirectionQueryMessage()
+	
+	if wasHandled == false then
+		return
+	end
+	
+	angle = (angle - 90)*math.pi/180]]--
+	angle = math.atan2(velocity_component.y_velocity, velocity_component.x_velocity)
+	max_x_velocity = math.abs(max_velocity*math.cos(angle))
+	max_y_velocity = math.abs(max_velocity*math.sin(angle))
+	
+	return max_x_velocity, max_y_velocity	
 end
 
 function OnRegisterForEvents()

@@ -1,23 +1,26 @@
 
 function UpdateXYAcceleration(move_direction, velocity_change, rotation)
 	-- shift rotation: currently 0 degrees is upwards, we want it to be on x axis
-	rotation = rotation - 180
-	-- after this x-axis is mirrored; we need to multiply the x-acceleration  with -1 to rectify this
-	
-	
-	multiplier = 0 --direction
+	rotation = rotation - 90
+		
+	multiplier = 0 
 	if move_direction == Direction_Forward then
 		multiplier = 1
 	elseif move_direction == Direction_Backward then
 		multiplier = -1
 	end
 		
-	acceleration_component.x_acceleration = -1.0*multiplier*velocity_change*math.sin(rotation*math.pi/180)
-	acceleration_component.y_acceleration = multiplier*velocity_change*math.cos(rotation*math.pi/180)
+	rotationRadian = rotation*math.pi/180
+	acceleration_component.x_acceleration = multiplier*velocity_change*math.cos(rotationRadian)
+	acceleration_component.y_acceleration = multiplier*velocity_change*math.sin(rotationRadian)
 end
 
 function ChangeXYAcceleration(move_direction, event_state)
-	max_acceleration = 3
+	if move_direction == Direction_None then
+		return
+	end
+	
+	max_acceleration = 2
 	velocity_change = max_acceleration
 	
 	if event_state == Event_State_Stop then
@@ -39,7 +42,11 @@ end
 
 
 function ChangeRotationAcceleration(turn_direction, event_state)
-	max_rotation_acceleration = 5
+	if turn_direction == Direction_None then
+		return
+	end
+	
+	max_rotation_acceleration = 8
 	
 	velocity_change = max_rotation_acceleration;
 	if event_state == Event_State_Stop then

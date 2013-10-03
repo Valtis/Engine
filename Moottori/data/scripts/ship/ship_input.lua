@@ -47,7 +47,7 @@ end
 function Fire()
 	if fire_counter == 0 then
 		engine:SpawnEntity("CreateMissile", entity:GetID())
-		fire_counter = 200/game_logic_tick
+		fire_counter = 600/game_logic_tick
 		engine:PlaySoundEffect(0)
 		return
 	end

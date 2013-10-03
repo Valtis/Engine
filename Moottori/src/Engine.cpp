@@ -176,10 +176,10 @@ void Engine::CleanUp()
 	EntityManager::Release();
 	SpriteManager::Release();
 	Renderer::Release();
-	LoggerManager::Release();
 	SoundManager::Release();
 	LevelManager::Release();
 	CollisionManager::Release();
+	LoggerManager::Release();
 	SDL_Quit();
 }
 
