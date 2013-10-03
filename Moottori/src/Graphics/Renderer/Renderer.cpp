@@ -191,36 +191,47 @@ void Renderer::SortByDrawPriority(std::vector<Entity *> &drawList)
 
 void Renderer::DrawEntity(Entity *e, Camera *camera)
 {
-	auto g = dynamic_cast<GraphicsComponent *>(e->GetComponent(ComponentType::Graphics));
+	
 	auto l = dynamic_cast<LocationComponent *>(e->GetComponent(ComponentType::Location));
-
-	SDL_assert(g != nullptr);
 	SDL_assert(l != nullptr);
 
+	Sprite *sprite = GetSprite(e);
+	SDL_Texture *texture =  GetTextureForDrawing(sprite, camera);
+
+	SDL_Rect drawDst = sprite->GetLocation();
+	drawDst.x = l->GetX() - GetCameraXOffset(camera);
+	drawDst.y = l->GetY() - GetCameraYOffset(camera);
+
+	SDL_Rect spriteLocation = sprite->GetLocation();
+	SDL_RenderCopyEx(mRenderer, texture, &spriteLocation, &drawDst, l->GetRotation(), NULL, SDL_FLIP_NONE);
+}
+
+Sprite * Renderer::GetSprite( Entity * e )
+{
+	auto g = dynamic_cast<GraphicsComponent *>(e->GetComponent(ComponentType::Graphics));
+	SDL_assert(g != nullptr);
 	Sprite *sprite = SpriteManager::Instance().GetSprite(g->GetCurrentSpriteID());
 
 	if (sprite == nullptr)
 	{
 		throw std::runtime_error("Couldn't find sprite with id " + g->GetCurrentSpriteID());
 	}
-
-	SDL_Rect drawDst = sprite->GetLocation();
-
-	drawDst.x = l->GetX() - GetCameraXOffset(camera);
-	drawDst.y = l->GetY() - GetCameraYOffset(camera);
+	return sprite;
+}
 
 
-
+SDL_Texture * Renderer::GetTextureForDrawing( Sprite * sprite, Camera * camera )
+{
 	SDL_Texture *texture = SpriteManager::Instance().GetTextureForDrawing(sprite->GetSpriteSheetID());
 
 	if (texture == nullptr)
 	{
 		throw std::runtime_error("Couldn't find sprite sheet with id" + sprite->GetSpriteSheetID());
 	}
-	SDL_Rect spriteLocation = sprite->GetLocation();
 
-	SDL_RenderCopyEx(mRenderer, texture, &spriteLocation, &drawDst, l->GetRotation(), NULL, SDL_FLIP_NONE);
+	return texture;
 }
+
 
 
 int Renderer::GetCameraXOffset( Camera * camera )
@@ -237,36 +248,6 @@ int Renderer::GetCameraYOffset( Camera * camera )
 void Renderer::AddEntity( int id )
 {
 	mDrawables.push_back(id);
-}
-
-
-
-void Renderer::DrawEmitters(Camera *camera)
-{
-	for (auto &emitter : mParticleEmitters)
-	{
-		if (IsOutsideCamera(emitter->GetX(), emitter->GetY(), emitter->GetWidth(), emitter->GetHeight(), camera))
-		{
-			continue;
-		}
-		SDL_Rect emitterLocation;
-		emitterLocation.x = emitter->GetX() - GetCameraXOffset(camera);
-		emitterLocation.y = emitter->GetY() - GetCameraYOffset(camera);
-		emitterLocation.w = 1;
-		emitterLocation.h = 1;
-
-		auto particles = emitter->GetParticles();
-
-		for (auto &particle : particles)
-		{
-			SDL_Rect particleLocation = emitterLocation;
-			particleLocation.x += particle->GetX();
-			particleLocation.y += particle->GetY();
-			SDL_RenderCopy(mRenderer, particle->GetTexture(), nullptr, &particleLocation);
-		}
-
-		
-	}
 }
 
 
@@ -287,4 +268,47 @@ void Renderer::UpdateEmitters(double ticks_passed)
 	{
 		emitter->Update(ticks_passed);
 	}
+}
+
+void Renderer::DrawEmitters(Camera *camera)
+{
+	for (auto &emitter : mParticleEmitters)
+	{
+		DrawEmitter(emitter.get(), camera);
+	}
+}
+
+void Renderer::DrawEmitter( Emitter *emitter, Camera * camera )
+{
+	if (IsOutsideCamera(emitter->GetX(), emitter->GetY(), emitter->GetWidth(), emitter->GetHeight(), camera))
+	{
+		return;
+	}
+	SDL_Rect emitterLocation;
+	CalculateEmitterLocation(emitter, emitterLocation, camera);
+
+
+	auto particles = emitter->GetParticles();
+
+	for (auto &particle : particles)
+	{
+		DrawEmitterParticle(particle, emitterLocation);
+	}
+}
+
+void Renderer::CalculateEmitterLocation( Emitter *emitter, SDL_Rect &emitterLocation, Camera * camera )
+{
+	emitterLocation.x = emitter->GetX() - GetCameraXOffset(camera);
+	emitterLocation.y = emitter->GetY() - GetCameraYOffset(camera);
+	emitterLocation.w = 1;
+	emitterLocation.h = 1;
+}
+
+
+void Renderer::DrawEmitterParticle( Particle *particle, SDL_Rect emitterLocation )
+{
+	SDL_Rect particleLocation = emitterLocation;
+	particleLocation.x += particle->GetX();
+	particleLocation.y += particle->GetY();
+	SDL_RenderCopy(mRenderer, particle->GetTexture(), nullptr, &particleLocation);
 }

@@ -41,6 +41,7 @@
     <ClInclude Include="include\Event\QueryDirectionEvent.h" />
     <ClInclude Include="include\Event\RequestTerminationEvent.h" />
     <ClInclude Include="include\Event\UIEvent.h" />
+    <ClInclude Include="include\Graphics\Camera\CameraManager.h" />
     <ClInclude Include="include\Graphics\Camera\EntityTrackingCamera.h" />
     <ClInclude Include="include\Graphics\Camera\Camera.h" />
     <ClInclude Include="include\Graphics\Particle\Emitter.h" />

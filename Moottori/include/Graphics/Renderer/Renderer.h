@@ -10,6 +10,8 @@
 
 class Entity;
 class Emitter; 
+class Sprite;
+class Particle;
 
 class Renderer
 {
@@ -53,12 +55,22 @@ private:
 	void SortByDrawPriority(std::vector<Entity *> &drawList);
 	void DrawEntity(Entity *e, Camera *c);
 
+	SDL_Texture *GetTextureForDrawing( Sprite * sprite, Camera * camera );
+
+	Sprite *GetSprite( Entity * e );
+
 
 	int GetCameraYOffset( Camera * camera );
 
 	int GetCameraXOffset( Camera * camera );
 
 	void DrawEmitters(Camera *camera);
+
+	void DrawEmitter(Emitter *emitter, Camera * camera );
+
+	void CalculateEmitterLocation(Emitter *emitter, SDL_Rect &emitterLocation, Camera * camera );
+
+	void DrawEmitterParticle(Particle *particle, SDL_Rect emitterLocation );
 
 	std::vector<int> mDrawables;
 	std::vector<std::unique_ptr<Emitter>> mParticleEmitters;
