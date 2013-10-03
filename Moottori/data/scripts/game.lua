@@ -27,4 +27,24 @@ function OnGameInit()
 	engine:SpawnEntity("CreateSun", -1)
 	engine:SpawnEntity("CreateStar", -1)
 	engine:SpawnEntity("CreateStar", -1)
+	
+	CreateParticlesForEmitters()
+	
+end
+
+function CreateParticlesForEmitters()
+
+	math.randomseed( os.time())
+	
+	for i = 0, 100 do
+		local r = math.random(15) + 240
+		local g = math.random(150)
+		engine:AddParticle(explosion_emitter, r, g, 0)
+	end
+	
+	for i = 0, 100 do
+		local colorVal = math.random(155) + 100
+		engine:AddParticle(smoke_emitter, colorVal, colorVal, colorVal)
+	end
+
 end

@@ -8,7 +8,7 @@
 #include "Level/LevelManager.h"
 #include "Sound/SoundManager.h"
 #include "Graphics/Particle/Emitter.h"
-
+#include "Graphics/Particle/ParticleCache.h"
 
 void EngineEventHandler::RegisterUI(UI *ui)
 {
@@ -22,6 +22,7 @@ void EngineEventHandler::RegisterFunctions(LuaState *state)
 			.def("SpawnEntity", &EngineEventHandler::SpawnEntity)
 			.def("PlaySoundEffect", &EngineEventHandler::PlaySoundEffect)
 			.def("AddParticleEmitter", &EngineEventHandler::AddEmitter)
+			.def("AddParticle", &EngineEventHandler::AddParticle)
 			.def("AddLevel", &EngineEventHandler::AddLevel)
 
 	];
@@ -53,15 +54,19 @@ void EngineEventHandler::PlaySoundEffect(int id)
 	SoundManager::Instance().PlaySoundEffect(id);
 }
 
+inline void EngineEventHandler::AddParticle(int id, int r, int g, int b)
+{
+	ParticleCache::Instance().AddParticle(id, r, g, b);
+}
 
-void EngineEventHandler::AddEmitter(int x, int y, int numberOfParticles, double lifeTime, double maxVelocity)
+void EngineEventHandler::AddEmitter(int id, int x, int y, int numberOfParticles, double lifeTime, double maxVelocity)
 {
 	SDL_Rect location;
 	location.x = x;
 	location.y = y;
 	location.w = 500;
 	location.h = 500;
-	std::unique_ptr<Emitter> emitter(new Emitter(numberOfParticles, location, lifeTime, maxVelocity));
+	std::unique_ptr<Emitter> emitter(new Emitter(id, numberOfParticles, location, lifeTime, maxVelocity));
 	Renderer::Instance().AddEmitter(std::move(emitter));
 }
 

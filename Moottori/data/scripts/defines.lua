@@ -7,6 +7,9 @@ game_draw_tick = 30
 player_faction = 0
 asteroid_faction = 1
 
+explosion_emitter = 0
+smoke_emitter = 1
+
 -- level size
 level_width = 800
 level_height = 800

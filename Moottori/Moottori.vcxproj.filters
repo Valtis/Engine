@@ -264,6 +264,9 @@
     <ClInclude Include="include\Level\LevelManager.h">
       <Filter>Header Files\Level</Filter>
     </ClInclude>
+    <ClInclude Include="include\Graphics\Particle\ParticleCache.h">
+      <Filter>Header Files\Graphics\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -388,6 +391,9 @@
     </ClCompile>
     <ClCompile Include="src\Level\LevelManager.cpp">
       <Filter>Source Files\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Particle\ParticleCache.cpp">
+      <Filter>Source Files\Graphics\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

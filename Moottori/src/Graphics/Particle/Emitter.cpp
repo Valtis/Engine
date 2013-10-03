@@ -7,21 +7,21 @@
 #include <fstream>
 
 
-Emitter::Emitter(int particles, SDL_Rect location, double particleLifeTime, double maxSpeed) : mLocation(location)
+Emitter::Emitter(int emitterID, int particles, SDL_Rect location, double particleLifeTime, double maxSpeed) : mLocation(location)
 {
-	CreateParticles(particles, particleLifeTime, maxSpeed);
+	CreateParticles(emitterID, particles, particleLifeTime, maxSpeed);
 }
 
 
-void Emitter::CreateParticles( int particleCount, double particleLifeTime, double maxSpeed )
+void Emitter::CreateParticles(int emitterID, int particleCount, double particleLifeTime, double maxSpeed )
 {
 	for (int i = 0; i < particleCount; ++i) 
 	{
-		CreateParticle(particleLifeTime, maxSpeed);
+		CreateParticle(emitterID, particleLifeTime, maxSpeed);
 	}
 }
 
-void Emitter::CreateParticle( double particleLifeTime, double maxSpeed )
+void Emitter::CreateParticle(int emitterID, double particleLifeTime, double maxSpeed )
 {
 	double x = mLocation.w/2;
 	double y = mLocation.h/2;
@@ -31,7 +31,8 @@ void Emitter::CreateParticle( double particleLifeTime, double maxSpeed )
 
 	std::unique_ptr<Particle> particle(new Particle(x, y, velocity*cos(angle), velocity*sin(angle), particleLifeTime));
 	
-	SetColor(particle.get());
+
+	particle->Initialize(emitterID);
 
 	mParticles.push_back(std::move(particle));
 		
@@ -45,13 +46,6 @@ Emitter::~Emitter()
 	SDL_FreeSurface(mSurface);
 	SDL_DestroyTexture(mTexture);
 }
-
-
-void Emitter::SetColor( Particle *particle )
-{
-	particle->Initialize();
-}
-
 
 void Emitter::Update(double ticks_passed)
 {

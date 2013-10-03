@@ -14,7 +14,7 @@ function OnEntityCollisionEvent(firstID, secondID)
 	if myFaction ~= theirFaction then
 		x, y, wasHandled = messaging:SendLocationQueryMessage()
 		if wasHandled then
-			engine:AddParticleEmitter(x + 25, y + 25, 500, 80, 4.0)
+			engine:AddParticleEmitter(explosion_emitter, x + 25, y + 25, 250, 80, 2.0)
 		end
 
 		messaging:SendEntityTerminationRequestMessage(firstID)

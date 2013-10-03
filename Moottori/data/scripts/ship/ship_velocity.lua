@@ -62,6 +62,11 @@ function OnUpdate(ticks_passed)
 		DecaySpeed()		
 		animation_state = true
 		animation_id = 1 -- ship go wroom
+		
+		x, y, wasHandled = messaging:SendLocationQueryMessage()
+		if wasHandled then
+			engine:AddParticleEmitter(smoke_emitter, x + 25, y + 25, 10, 10, 1.0)
+		end
 	end
 	messaging:SendAnimationStateMessage(animation_id, animation_state)
 end
