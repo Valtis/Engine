@@ -66,7 +66,7 @@ void Engine::UpdateGameState()
 	if (currentTick > mGameLogicTickLength + mLastGameLogicTick)
 	{
 		double ticksPassed = (double)(currentTick - mLastGameLogicTick)/(double)mGameLogicTickLength;
-		LevelManager::Instance().Update(ticksPassed); // todo: replace with level manager code
+		LevelManager::Instance().Update(ticksPassed);
 		EntityManager::Instance().Update(ticksPassed); 
 	
 		CollisionManager::Instance().Update(ticksPassed);
