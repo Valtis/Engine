@@ -1,14 +1,14 @@
 #include "UI/UI.h"
 #include "Graphics/Renderer/Renderer.h"
 #include "Graphics/SpriteManager.h"
+#include "Graphics/Camera/CameraManager.h"
 #include "Utility/Defines.h"
 #include "Event/EventFactory.h"
-
 #include "UI/Controller/ControllerFactory.h"
 
 #include <algorithm>
 
-UI::UI() : mInputHandlers(), MAX_NUMBER_OF_EVENTS_TO_PROCESS_PER_TICK(10), mCamera(), mController(ControllerFactory::NewObject(ControllerType::Keyboard))
+UI::UI() : mInputHandlers(), MAX_NUMBER_OF_EVENTS_TO_PROCESS_PER_TICK(10), mController(ControllerFactory::NewObject(ControllerType::Keyboard))
 {
 
 }
@@ -30,15 +30,7 @@ void UI::Initialize(std::string title, std::string spritesheetpath,  int windowW
 
 void UI::Draw()
 {
-	Renderer::Instance().Draw(mCamera.get());
-}
-
-
-void UI::AttachCamera(std::unique_ptr<Camera> camera)
-{
-	mCamera = std::move(camera); 
-	mCamera->SetScreenWidth(mScreenWidth);
-	mCamera->SetScreenHeight(mScreenHeight);
+	Renderer::Instance().Draw(CameraManager::Instance().GetActiveCamera());
 }
 
 void UI::Update()

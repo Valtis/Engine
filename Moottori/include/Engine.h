@@ -60,7 +60,6 @@ private:
 
 	// todo: refactor\split to multiple classes - here just so that I get something functional for now
 	int AddEntity(const char *scriptName);
-	void CreateAndAttachCamera( int entityID);
 	void InitializeInputTypes();
 	int GetNumberOfActiveEntities();
 };

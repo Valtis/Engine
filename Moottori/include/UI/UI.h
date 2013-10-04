@@ -7,7 +7,6 @@
 
 #include "Utility/Enumerations.h"
 #include "UI/Controller/Controller.h"
-#include "Graphics/Camera/Camera.h"
 class Event;
 
 class UI
@@ -32,7 +31,7 @@ public:
 	void Draw();
 
 	void Update();
-	void AttachCamera(std::unique_ptr<Camera> camera);
+	
 	// basic idea: UI has list of handlers with priority. It offers input for each handler, starting with handler with highest priority. If handler doesn't handle the input, it offers it to next one
 	void RegisterInputHandler(InputHandler, int priority);
 private:
@@ -48,7 +47,7 @@ private:
 	const int MAX_NUMBER_OF_EVENTS_TO_PROCESS_PER_TICK;
 	int mScreenWidth;
 	int mScreenHeight;
-	std::unique_ptr<Camera> mCamera;
+
 	std::unique_ptr<Controller> mController;
 
 };

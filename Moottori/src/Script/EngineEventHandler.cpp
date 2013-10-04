@@ -9,6 +9,9 @@
 #include "Sound/SoundManager.h"
 #include "Graphics/Particle/Emitter.h"
 #include "Graphics/Particle/ParticleCache.h"
+#include "Graphics/Camera/EntityTrackingCamera.h"
+#include "Graphics/Camera/CameraManager.h"
+
 
 void EngineEventHandler::RegisterUI(UI *ui)
 {
@@ -24,6 +27,7 @@ void EngineEventHandler::RegisterFunctions(LuaState *state)
 			.def("AddParticleEmitter", &EngineEventHandler::AddEmitter)
 			.def("AddParticle", &EngineEventHandler::AddParticle)
 			.def("AddLevel", &EngineEventHandler::AddLevel)
+			.def("CreateEntityTrackingCamera", &EngineEventHandler::CreateEntityTrackingCamera)
 
 	];
 
@@ -73,4 +77,27 @@ void EngineEventHandler::AddEmitter(int id, int x, int y, int numberOfParticles,
 void EngineEventHandler::AddLevel(int width, int height)
 {
 	LevelManager::Instance().AddLevel(width, height);
+}
+
+
+void EngineEventHandler::CreateEntityTrackingCamera( int entityID )
+{
+	Entity *e = EntityManager::Instance().GetEntity(entityID);
+	if (e == nullptr)
+	{
+		LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning, 
+			"Could not find entity with id " + std::to_string(entityID) + " for a camera to attach to - aborting");
+		return;
+	}
+
+	if (e->GetComponent(ComponentType::Location) == nullptr)
+	{
+		LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning, 
+			"Entity with id " + std::to_string(entityID) + " does not contain location - cannot attach camera - aborting");
+		return;
+	}
+
+	std::unique_ptr<Camera> c(new EntityTrackingCamera(entityID, 
+		LevelManager::Instance().GetActiveLevel()->GetWidth(), LevelManager::Instance().GetActiveLevel()->GetHeight()));
+	CameraManager::Instance().AddCamera(std::move(c));
 }

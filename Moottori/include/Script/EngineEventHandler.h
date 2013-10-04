@@ -19,5 +19,7 @@ private:
 	
 	void AddLevel(int width, int height);
 
+	void CreateEntityTrackingCamera(int entityID);
+
 	UI *mUI;
 };

@@ -16,7 +16,7 @@
 #include "Component/GraphicsComponent.h"
 #include "Graphics/Sprite.h"
 #include "Graphics/SpriteManager.h"
-#include "Graphics/Camera/EntityTrackingCamera.h"
+#include "Graphics/Camera/CameraManager.h"
 
 
 Engine::Engine() : mDrawTickLength(0), mLastDrawTick(0), mGameLogicTickLength(0), mLastGameLogicTick(0), mIsRunning(true)
@@ -105,8 +105,12 @@ void Engine::Initialize()
 	SDL_Init(SDL_INIT_VIDEO);
 	InitializeLua();
 
-	mUI.Initialize("Generic title - move to settings file!", "data/spritesheets/", 640, 480);
+	mUI.Initialize("Generic title - move to settings file!", "data/spritesheets/", 640, 480);	
 	mUI.RegisterInputHandler([&](Event *event) { return this->InputHandler(event); }, INPUT_PRIORITY_HIGH);
+
+	CameraManager::Instance().SetScreenWidth(640);
+	CameraManager::Instance().SetScreenHeight(480);
+
 
 	InitializeInputTypes();
 	EntityFactory::RegisterCreationScript("data/scripts/entity_creation.lua");
@@ -115,7 +119,6 @@ void Engine::Initialize()
 	CollisionManager::Instance().SetCollidabeEntities(LevelManager::Instance().GetActiveLevel()->GetEntities());
 	CollisionManager::Instance().SetLevelWidth(LevelManager::Instance().GetActiveLevel()->GetWidth());
 	CollisionManager::Instance().SetLevelHeight(LevelManager::Instance().GetActiveLevel()->GetHeight());
-
 
 	mLastDrawTick = SDL_GetTicks();
 	mLastGameLogicTick = SDL_GetTicks();
@@ -142,7 +145,6 @@ void Engine::InitializeLua()
 		luabind::class_<Engine>("Engine")
 			.def_readwrite("draw_tick_length", &Engine::mDrawTickLength)
 			.def_readwrite("game_logic_tick_length", &Engine::mGameLogicTickLength)
-			.def("AttachCamera", &Engine::CreateAndAttachCamera)
 			.def("GetNumberOfActiveEntities", &Engine::GetNumberOfActiveEntities)
 	];
 
@@ -181,27 +183,5 @@ void Engine::CleanUp()
 	CollisionManager::Release();
 	LoggerManager::Release();
 	SDL_Quit();
-}
-
-void Engine::CreateAndAttachCamera( int entityID )
-{
-	Entity *e = EntityManager::Instance().GetEntity(entityID);
-	if (e == nullptr)
-	{
-		LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning, 
-			"Could not find entity with id " + std::to_string(entityID) + " for a camera to attach to - aborting");
-		return;
-	}
-
-	if (e->GetComponent(ComponentType::Location) == nullptr)
-	{
-		LoggerManager::GetLog(SCRIPT_LOG).AddLine(LogLevel::Warning, 
-			"Entity with id " + std::to_string(entityID) + " does not contain location - cannot attach camera - aborting");
-		return;
-	}
-
-	std::unique_ptr<Camera> c(new EntityTrackingCamera(entityID, 
-		LevelManager::Instance().GetActiveLevel()->GetWidth(), LevelManager::Instance().GetActiveLevel()->GetHeight()));
-	mUI.AttachCamera(std::move(c));
 }
 

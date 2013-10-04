@@ -398,6 +398,9 @@
     <ClCompile Include="src\Graphics\Particle\ParticleCache.cpp">
       <Filter>Source Files\Graphics\Particle</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Camera\CameraManager.cpp">
+      <Filter>Source Files\Graphics\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\spritesheets\sprites.dat">

@@ -89,6 +89,7 @@
     <ClCompile Include="src\Event\EventFactory.cpp" />
     <ClCompile Include="src\Event\EventActionExecutor.cpp" />
     <ClCompile Include="src\Event\EventSender.cpp" />
+    <ClCompile Include="src\Graphics\Camera\CameraManager.cpp" />
     <ClCompile Include="src\Graphics\Camera\EntityTrackingCamera.cpp" />
     <ClCompile Include="src\Graphics\Particle\Emitter.cpp" />
     <ClCompile Include="src\Graphics\Particle\Particle.cpp" />

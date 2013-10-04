@@ -22,7 +22,7 @@ function OnGameInit()
 
 
 	entityID = engine:SpawnEntity("CreatePlayer", -1)
-	placeholder:AttachCamera(entityID)
+	engine:CreateEntityTrackingCamera(entityID)
 
 	engine:SpawnEntity("CreateSun", -1)
 	engine:SpawnEntity("CreateStar", -1)
