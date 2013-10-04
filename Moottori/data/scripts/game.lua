@@ -5,7 +5,7 @@ function OnUpdate(ticks_passed)
 	number_of_ticks_passed = ticks_passed + number_of_ticks_passed
 
 	if number_of_ticks_passed*game_logic_tick > 1000 then
-		if placeholder:GetNumberOfActiveEntities() < 20 then
+		if engine:GetNumberOfActiveEntities() < 20 then
 			number_of_ticks_passed = 0
 			engine:SpawnEntity("CreateAsteroid", -1)
 		end

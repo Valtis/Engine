@@ -126,11 +126,6 @@ void Engine::Initialize()
 
 }
 
-int Engine::GetNumberOfActiveEntities()
-{
-	return LevelManager::Instance().GetActiveLevel()->GetEntities().size();
-}
-
 void Engine::InitializeLua()
 {
 	mLuaState.Open();
@@ -145,7 +140,6 @@ void Engine::InitializeLua()
 		luabind::class_<Engine>("Engine")
 			.def_readwrite("draw_tick_length", &Engine::mDrawTickLength)
 			.def_readwrite("game_logic_tick_length", &Engine::mGameLogicTickLength)
-			.def("GetNumberOfActiveEntities", &Engine::GetNumberOfActiveEntities)
 	];
 
 	luabind::globals(mLuaState.State())["placeholder"] = this;

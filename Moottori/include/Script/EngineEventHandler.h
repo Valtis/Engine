@@ -21,5 +21,7 @@ private:
 
 	void CreateEntityTrackingCamera(int entityID);
 
+	int GetLevelEntitiesCount();
+
 	UI *mUI;
 };

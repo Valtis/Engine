@@ -61,5 +61,4 @@ private:
 	// todo: refactor\split to multiple classes - here just so that I get something functional for now
 	int AddEntity(const char *scriptName);
 	void InitializeInputTypes();
-	int GetNumberOfActiveEntities();
 };

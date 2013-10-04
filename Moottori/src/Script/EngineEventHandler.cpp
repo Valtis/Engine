@@ -28,6 +28,7 @@ void EngineEventHandler::RegisterFunctions(LuaState *state)
 			.def("AddParticle", &EngineEventHandler::AddParticle)
 			.def("AddLevel", &EngineEventHandler::AddLevel)
 			.def("CreateEntityTrackingCamera", &EngineEventHandler::CreateEntityTrackingCamera)
+			.def("GetNumberOfActiveEntities", &EngineEventHandler::GetLevelEntitiesCount)
 
 	];
 
@@ -100,4 +101,10 @@ void EngineEventHandler::CreateEntityTrackingCamera( int entityID )
 	std::unique_ptr<Camera> c(new EntityTrackingCamera(entityID, 
 		LevelManager::Instance().GetActiveLevel()->GetWidth(), LevelManager::Instance().GetActiveLevel()->GetHeight()));
 	CameraManager::Instance().AddCamera(std::move(c));
+}
+
+
+int EngineEventHandler::GetLevelEntitiesCount()
+{
+	return LevelManager::Instance().GetActiveLevel()->GetEntities().size();
 }
