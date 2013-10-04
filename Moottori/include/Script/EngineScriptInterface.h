@@ -1,11 +1,11 @@
 #pragma once
 #include "Utility/LuaState.h"
 class UI;
-class EngineEventHandler
+class EngineScriptInterface
 {
 public:
-	EngineEventHandler() : mUI(nullptr) { }
-	~EngineEventHandler() { }
+	EngineScriptInterface() : mUI(nullptr) { }
+	~EngineScriptInterface() { }
 	
 	void RegisterFunctions(LuaState *state);
 	void RegisterUI(UI *ui);

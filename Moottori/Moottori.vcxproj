@@ -53,7 +53,7 @@
     <ClInclude Include="include\Graphics\SurfaceOperations.h" />
     <ClInclude Include="include\Level\Level.h" />
     <ClInclude Include="include\Level\LevelManager.h" />
-    <ClInclude Include="include\Script\EngineEventHandler.h" />
+    <ClInclude Include="include\Script\EngineScriptInterface.h" />
     <ClInclude Include="include\Script\ScriptInterface.h" />
     <ClInclude Include="include\Sound\Music.h" />
     <ClInclude Include="include\Sound\SoundEffects.h" />
@@ -101,7 +101,7 @@
     <ClCompile Include="src\Level\Level.cpp" />
     <ClCompile Include="src\Level\LevelManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Script\EngineEventHandler.cpp" />
+    <ClCompile Include="src\Script\EngineScriptInterface.cpp" />
     <ClCompile Include="src\Script\ScriptInterface.cpp" />
     <ClCompile Include="src\Sound\Music.cpp" />
     <ClCompile Include="src\Sound\SoundEffects.cpp" />

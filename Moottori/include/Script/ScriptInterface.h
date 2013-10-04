@@ -4,7 +4,7 @@
 #include "Utility/Enumerations.h"
 #include "Utility/LuaState.h"
 #include "Event/EventSender.h"
-#include "Script/EngineEventHandler.h"
+#include "Script/EngineScriptInterface.h"
 class EventHandler;
 class UI;
 class ScriptInterface
@@ -18,7 +18,7 @@ public:
 private:
 
 	EventSender mEntityEvents;
-	EngineEventHandler mEngineEvents;
+	EngineScriptInterface mEngineEvents;
 
 	LuaState *mLuaState;
 };

@@ -1,4 +1,4 @@
-#include "Script/EngineEventHandler.h"
+#include "Script/EngineScriptInterface.h"
 #include "Entity/EntityManager.h"
 #include "Entity/Entity.h"
 #include "Entity/EntityFactory.h"
@@ -13,29 +13,29 @@
 #include "Graphics/Camera/CameraManager.h"
 
 
-void EngineEventHandler::RegisterUI(UI *ui)
+void EngineScriptInterface::RegisterUI(UI *ui)
 {
 	mUI = ui;
 }
 
-void EngineEventHandler::RegisterFunctions(LuaState *state)
+void EngineScriptInterface::RegisterFunctions(LuaState *state)
 {
 	luabind::module(state->State()) [
-		luabind::class_<EngineEventHandler>("EventSender")
-			.def("SpawnEntity", &EngineEventHandler::SpawnEntity)
-			.def("PlaySoundEffect", &EngineEventHandler::PlaySoundEffect)
-			.def("AddParticleEmitter", &EngineEventHandler::AddEmitter)
-			.def("AddParticle", &EngineEventHandler::AddParticle)
-			.def("AddLevel", &EngineEventHandler::AddLevel)
-			.def("CreateEntityTrackingCamera", &EngineEventHandler::CreateEntityTrackingCamera)
-			.def("GetNumberOfActiveEntities", &EngineEventHandler::GetLevelEntitiesCount)
+		luabind::class_<EngineScriptInterface>("EventSender")
+			.def("SpawnEntity", &EngineScriptInterface::SpawnEntity)
+			.def("PlaySoundEffect", &EngineScriptInterface::PlaySoundEffect)
+			.def("AddParticleEmitter", &EngineScriptInterface::AddEmitter)
+			.def("AddParticle", &EngineScriptInterface::AddParticle)
+			.def("AddLevel", &EngineScriptInterface::AddLevel)
+			.def("CreateEntityTrackingCamera", &EngineScriptInterface::CreateEntityTrackingCamera)
+			.def("GetNumberOfActiveEntities", &EngineScriptInterface::GetLevelEntitiesCount)
 
 	];
 
 	luabind::globals(state->State())["engine"] = this;	
 }
 
-int EngineEventHandler::SpawnEntity(const char *scriptName, int parentID)
+int EngineScriptInterface::SpawnEntity(const char *scriptName, int parentID)
 {
 	auto entity = EntityFactory::CreateEntity(scriptName, mUI);
 	int id = entity->GetID();
@@ -54,17 +54,17 @@ int EngineEventHandler::SpawnEntity(const char *scriptName, int parentID)
 }
 
 
-void EngineEventHandler::PlaySoundEffect(int id)
+void EngineScriptInterface::PlaySoundEffect(int id)
 {
 	SoundManager::Instance().PlaySoundEffect(id);
 }
 
-inline void EngineEventHandler::AddParticle(int id, int r, int g, int b)
+inline void EngineScriptInterface::AddParticle(int id, int r, int g, int b)
 {
 	ParticleCache::Instance().AddParticle(id, r, g, b);
 }
 
-void EngineEventHandler::AddEmitter(int id, int x, int y, int numberOfParticles, double lifeTime, double maxVelocity)
+void EngineScriptInterface::AddEmitter(int id, int x, int y, int numberOfParticles, double lifeTime, double maxVelocity)
 {
 	SDL_Rect location;
 	location.x = x;
@@ -75,13 +75,13 @@ void EngineEventHandler::AddEmitter(int id, int x, int y, int numberOfParticles,
 	Renderer::Instance().AddEmitter(std::move(emitter));
 }
 
-void EngineEventHandler::AddLevel(int width, int height)
+void EngineScriptInterface::AddLevel(int width, int height)
 {
 	LevelManager::Instance().AddLevel(width, height);
 }
 
 
-void EngineEventHandler::CreateEntityTrackingCamera( int entityID )
+void EngineScriptInterface::CreateEntityTrackingCamera( int entityID )
 {
 	Entity *e = EntityManager::Instance().GetEntity(entityID);
 	if (e == nullptr)
@@ -104,7 +104,7 @@ void EngineEventHandler::CreateEntityTrackingCamera( int entityID )
 }
 
 
-int EngineEventHandler::GetLevelEntitiesCount()
+int EngineScriptInterface::GetLevelEntitiesCount()
 {
 	return LevelManager::Instance().GetActiveLevel()->GetEntities().size();
 }

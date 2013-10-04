@@ -258,9 +258,6 @@
     <ClInclude Include="include\Script\ScriptInterface.h">
       <Filter>Header Files\Script</Filter>
     </ClInclude>
-    <ClInclude Include="include\Script\EngineEventHandler.h">
-      <Filter>Header Files\Script</Filter>
-    </ClInclude>
     <ClInclude Include="include\Level\LevelManager.h">
       <Filter>Header Files\Level</Filter>
     </ClInclude>
@@ -269,6 +266,9 @@
     </ClInclude>
     <ClInclude Include="include\Graphics\Camera\CameraManager.h">
       <Filter>Header Files\Graphics\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Script\EngineScriptInterface.h">
+      <Filter>Header Files\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -389,9 +389,6 @@
     <ClCompile Include="src\Script\ScriptInterface.cpp">
       <Filter>Source Files\Script</Filter>
     </ClCompile>
-    <ClCompile Include="src\Script\EngineEventHandler.cpp">
-      <Filter>Source Files\Script</Filter>
-    </ClCompile>
     <ClCompile Include="src\Level\LevelManager.cpp">
       <Filter>Source Files\Level</Filter>
     </ClCompile>
@@ -400,6 +397,9 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\Camera\CameraManager.cpp">
       <Filter>Source Files\Graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Script\EngineScriptInterface.cpp">
+      <Filter>Source Files\Script</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
