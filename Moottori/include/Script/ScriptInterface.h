@@ -18,7 +18,7 @@ public:
 private:
 
 	EventSender mEntityEvents;
-	EngineScriptInterface mEngineEvents;
+	EngineScriptInterface mEngineScriptInterface;
 
 	LuaState *mLuaState;
 };

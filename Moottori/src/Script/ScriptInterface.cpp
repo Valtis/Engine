@@ -15,10 +15,10 @@ void ScriptInterface::RegisterEntityEventHandler(EventHandler *handler)
 void ScriptInterface::RegisterMethods()
 {
 	mEntityEvents.RegisterFunctions(mLuaState);
-	mEngineEvents.RegisterFunctions(mLuaState);
+	mEngineScriptInterface.RegisterFunctions(mLuaState);
 }
 
 void ScriptInterface::RegisterUI(UI *ui)
 {
-	mEngineEvents.RegisterUI(ui);
+	mEngineScriptInterface.RegisterUI(ui);
 }
