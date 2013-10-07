@@ -20,6 +20,11 @@ function OnParentIdNotificationEvent(parent_id)
 
 end
 
+function OnUpdate(tick_count)
+	engine:AddParticleEmitter(smoke_emitter,
+	location_component.x + 25, location_component.y	+ 25,
+	20, 20, 0.5)
+end
 
 
 function OnRegisterForEvents()

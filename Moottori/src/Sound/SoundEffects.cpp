@@ -34,10 +34,10 @@ void SoundEffects::ParseLine( std::string &line )
 	{
 		return;
 	}
-
-	if (mEffects.count(std::stoi(tokens[1]) != 0))
+  
+	if (mEffects.count(std::stoi(tokens[1])) != 0)
 	{
-		LoggerManager::GetLog(SOUND_LOG).AddLine(LogLevel::Warning, "Sound effect with id " + tokens[1] + " already exist - skipping");
+		LoggerManager::GetLog(SOUND_LOG).AddLine(LogLevel::Warning, "Sound effect with id " + tokens[1] + " already exists - skipping");
 		return;
 	}
 

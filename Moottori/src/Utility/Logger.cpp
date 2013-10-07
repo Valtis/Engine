@@ -62,7 +62,7 @@ std::string Logger::CreateStamp(bool initializeStamp)
 
 void Logger::AddLine( LogLevel level, std::string text )
 {
-	if (level > mLoggingLevel || mLoggingLevel == LogLevel::None)
+	if (mLoggingLevel == LogLevel::None || (mLoggingLevel != LogLevel::All && level < mLoggingLevel))
 		return;
 
 	if (mTimeStamps == true)
